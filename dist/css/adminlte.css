@@ -33058,6 +33058,20 @@ a.text-muted:hover {
   
 }
 
+@media (max-width: 600px){
+  .form-upload{
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .file-upload{
+    margin-bottom: 20px;
+  }
+  
+
+}
+
+
 .margin{
   margin-bottom: 20px;
 }

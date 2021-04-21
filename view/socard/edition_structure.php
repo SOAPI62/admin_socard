@@ -7,23 +7,6 @@
 
   <meta content="width=device-width, initial-scale=1" name="viewport">
       <meta content="Webflow" name="generator">
-      <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
-      <link href="images/favicon.png" rel="shortcut icon" type="image/x-icon">
-      <link href="images/hello-icon-192.png" rel="apple-touch-icon">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="apple-mobile-web-app-status-bar-style" content="green">
-      <meta name="apple-mobile-web-app-title" content="FreeCodeCamp">
-      <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-      <link href="images/hello-icon-192.png" rel="apple-touch-icon">
-      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-      <link rel="apple-touch-icon" href="images/hello-icon-152.png">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="theme-color" content="white">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="apple-mobile-web-app-status-bar-style" content="black">
-      <meta name="apple-mobile-web-app-title" content="So'Shooting">
-      <meta name="msapplication-TileImage" content="images/hello-icon-144.png">
-      <meta name="msapplication-TileColor" content="#FFFFFF">
       <!-- Google Font: Source Sans Pro -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
       <!-- Font Awesome -->
