@@ -52,33 +52,21 @@
 
   <!-- Site wrapper -->
   <div class="wrapper">
-    <!-- Navbar -->
+    <!-- Navbar top-->
     <?php
-          include '../navigation/nav-top.php';
-        ?>
-         <!-- /.navbar -->
-         <!-- Main Sidebar Container -->
-         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-            <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">Admin So'Card </span>
-            </a>
-            <!-- Sidebar -->
-            <div class="sidebar">
-               <!-- Sidebar user panel (optional) -->
-               <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                  <div class="image">
-                     <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                  </div>
-                  <div class="info">
-                     <a href="#" class="d-block">So Shooting</a>
-                  </div>
-               </div>
-
-        <?php
-          include '../navigation/nav-left.php';
-        ?>
+      include '../navigation/nav-top.php';
+    ?>
+    <!-- /.navbar top-->
+    <!-- Navbar utilisateur-->
+    <?php
+      include '../navigation/nav-utilisateur.php';
+    ?> 
+    <!-- /.Navbar utilisateur -->
+    <!-- Navbar left-->
+    <?php
+      include '../navigation/nav-left.php';
+    ?>
+    <!-- /.Navbar left -->
     
     </div>
     <!-- /.sidebar -->
@@ -91,7 +79,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Structure du bloc PROMOTION</h1>
+            <h1 >Structure du bloc PROMOTION</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -103,28 +91,25 @@
         <div class="col-sm-4">
           <!-- text input -->
           <div class="form-group card-body">
-            <label>Titre :</label>
+            <label class="margin">Titre :</label>
             <input type="text" class="form-control" placeholder="Votre titre">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group card-body">
-            <label>Bouton :</label>
+            <label class="margin">Bouton :</label>
             <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
             <input type="text" class="form-control" placeholder="URL du bouton">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group card-body">
-            <label>Nombre(s) de promo(s) :</label>
+            <label class="margin">Nombre(s) de promo(s) :</label>
             <select class="form-control">
               <option>0</option>
               <option>1</option>
               <option>2</option>
               <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
             </select>
           </div>
         </div>
@@ -213,6 +198,7 @@ $(function () {
       $(this).bootstrapSwitch('state', $(this).prop('checked'));
     })
   });
+
 
   function readURL(input) {
   if (input.files && input.files[0]) {
