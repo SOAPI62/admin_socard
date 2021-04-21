@@ -88,16 +88,17 @@
         <div class="col-sm-4">
           <div class="form-group card-body">
             <label class="margin">Nombre(s) de promo(s) :</label>
-            <select class="form-control">
-              <option>0</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
+            <select id="nb_promotions" class="form-control">
+              <option value='0'>0</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+             </select>
           </div>
         </div>
             <div class="form-group card-body form-upload col-sm-12">
-              <div class="file-upload col-sm-3">
+              
+              <div class="file-upload col-sm-3" id="BLK_IMG_PROMO_1">
                 <div class="image-upload-wrap">
                   <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
                   <div class="drag-text">
@@ -111,7 +112,8 @@
                   </div>
                 </div>
               </div>  
-              <div class="file-upload col-sm-3">
+
+              <div class="file-upload col-sm-3" id="BLK_IMG_PROMO_2">
                 <div class="image-upload-wrap">
                   <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
                   <div class="drag-text">
@@ -125,7 +127,7 @@
                   </div>
                 </div>
               </div>
-              <div class="file-upload col-sm-3">
+              <div class="file-upload col-sm-3" id="BLK_IMG_PROMO_3">
                 <div class="image-upload-wrap">
                   <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
                   <div class="drag-text">
@@ -177,9 +179,55 @@
 
 <script>
 
-var otherCheckbox = document.querySelector('input[value="other"]');
-var otherText = document.querySelector('input[id="otherValue"]');
-otherText.style.visibility = 'hidden';
+// ----------------------------------------------------------------------------------------------------------------
+// ---- VALEURS PAR DEFAUT AU CHARGEMENT DE LA PAGE
+// ----------------------------------------------------------------------------------------------------------------
+
+$("#BLK_IMG_PROMO_1").hide();
+$("#BLK_IMG_PROMO_2").hide();
+$("#BLK_IMG_PROMO_3").hide();
+
+var otherCheckbox           = document.querySelector('input[value="other"]');
+var otherText               = document.querySelector('input[id="otherValue"]');
+otherText.style.visibility  = 'hidden';
+
+// ----------------------------------------------------------------------------------------------------------------
+// ---- DETECTION CHANGEMEN DU NOMBRE DE PROMOTIONS
+// ----------------------------------------------------------------------------------------------------------------
+
+$('#nb_promotions').change(function() {
+  $nb_promotion =  $('#nb_promotions').val();
+
+  switch($nb_promotion) {
+  case '0':
+    $("#BLK_IMG_PROMO_1").hide();
+    $("#BLK_IMG_PROMO_2").hide();
+    $("#BLK_IMG_PROMO_3").hide();
+    break;
+  case '1':
+    $("#BLK_IMG_PROMO_1").show();
+    $("#BLK_IMG_PROMO_2").hide();
+    $("#BLK_IMG_PROMO_3").hide();
+    break;
+  case '2':
+    $("#BLK_IMG_PROMO_1").show();
+    $("#BLK_IMG_PROMO_2").show();
+    $("#BLK_IMG_PROMO_3").hide();
+  break;
+  case '3':
+    $("#BLK_IMG_PROMO_1").show();
+    $("#BLK_IMG_PROMO_2").show();
+    $("#BLK_IMG_PROMO_3").show();
+  break;
+  default:
+    // code block
+} 
+
+});
+
+// ----------------------------------------------------------------------------------------------------------------
+// ---- DETECTION SI AFFICHAGE URL DE LA PGE PROMOTION 
+// ----------------------------------------------------------------------------------------------------------------
 
 otherCheckbox.onchange = function() {
   if(otherCheckbox.checked) {
