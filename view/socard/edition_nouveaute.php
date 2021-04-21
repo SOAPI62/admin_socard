@@ -62,7 +62,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-4  card-body">
-            <h1 >Structure du bloc PROMOTION</h1>
+            <h1 >Structure du bloc NOUVEAUTE</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -79,22 +79,10 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-group card-body">
-            <label class="margin">Bouton :</label>
-            <input type="checkbox" name="my-checkbox"  value="other" >
-            <input type="text" id="otherValue" class="form-control" placeholder="URL du bouton">
-          </div>
+          
         </div>
         <div class="col-sm-4">
-          <div class="form-group card-body">
-            <label class="margin">Nombre(s) de promo(s) :</label>
-            <select class="form-control">
-              <option>0</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
-          </div>
+          
         </div>
             <div class="form-group card-body form-upload col-sm-12">
               <div class="file-upload col-sm-3">
