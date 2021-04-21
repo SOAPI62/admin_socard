@@ -5,37 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin So Card| Structure</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.css">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+      <meta content="Webflow" name="generator">
+      <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+      <link href="images/favicon.png" rel="shortcut icon" type="image/x-icon">
+      <link href="images/hello-icon-192.png" rel="apple-touch-icon">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="green">
+      <meta name="apple-mobile-web-app-title" content="FreeCodeCamp">
+      <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+      <link href="images/hello-icon-192.png" rel="apple-touch-icon">
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="apple-touch-icon" href="images/hello-icon-152.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="theme-color" content="white">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="apple-mobile-web-app-title" content="So'Shooting">
+      <meta name="msapplication-TileImage" content="images/hello-icon-144.png">
+      <meta name="msapplication-TileColor" content="#FFFFFF">
+      <!-- Google Font: Source Sans Pro -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+      <!-- Ionicons -->
+      <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+      <!-- Tempusdominus Bootstrap 4 -->
+      <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+      <!-- iCheck -->
+      <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+      <!-- JQVMap -->
+      <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
+      <!-- Theme style -->
+      <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+      <!-- overlayScrollbars -->
+      <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+      <!-- Daterange picker -->
+      <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+      <!-- summernote -->
+      <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+      <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-               <li class="nav-item">
-                  <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-               </li>
-               <li class="nav-item dropdown">
-                  <a id="BTN_AJOUT_CONTACT" class="nav-link"  data-toggle="modal">
-                  <i class="fas fa-user-plus"></i></i>
-                  </a>
-               </li>
-            </ul>
-         </nav>
+    <?php
+            include '../navigation/nav-top.php';
+         ?>
          <!-- /.navbar -->
          <!-- Main Sidebar Container -->
          <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-            <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Admin So'Card </span>
             </a>
             <!-- Sidebar -->
@@ -43,7 +67,7 @@
                <!-- Sidebar user panel (optional) -->
                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                   <div class="image">
-                     <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                     <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                   </div>
                   <div class="info">
                      <a href="#" class="d-block">So Shooting</a>
@@ -131,7 +155,7 @@
                   <span class="badge badge-success">Actif</span>
                 </td>
                 <td class="project-actions text-right">
-                  <a class="btn btn-info btn-sm" href="../formulaires/form-promotions.php">
+                  <a class="btn btn-info btn-sm" href="edition_promotions.php">
                     <i class="fas fa-pencil-alt">
                     </i>
                     Editer
@@ -309,12 +333,12 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
+<script src="../../dist/js/demo.js"></script>
 </body>
 </html>
