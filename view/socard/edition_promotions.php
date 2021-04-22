@@ -74,7 +74,7 @@
         <div class="col-sm-4">
           <!-- text input -->
           <div class="form-group card-body">
-            <label class="margin">Titre :</label>
+            <label class="margin">Titre du bloc :</label>
             <input type="text" class="form-control" placeholder="Votre titre">
           </div>
         </div>
@@ -127,6 +127,7 @@
                   </div>
                 </div>
               </div>
+              
               <div class="file-upload col-sm-3" id="BLK_IMG_PROMO_3">
                 <div class="image-upload-wrap">
                   <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
@@ -187,9 +188,7 @@ $("#BLK_IMG_PROMO_1").hide();
 $("#BLK_IMG_PROMO_2").hide();
 $("#BLK_IMG_PROMO_3").hide();
 
-var otherCheckbox           = document.querySelector('input[value="other"]');
-var otherText               = document.querySelector('input[id="otherValue"]');
-otherText.style.visibility  = 'hidden';
+
 
 // ----------------------------------------------------------------------------------------------------------------
 // ---- DETECTION CHANGEMEN DU NOMBRE DE PROMOTIONS
@@ -229,6 +228,10 @@ $('#nb_promotions').change(function() {
 // ---- DETECTION SI AFFICHAGE URL DE LA PGE PROMOTION 
 // ----------------------------------------------------------------------------------------------------------------
 
+var otherCheckbox           = document.querySelector('input[value="other"]');
+var otherText               = document.querySelector('input[id="otherValue"]');
+otherText.style.visibility  = 'hidden';
+
 otherCheckbox.onchange = function() {
   if(otherCheckbox.checked) {
     otherText.style.visibility = 'visible';
@@ -237,6 +240,10 @@ otherCheckbox.onchange = function() {
     otherText.style.visibility = 'hidden';
   }
 };
+
+// ----------------------------------------------------------------------------------------------------------------
+// ---- CHARGEMENT DES IMAGES PROMOTIONS 
+// ----------------------------------------------------------------------------------------------------------------
 
   function readURL(input) {
   if (input.files && input.files[0]) {

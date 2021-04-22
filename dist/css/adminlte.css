@@ -33075,3 +33075,8 @@ a.text-muted:hover {
 .margin{
   margin-bottom: 20px;
 }
+
+.placeholder-service{
+  text-align: center;
+  margin-top: 5px;
+}

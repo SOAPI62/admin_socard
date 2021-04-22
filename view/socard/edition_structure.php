@@ -109,7 +109,7 @@
                   <span class="badge badge-success">Actif</span>
                 </td>
                 <td class="project-actions text-right">
-                  <a class="btn btn-info btn-sm" href="#">
+                  <a class="btn btn-info btn-sm" href="edition_a_propos.php">
                     <i class="fas fa-pencil-alt">
                     </i>
                     Editer
@@ -143,7 +143,7 @@
                   <span class="badge badge-success">Actif</span>
                 </td>
                 <td class="project-actions text-right">
-                  <a class="btn btn-info btn-sm" href="#">
+                  <a class="btn btn-info btn-sm" href="edition_services.php">
                     <i class="fas fa-pencil-alt">
                     </i>
                     Editer

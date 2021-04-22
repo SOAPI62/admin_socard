@@ -62,7 +62,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-4  card-body">
-            <h1 >Structure du bloc NOUVEAUTE</h1>
+            <h1 >Structure du bloc A PROPOS</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -78,25 +78,11 @@
             <input type="text" class="form-control" placeholder="Votre titre">
           </div>
         </div>
-      <div class="col-sm-4">
-        <div class="form-group card-body">
-        <label class="margin">Texte du bloc :</label>
-          <div class="card card-outline card-info">
-          
-            <!-- /.card-header -->
-            <div class="card-body ">
-              <textarea id="summernote">
-                <strong>Placez votre texte ici</strong>
-              </textarea>
-            </div>
-          </div>
-        </div>
-        <!-- /.col-->
-      </div>
+      
       <div class="col-sm-4">
           <!-- text input -->
           <div class="form-group card-body">
-            <label class="margin">Image nouveauté du bloc :</label>
+            <label class="margin">Image du bloc :</label>
           </div>
         </div>
       <div class=" col-sm-4" >
@@ -113,7 +99,30 @@
           </div>
         </div>
       </div> 
+      <div class="col-sm-4">
+        <div class="form-group card-body">
+        <label class="margin">Texte du bloc :</label>
+          <div class="card card-outline card-info">
+          
+            <!-- /.card-header -->
+            <div class="card-body ">
+              <textarea id="summernote">
+                <strong>Placez votre texte ici</strong>
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-->
+      </div>
       <!-- ./row -->
+
+      <div class="col-sm-4">
+          <div class="form-group card-body">
+            <label class="margin">Avis :</label>
+            <input type="checkbox" name="my-checkbox"  value="other" >
+            <input type="text" id="otherValue" class="form-control" placeholder="URL du bouton">
+          </div>
+        </div>
     </section>
     <!-- /.content -->
   </div>
@@ -193,6 +202,23 @@ $('.image-upload-wrap').bind('dragover', function () {
 	$('.image-upload-wrap').bind('dragleave', function () {
 		$('.image-upload-wrap').removeClass('image-dropping');
 });
+
+// ----------------------------------------------------------------------------------------------------------------
+// ---- DETECTION SI AFFICHAGE URL DE LA PGE PROMOTION 
+// ----------------------------------------------------------------------------------------------------------------
+
+var otherCheckbox           = document.querySelector('input[value="other"]');
+var otherText               = document.querySelector('input[id="otherValue"]');
+otherText.style.visibility  = 'hidden';
+
+otherCheckbox.onchange = function() {
+  if(otherCheckbox.checked) {
+    otherText.style.visibility = 'visible';
+    otherText.value = '';
+  } else {
+    otherText.style.visibility = 'hidden';
+  }
+};
 </script>
 </body>
 </html>
