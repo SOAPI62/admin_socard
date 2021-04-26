@@ -38,9 +38,9 @@ if (!empty($_POST['email']) && !empty($_POST['pwd'])) {
     try {
         $stmt = $dbh->prepare($query);
         $stmt->execute();
-    } catch (PDOException $ex) {
+    } catch (PDOException $e) {
         $select["CODE_RETOUR"] = 'ERREUR';
-        $select["MESSAGE_SQL"] = $ex->POSTMessage();
+        $select["MESSAGE_SQL"] = 'ERREUR DE TRAITEMENT : ' . $query;
     } finally {
         if ($select["CODE_RETOUR"] != 'ERREUR') {
             if ($stmt->rowCount() > 0) {
