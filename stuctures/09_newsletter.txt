@@ -1,0 +1,13 @@
+    <div id="NEWSLETTER" class="section wide">
+      <div data-w-id="8cf47482-19f1-1f52-25ba-910a60bc91de" style="-webkit-transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="wrap newsletter">
+        <h2 class="heading-5">Abonnement à la newsletter</h2>
+        <p class="paragraph-6">pour être informer des nouveautés, des promotions et événements futurs</p>
+        <div id="newsletter" class="form-block w-form">
+          <form id="wf-form-newsletter" name="wf-form-newsletter" data-name="newsletter" class="form-2"><label for="email-3" class="field-label">Recevoir des notifications par EMAIL</label><input type="text" class="input w-input" maxlength="256" name="email" data-name="email" placeholder="Entrer votre adresse mail" id="email"><label for="nro_tel-2" class="field-label sms">Recevoir des notifications par SMS</label><input type="tel" class="input w-input" maxlength="256" name="nro_tel" data-name="nro_tel" placeholder="Entrer votre numéro de téléphone" id="nro_tel"><input type="submit" value="Soumettre" data-wait="Please wait..." class="button form-button w-button"></form>
+          <div class="message w-form-done">
+            <div class="text-block-3">Merco ! Votre demande a bien été envoyé !</div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper"></div>
+    </div>

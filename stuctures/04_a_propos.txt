@@ -1,0 +1,14 @@
+    <div id="APROPOS" class="section wide img apropos">
+      <div class="wrapper">
+        <h2>À propos</h2><img src="images/identite.png" alt="" class="image-6">
+      </div>
+      <div data-w-id="b126983d-9126-fc06-c81d-1318685e2add" style="-webkit-transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="wrap">
+        <p class="paragraph-3">Spécialisé dans le reportage photo, que ce soit pour le mariage, les événements de la vie, ainsi que pour le portrait, je réalise vos photographies sur le mode du reportage photo, pour un rendu à la fois authentique et naturel.</p>
+        <a id="PRENDRE_RDV" href="#" class="link-block-6 rdv w-inline-block">
+          <p class="paragraph-2 boutique">Prendre rendez-vous</p>
+        </a>
+      </div>
+      <a id="BTN_TRUSTPILOT" href="https://fr.trustpilot.com/review/www.so-shooting.fr" target="_blank" class="link-block-8 w-inline-block">
+        <p class="paragraph-3 center">Consulter nos avis clients</p><img src="images/Trustpilot.png" alt="" class="image-6">
+      </a>
+    </div>
