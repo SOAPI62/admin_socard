@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // ----------------------------------------------------------------------
 // Connexion à la base de données
@@ -19,20 +20,20 @@ $select["MESSAGE_SQL"]      = '';
 // Leture des parametres en entrée
 // ----------------------------------------------------------------------
 
-$EMAIL  = $_POST['EMAIL'];
-$PWD    = $_POST['PWD'];
+$email  = $_POST['email'];
+$pwd    = $_POST['pwd'];
 
 // ----------------------------------------------------------------------
 // Vérification si les parametres sont renseignés
 // ----------------------------------------------------------------------
 
-if (!empty($_POST['EMAIL']) && !empty($_POST['PWD'])) {
+if (!empty($_POST['email']) && !empty($_POST['pwd'])) {
     
     // ----------------------------------------------------------------------
     // Préparation de la requêtes SQL
     // ----------------------------------------------------------------------
 
-    $query = "SELECT `ID_UTILISATEUR` FROM `SOCARD_UTILISATEUR` WHERE `EMAIL`='$EMAIL' AND `PWD`='$PWD'";
+    $query = "SELECT `ID_UTILISATEUR` FROM `SOCARD_UTILISATEUR` WHERE `EMAIL`='$email' AND `PWD`='$pwd'";
 
     try {
         $stmt = $dbh->prepare($query);
@@ -44,6 +45,12 @@ if (!empty($_POST['EMAIL']) && !empty($_POST['PWD'])) {
         if ($select["CODE_RETOUR"] != 'ERREUR') {
             if ($stmt->rowCount() > 0) {
                 $select["CODE_RETOUR"] = 'OK';
+
+                // Création de la session utilisateur
+
+                $_SESSION['EMAIL_UTILISATEUR'] = $email;
+                $_SESSION['PWD_UTILISATEUR']   = sha1($pwd);
+                
             } else {
                 $select["CODE_RETOUR"] = 'ANOMALIE';
                 $select["MESSAGE_RETOUR"] = 'L utilisateur n existe pas !';

@@ -1,10 +1,7 @@
 <?php
 session_start();
-
 if($_SESSION['EMAIL_UTILISATEUR'] == ''){
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,10 +49,10 @@ if($_SESSION['EMAIL_UTILISATEUR'] == ''){
     <div class="card-body login-card-body">
       <p class="login-box-msg">Connectez-vous pour démarrer votre session</p>
 
-      <form action="#" id="form_connexion" method="post">
+      <form id="form_connexion">
         <div class="input-group mb-3">
           <div class="input-group-erreur">
-          <input id="EMAIL" type="email" name="email" class="form-control" placeholder="Email">
+          <input  id="email" type="email" name="email" class="form-control" placeholder="Email">
           </div>
           <div class="input-group-append">
             <div class="input-group-text">
@@ -65,7 +62,7 @@ if($_SESSION['EMAIL_UTILISATEUR'] == ''){
         </div>
         <div class="input-group mb-3">
         <div class="input-group-erreur">
-          <input id="PWD" type="password"  name="pwd" class="form-control" placeholder="Password">
+          <input  id="pwd" type="password"  name="pwd" class="form-control" placeholder="Password">
         </div>
           <div class="input-group-append">
             <div class="input-group-text">
@@ -76,7 +73,7 @@ if($_SESSION['EMAIL_UTILISATEUR'] == ''){
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember">
+              <input type="checkbox" id="se_souvenir">
               <label for="remember">
                 Se souvenir de moi
               </label>
@@ -108,53 +105,84 @@ if($_SESSION['EMAIL_UTILISATEUR'] == ''){
 
 <script>
 
-// ----------------------------------------------------------------------------------------------------------------
-// ---- DETECTION SOUVENIR DE MOI
-// ----------------------------------------------------------------------------------------------------------------
-
-let str_utilisateur = {
-    EMAIL : "",
-    PWD : ""
-};
-
-obj_utilisateur = localStorage.getItem("UTILISATEUR");
-str_utilisateur = JSON.parse(obj_utilisateur);
-
-if (obj_utilisateur){
-    $('#EMAIL').obj_utilisateur.EMAIL;
-    $('#PWD').obj_utilisateur.PWD;
-}
-
-// ----------------------------------------------------------------------------------------------------------------
-// ---- VERIFICATION FORMULAIRE DE CONNEXION
-// ----------------------------------------------------------------------------------------------------------------
-
 $().ready(function() {
-  $("#form_connexion").validate({
-  rules : {
-    email : {
-      required : true,
-      mail : true
-    },
-    pwd : {
-      required : true,
-      minlength : 3
-    },	
-  },
-  messages : {
-    email: {
-      required: "L'email n'est pas renseigné",
-      email: "Votre adresse doit être du format name@domain.com"
-    },
-    pwd: {
-      required: "Le mot de passe n'est pas renseigné",
-      minlength: "Votre mot de passe est trop court"
+
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // ---- DETECTION PRESENCE SOUVENIR DE MOI
+    // ----------------------------------------------------------------------------------------------------------------
+
+    let str_utilisateur = {
+      email : "",
+      pwd : ""
+    };
+
+    obj_utilisateur = localStorage.getItem("UTILISATEUR");
+    str_utilisateur = JSON.parse(obj_utilisateur);
+
+    if (obj_utilisateur){
+      $('#email').val(obj_utilisateur.email);
+      $('#pwd').val(obj_utilisateur.pwd);
     }
-  },
-  submitHandler: function(form) {
-    form.submit();
-  }
- });
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // ---- DETECTION SI SOUVENIR DE MOI
+    // ----------------------------------------------------------------------------------------------------------------
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // ---- VERIFICATION FORMULAIRE DE CONNEXION
+    // ----------------------------------------------------------------------------------------------------------------
+
+      $("#form_connexion").validate({
+      rules : {
+        email : {
+          required : true,
+          email : true
+        },
+        pwd : {
+          required : true,
+          minlength : 3
+        },	
+      },
+      messages : {
+        email: {
+          required: "L'email n'est pas renseigné",
+          email: "Votre adresse doit être du format name@domain.com"
+        },
+        pwd: {
+          required: "Le mot de passe n'est pas renseigné",
+          minlength: "Votre mot de passe est trop court"
+        }
+      },
+      submitHandler: function(form) {
+      
+        $.ajax({
+                 type: "POST",
+                 url: "traitements/utilisateur/verif_utilisateur.php",
+                 data: $(form).serialize(),
+                 dataType: 'json',
+                 success: function (data) 
+                 {
+                   switch (data.CODE_RETOUR) {
+                     case 'OK':
+                      document.location.href="view/dashboard/dashboard.php";
+                     break;
+                     case 'ANOMALIE':
+                       alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                      alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                       break;
+                   }
+                }
+        });
+        return false;
+      }
+    });
+ 
+
 });
 </script>
 
