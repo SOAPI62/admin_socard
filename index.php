@@ -74,7 +74,7 @@ if($_SESSION['EMAIL_UTILISATEUR'] == ''){
           <div class="col-8">
             <div class="icheck-primary">
               <input type="checkbox" id="se_souvenir">
-              <label for="remember">
+              <label for="se_souvenir">
                 Se souvenir de moi
               </label>
             </div>
@@ -128,6 +128,24 @@ $().ready(function() {
     // ----------------------------------------------------------------------------------------------------------------
     // ---- DETECTION SI SOUVENIR DE MOI
     // ----------------------------------------------------------------------------------------------------------------
+    
+    $("input[type='checkbox']").change(function(){
+      if(document.querySelector('#se_souvenir').checked = true){
+        let str_utilisateur = {
+        email : document.getElementById("email").value,
+        pwd : document.getElementById("pwd").value
+        };
+
+        obj_utilisateur = JSON.stringify(str_utilisateur);
+        localStorage.setItem("UTILISATEUR",obj_utilisateur);
+        alert("check");
+      }
+      else{
+        obj_utilisateur = localStorage.clear();
+        alert("uncheck");
+      }
+    });
+    
 
     // ----------------------------------------------------------------------------------------------------------------
     // ---- VERIFICATION FORMULAIRE DE CONNEXION
