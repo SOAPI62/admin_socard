@@ -19,14 +19,14 @@ $select["MESSAGE_SQL"]      = '';
 // Leture des parametres en entrée
 // ----------------------------------------------------------------------
 
-$EMAIL  = $_GET['EMAIL'];
-$PWD    = $_GET['PWD'];
+$EMAIL  = $_POST['EMAIL'];
+$PWD    = $_POST['PWD'];
 
 // ----------------------------------------------------------------------
 // Vérification si les parametres sont renseignés
 // ----------------------------------------------------------------------
 
-if (!empty($_GET['EMAIL']) && !empty($_GET['PWD'])) {
+if (!empty($_POST['EMAIL']) && !empty($_POST['PWD'])) {
     
     // ----------------------------------------------------------------------
     // Préparation de la requêtes SQL
@@ -39,7 +39,7 @@ if (!empty($_GET['EMAIL']) && !empty($_GET['PWD'])) {
         $stmt->execute();
     } catch (PDOException $ex) {
         $select["CODE_RETOUR"] = 'ERREUR';
-        $select["MESSAGE_SQL"] = $ex->getMessage();
+        $select["MESSAGE_SQL"] = $ex->POSTMessage();
     } finally {
         if ($select["CODE_RETOUR"] != 'ERREUR') {
             if ($stmt->rowCount() > 0) {

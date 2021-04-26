@@ -33080,3 +33080,24 @@ a.text-muted:hover {
   text-align: center;
   margin-top: 5px;
 }
+
+
+/* form connexion */
+
+.input-group-append{
+  width: 41px;
+  height: 38px;
+}
+
+.input-group-erreur{
+  width: 80%;
+}
+
+.error{
+  color: red;
+  font-weight: none;
+}
+
+label:not(.form-check-label):not(.custom-file-label){
+  font-weight: normal;
+}
