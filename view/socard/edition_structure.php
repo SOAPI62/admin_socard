@@ -108,6 +108,41 @@
             </div>
             <!-- /.modal-dialog -->
          </div>
+
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- AJOUT D UN CONTACT ( RACCOURCI )                                                                         -->
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <div class="modal fade" id="structure_modale">
+            <div class="modal-dialog modal-xl">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Edition de la structure HTML</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+               
+                     <div class="form-group">
+                        
+                        <div class="form-group"  >
+                        
+                           <div id='nro_structure' style='display:none'></div>
+
+                           <label">Structure HTML</label>
+                           <textarea id="BLK_STRUCTURE_HTML" class="form-control" rows="2" placeholder="..." style="text-transform: uppercase"></textarea>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                     <button id="BTN_MODIF_STRUCTURE" type="button" class="btn btn-primary">Modifier</button>
+                  </div>
+               </div>
+               <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>
+
          <!-- /.modal -->
          <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
@@ -206,27 +241,27 @@
          	var $id_structure = data[1];
 
             $.ajax({
-                 type: "POST",
-                 url: "../../traitements/socard/structures/supp_structures.php",
-                 data: 'id_structure=' + $id_structure,
-                 dataType: 'json',
-                 success: function (data) 
-                 {
-                   switch (data.CODE_RETOUR) {
+                  type: "POST",
+                  url: "../../traitements/socard/structures/supp_structures.php",
+                  data: 'id_structure=' + $id_structure,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
                      case 'OK':
                         table.ajax.reload();
                      break;
                      case 'ANOMALIE':
-                       alert(data.MESSAGE_RETOUR);
+                        alert(data.MESSAGE_RETOUR);
                      break;  
                      case 'ERREUR':
-                      alert(data.MESSAGE_SQL);
+                        alert(data.MESSAGE_SQL);
                      break;                       
                      default:
-                       break;
-                   }
-                }
-        });
+                        break;
+                     }
+                  }
+            });
 
            });
 
@@ -235,7 +270,62 @@
           // -------------------------------------------------------------------------------------------------------
 
           $('#liste_structure tbody').on('click', '.edit-structure', function() {
-            alert('b');
+            var data = table.row($(this).parents('tr')).data();
+         	var $id_structure = data[1];
+
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/lecture_structure.php",
+                  data: 'id_structure=' + $id_structure,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        $('#nro_structure').html($id_structure);
+                        $('#BLK_STRUCTURE_HTML').val(data.STRUCTURE_HTML);
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+
+
+            $('#BTN_MODIF_STRUCTURE').click(function() {
+
+               $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/maj_structure.php",
+                  data: 'id_structure=' + $('#nro_structure').html() + '&structure_html=' + $('#BLK_STRUCTURE_HTML').val(),
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        $('#structure_modale').modal('toggle');
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+            });
+
+
+            $('#structure_modale').modal('toggle');
            });
 
           // -------------------------------------------------------------------------------------------------------

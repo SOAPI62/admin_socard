@@ -157,10 +157,8 @@
       <script src="../../dist/js/demo.js"></script>   
       <script>
          
-         
              // Summernote
              $('#summernote').summernote()
-          
          
          // ----------------------------------------------------------------------------------------------------------------
          // ---- CHARGEMENT DES IMAGES PROMOTIONS 
