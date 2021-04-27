@@ -56,7 +56,7 @@
       <div class="wrapper">
          <!-- Navbar top-->
          <?php
-            include '../navigation/nav-top.php';
+            include '../navigation/nav-top-dashboard.php';
             ?>
          <!-- /.navbar top-->
          <!-- Navbar utilisateur-->
