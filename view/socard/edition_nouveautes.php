@@ -58,7 +58,7 @@
             <div class="container-fluid">
                <div class="row mb-2">
                   <div class="col-sm-4  card-body">
-                     <h1 >Structure du bloc NOUVEAUTE</h1>
+                     <h1>Structure du bloc NOUVEAUTE</h1>
                   </div>
                </div>
             </div>
@@ -83,7 +83,7 @@
                            <!-- /.card-header -->
                            <div class="card-body ">
                               <textarea id="summernote" name="description" class="val">
-                              <strong>Placez votre texte ici</strong>
+                              <strong></strong>
                               </textarea>
                            </div>
                         </div>
@@ -155,12 +155,42 @@
       <script src="../../plugins/summernote/summernote-bs4.min.js"></script>
       <!-- AdminLTE for demo purposes -->
       <script src="../../dist/js/demo.js"></script>   
-      <script>
+      <script>    
+
+      $( document ).ready(function() {
          // ----------------------------------------------------------------------------------------------------------------
          // ---- DESIGN DESCRIPTION
          // ---------------------------------------------------------------------------------------------------------------- 
              
-              $('#summernote').summernote()
+  
+         $.ajax({
+               type: "POST",
+               url: "../../traitements/socard/structures/lire_nouveaute.php",
+               dataType: 'json',
+               success: function (data) 
+               {
+                  switch (data.CODE_RETOUR) {
+                  case 'OK':
+                     $('#titre').val(data.TITRE_NOUVEAUTE);
+                     $('#summernote').val(data.DESCRIPTION_NOUVEAUTE);
+                     $('#summernote').summernote();
+
+                     $('.image-upload-wrap').hide();
+                     $('.file-upload-image').attr('src', data.IMG_NOUVEAUTE);
+                     $('.file-upload-content').show();
+      
+                   break;
+                  case 'ANOMALIE':
+                     alert(data.MESSAGE_RETOUR);
+                  break;  
+                  case 'ERREUR':
+                     alert(data.MESSAGE_SQL);
+                  break;                       
+                  default:
+                     break;
+                  }
+               }
+            });
           
          // ----------------------------------------------------------------------------------------------------------------
          // ---- CHARGEMENT DE L IMAGE NOUVAUTE
@@ -239,7 +269,10 @@
                       }
                    }
                   });
+
             });
+      });
+
       </script>
    </body>
 </html>
