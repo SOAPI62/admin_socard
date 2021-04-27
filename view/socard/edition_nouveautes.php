@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin So Card | Structure PROMOTION</title>
-  <meta content="width=device-width, initial-scale=1" name="viewport">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Admin So Card | Structure PROMOTION</title>
+      <meta content="width=device-width, initial-scale=1" name="viewport">
       <meta content="Webflow" name="generator">
       <!-- Ionicons -->
       <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -23,209 +23,220 @@
       <!-- summernote -->
       <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
       <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.css">
-</head>
-<body class="hold-transition sidebar-mini">
-
-  <!-- Site wrapper -->
-  <div class="wrapper">
-    <!-- Navbar top-->
-    <?php
-      include '../navigation/nav-top.php';
-    ?>
-    <!-- /.navbar top-->
-    <!-- Navbar utilisateur-->
-    <?php
-      include '../navigation/nav-utilisateur.php';
-    ?> 
-    <!-- /.Navbar utilisateur -->
-    <!-- Navbar left-->
-    <?php
-      include '../navigation/nav-left.php';
-    ?>
-    <!-- /.Navbar left -->
-    
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-4  card-body">
-            <h1 >Structure du bloc NOUVEAUTE</h1>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <!-- Main content -->
-    <section class="content">
-    <div class="row " >
-        <div class="col-sm-6">
-          <!-- text input -->
-          <div class="form-group card-body">
-            <label class="margin">Titre :</label>
-            <input type="text"  id="inpt" class="form-control" placeholder="Votre titre">
-          </div>
-        </div>
-      <div class="col-sm-6">
-        <div class="form-group card-body">
-        <label class="margin">Description :</label>
-          <div class="card card-outline card-info">
-          
-            <!-- /.card-header -->
-            <div class="card-body ">
-              <textarea id="summernote" class="val">
-                <strong>Placez votre texte ici</strong>
-              </textarea>
+      <!-- Google Font: Source Sans Pro -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+      <!-- Theme style -->
+      <link rel="stylesheet" href="../../dist/css/adminlte.css">
+   </head>
+   <body class="hold-transition sidebar-mini">
+      <!-- Site wrapper -->
+      <div class="wrapper">
+         <!-- Navbar top-->
+         <?php
+            include '../navigation/nav-top.php';
+            ?>
+         <!-- /.navbar top-->
+         <!-- Navbar utilisateur-->
+         <?php
+            include '../navigation/nav-utilisateur.php';
+            ?> 
+         <!-- /.Navbar utilisateur -->
+         <!-- Navbar left-->
+         <?php
+            include '../navigation/nav-left.php';
+            ?>
+         <!-- /.Navbar left -->
+      </div>
+      <!-- /.sidebar -->
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+         <!-- Content Header (Page header) -->
+         <section class="content-header">
+            <div class="container-fluid">
+               <div class="row mb-2">
+                  <div class="col-sm-4  card-body">
+                     <h1 >Structure du bloc NOUVEAUTE</h1>
+                  </div>
+               </div>
             </div>
-          </div>
-        </div>
-        <!-- /.col-->
+            <!-- /.container-fluid -->
+         </section>
+         <!-- Main content -->
+         <!-- Main content -->
+         <section class="content">
+            <form id="form_nouveaute">
+               <div class="row" >
+                  <div class="col-sm-6">
+                     <!-- text input -->
+                     <div class="form-group card-body">
+                        <label class="margin">Titre :</label>
+                        <input type="text"  id="titre" name="titre" class="form-control" placeholder="Votre titre">
+                     </div>
+                  </div>
+                  <div class="col-sm-6">
+                     <div class="form-group card-body">
+                        <label class="margin">Description :</label>
+                        <div class="card card-outline card-info">
+                           <!-- /.card-header -->
+                           <div class="card-body ">
+                              <textarea id="summernote" name="description" class="val">
+                              <strong>Placez votre texte ici</strong>
+                              </textarea>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- /.col-->
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="form-group card-body">
+                     <div >
+                        <!-- text input -->
+                        <div class="">
+                           <label class="margin">Image :</label>
+                        </div>
+                     </div>
+                     <div >
+                        <div class="image-upload-wrap  ">
+                           <input class="file-upload-input" id="file" name="files" type='file' onchange="readURL(this);" accept="image/*" />
+                           <div class="drag-text">
+                              <h3>cliquez ou glissez un fichier</h3>
+                           </div>
+                        </div>
+                        <div class="file-upload-content">
+                           <img class="file-upload-image" src="#" alt="your image" />
+                           <div class="image-title-wrap">
+                              <button type="button" onclick="removeUpload()" class="remove-image">Supprimer <span class="image-title">Télécharger une image</span></button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- /.container-fluid -->
+               <div class="col-sm-6">
+                  <div class="form-group card-body">
+                     <button type="button" class="btn btn-primary" onclick="location.href='../socard/edition_structure.php'">Annuler</button>
+                     <button type="button"  id="btn_valider" class="btn btn-primary">Valider</button>
+                  </div>
+               </div>
+               <!-- ./row -->
+            </form>
+         </section>
+         <!-- /.content -->
       </div>
+      <!-- /.content-wrapper -->
+      <footer class="main-footer">
+         <div class="float-right d-none d-sm-block">
+            <b>Version</b> 3.1.0-rc
+         </div>
+         <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+      </footer>
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+         <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
       </div>
-      <div class="col-sm-6">
-      <div class="form-group card-body">
-      <div >
-        <!-- text input -->
-        <div class="">
-          <label class="margin">Image :</label>
-        </div>
-      </div>
-      <div >
-        <div class="image-upload-wrap  ">
-          <input class="file-upload-input" id="file" name="files" type='file' onchange="readURL(this);" accept="image/*" />
-          <div class="drag-text">
-            <h3>cliquez ou glissez un fichier</h3>
-          </div>
-        </div>
-        <div class="file-upload-content">
-          <img class="file-upload-image" src="#" alt="your image" />
-          <div class="image-title-wrap">
-            <button type="button" onclick="removeUpload()" class="remove-image">Supprimer <span class="image-title">Télécharger une image</span></button>
-          </div>
-        </div>
-      </div> 
-      </div>
-      </div>
-      <!-- /.container-fluid -->
-      <div class="col-sm-6">
-      <div class="form-group card-body">
-        <button type="button" class="btn btn-primary" onclick="location.href='../socard/edition_structure.php'">Annuler</button>
-        <button type="button"  id="btn" class="btn btn-primary">Valider</button>
-      </div>
-      </div>
-      <!-- ./row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.1.0-rc
-    </div>
-    <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Bootstrap Switch -->
-<script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- Summernote -->
-<script src="../../plugins/summernote/summernote-bs4.min.js"></script>
-
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>   
-
-<script>
-  $(function () {
-    // Summernote
-    $('#summernote').summernote()
-  })
-
-// ----------------------------------------------------------------------------------------------------------------
-// ---- CHARGEMENT DES IMAGES PROMOTIONS 
-// ----------------------------------------------------------------------------------------------------------------
-
-function readURL(input) {
-  if (input.files && input.files[0]) {
-
-    var reader = new FileReader();
-
-    reader.onload = function(e) {
-      $('.image-upload-wrap').hide();
-
-      $('.file-upload-image').attr('src', e.target.result);
-      $('.file-upload-content').show();
-
-      $('.image-title').html(input.files[0].name);
-    };
-
-    reader.readAsDataURL(input.files[0]);
-
-  } else {
-    removeUpload();
-  }
-}
-
-function removeUpload() {
-  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-  $('.file-upload-content').hide();
-  $('.image-upload-wrap').show();
-}
-$('.image-upload-wrap').bind('dragover', function () {
-		$('.image-upload-wrap').addClass('image-dropping');
-	});
-	$('.image-upload-wrap').bind('dragleave', function () {
-		$('.image-upload-wrap').removeClass('image-dropping');
-});
-
-// ----------------------------------------------------------------------------------------------------------------
-// ---- RECUPERATION VALEUR
-// ----------------------------------------------------------------------------------------------------------------
-
-$().ready(function() {
-
-  $("#btn").click(function(){
-    var str = $("#inpt").val();
-    var val = $.trim($(".val").val());
-      if (val != "") {
-          alert(val);
-      }
-    var file = $("#file").get(0).files;
-    alert(str);
-    alert(file);
+      <!-- ./wrapper -->
+      <!-- jQuery -->
+      <script src="../../plugins/jquery/jquery.min.js"></script>
+      <!-- Bootstrap 4 -->
+      <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Bootstrap Switch -->
+      <script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../../dist/js/adminlte.min.js"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="../../dist/js/demo.js"></script>
+      <!-- Summernote -->
+      <script src="../../plugins/summernote/summernote-bs4.min.js"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="../../dist/js/demo.js"></script>   
+      <script>
+         
+         
+             // Summernote
+             $('#summernote').summernote()
+          
+         
+         // ----------------------------------------------------------------------------------------------------------------
+         // ---- CHARGEMENT DES IMAGES PROMOTIONS 
+         // ----------------------------------------------------------------------------------------------------------------
+         
+         function readURL(input) {
+           if (input.files && input.files[0]) {
+         
+             var reader = new FileReader();
+         
+             reader.onload = function(e) {
+               $('.image-upload-wrap').hide();
+         
+               $('.file-upload-image').attr('src', e.target.result);
+               $('.file-upload-content').show();
+         
+               $('.image-title').html(input.files[0].name);
+             };
+         
+             reader.readAsDataURL(input.files[0]);
+         
+           } else {
+             removeUpload();
+           }
+         }
+         
+         function removeUpload() {
+           $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+           $('.file-upload-content').hide();
+           $('.image-upload-wrap').show();
+         }
+         
+         $('.image-upload-wrap').bind('dragover', function () {
+         		$('.image-upload-wrap').addClass('image-dropping');
+         	});
+         	$('.image-upload-wrap').bind('dragleave', function () {
+         		$('.image-upload-wrap').removeClass('image-dropping');
+         });
+         
+         // ----------------------------------------------------------------------------------------------------------------
+         // ---- XXXX
+         // ----------------------------------------------------------------------------------------------------------------
+         
+           $("#btn_valider").click(function(){
+             var str = $("#inpt").val();
+             var val = $.trim($(".val").val());
     
-  });
-
-});
-</script>
-</body>
+             var file = $("#file").get(0).files;
+             alert(file);
+         
+             $.ajax({
+                          type: "POST",
+                          url: "../../traitements/socard/structures/maj_nouveaute.php",
+                          data: $('#form_nouveaute').serialize(),
+                          dataType: 'json',
+                          success: function (data) 
+                          {
+                            switch (data.CODE_RETOUR) {
+                              case 'OK':
+                              break;
+                              case 'ANOMALIE':
+                                alert(data.MESSAGE_RETOUR);
+                              break;  
+                              case 'ERREUR':
+                               alert(data.MESSAGE_SQL);
+                              break;                       
+                              default:
+                                break;
+                            }
+                         }
+                 });
+         
+             
+           });
+         
+    
+      </script>
+   </body>
 </html>
