@@ -129,24 +129,26 @@ $().ready(function() {
     // ---- DETECTION SI SOUVENIR DE MOI
     // ----------------------------------------------------------------------------------------------------------------
     
-    $("input[type='checkbox']").change(function(){
-      if(document.querySelector('#se_souvenir').checked = true){
+    $("#se_souvenir").change(function()
+    {
+      var $checked = $("#se_souvenir").is(':checked')
+
+      if ( $checked == true)
+      {
         let str_utilisateur = {
-        email : document.getElementById("email").value,
-        pwd : document.getElementById("pwd").value
+            email : $('#email').val(),
+            pwd   : $('#pwd').val()
         };
 
         obj_utilisateur = JSON.stringify(str_utilisateur);
         localStorage.setItem("UTILISATEUR",obj_utilisateur);
-        alert("check");
-      }
-      else{
-        obj_utilisateur = localStorage.clear();
-        alert("uncheck");
-      }
+       }
+      else
+      {
+        localStorage.removeItem('UTILISATEUR');
+       }
     });
     
-
     // ----------------------------------------------------------------------------------------------------------------
     // ---- VERIFICATION FORMULAIRE DE CONNEXION
     // ----------------------------------------------------------------------------------------------------------------
