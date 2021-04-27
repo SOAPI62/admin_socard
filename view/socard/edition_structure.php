@@ -64,7 +64,7 @@
             <div class="card-body p-0">
             <button type="button" class="btn btn-primary">Ajouterw</button>
             <button type="button" class="btn btn-primary">Visualisation</button>
-               <button type="button" class="btn btn-primary">Générer</button>
+            <button type="button" class="btn btn-primary">Générer</button>
             </div>
          </section>
          <!-- Main content -->

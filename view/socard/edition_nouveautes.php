@@ -71,21 +71,22 @@
     <!-- Main content -->
     <!-- Main content -->
     <section class="content">
-        <div class="col-sm-4">
+    <div class="row " >
+        <div class="col-sm-6">
           <!-- text input -->
           <div class="form-group card-body">
-            <label class="margin">Titre du bloc :</label>
-            <input type="text" class="form-control" placeholder="Votre titre">
+            <label class="margin">Titre :</label>
+            <input type="text"  id="inpt" class="form-control" placeholder="Votre titre">
           </div>
         </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="form-group card-body">
-        <label class="margin">Texte du bloc :</label>
+        <label class="margin">Description :</label>
           <div class="card card-outline card-info">
           
             <!-- /.card-header -->
             <div class="card-body ">
-              <textarea id="summernote">
+              <textarea id="summernote" class="val">
                 <strong>Placez votre texte ici</strong>
               </textarea>
             </div>
@@ -93,15 +94,18 @@
         </div>
         <!-- /.col-->
       </div>
-      <div class="col-sm-4">
-          <!-- text input -->
-          <div class="form-group card-body">
-            <label class="margin">Image nouveauté du bloc :</label>
-          </div>
+      </div>
+      <div class="col-sm-6">
+      <div class="form-group card-body">
+      <div >
+        <!-- text input -->
+        <div class="">
+          <label class="margin">Image :</label>
         </div>
-      <div class=" col-sm-4" >
-        <div class="image-upload-wrap form-group card-body">
-          <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+      </div>
+      <div >
+        <div class="image-upload-wrap  ">
+          <input class="file-upload-input" id="file" name="files" type='file' onchange="readURL(this);" accept="image/*" />
           <div class="drag-text">
             <h3>cliquez ou glissez un fichier</h3>
           </div>
@@ -113,6 +117,15 @@
           </div>
         </div>
       </div> 
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+      <div class="col-sm-6">
+      <div class="form-group card-body">
+        <button type="button" class="btn btn-primary" onclick="location.href='../socard/edition_structure.php'">Annuler</button>
+        <button type="button"  id="btn" class="btn btn-primary">Valider</button>
+      </div>
+      </div>
       <!-- ./row -->
     </section>
     <!-- /.content -->
@@ -192,6 +205,26 @@ $('.image-upload-wrap').bind('dragover', function () {
 	});
 	$('.image-upload-wrap').bind('dragleave', function () {
 		$('.image-upload-wrap').removeClass('image-dropping');
+});
+
+// ----------------------------------------------------------------------------------------------------------------
+// ---- RECUPERATION VALEUR
+// ----------------------------------------------------------------------------------------------------------------
+
+$().ready(function() {
+
+  $("#btn").click(function(){
+    var str = $("#inpt").val();
+    var val = $.trim($(".val").val());
+      if (val != "") {
+          alert(val);
+      }
+    var file = $("#file").get(0).files;
+    alert(str);
+    alert(file);
+    
+  });
+
 });
 </script>
 </body>
