@@ -67,7 +67,7 @@
          <!-- Main content -->
          <!-- Main content -->
          <section class="content">
-            <form id="form_nouveaute" enctype="multipart/form-data">
+            <form id="form_nouveaute">
                <div class="row" >
                   <div class="col-sm-6">
                      <!-- text input -->
@@ -156,90 +156,90 @@
       <!-- AdminLTE for demo purposes -->
       <script src="../../dist/js/demo.js"></script>   
       <script>
+         
+        // ----------------------------------------------------------------------------------------------------------------
+        // ---- DESIGN DESCRIPTION
+        // ---------------------------------------------------------------------------------------------------------------- 
+             // Summernote
+             $('#summernote').summernote()
+         
+        // ----------------------------------------------------------------------------------------------------------------
+        // ---- CHARGEMENT DES IMAGES PROMOTIONS 
+        // ----------------------------------------------------------------------------------------------------------------
+         
+         function readURL(input) {
+           if (input.files && input.files[0]) {
+         
+             var reader = new FileReader();
+         
+             reader.onload = function(e) {
+               $('.image-upload-wrap').hide();
+         
+               $('.file-upload-image').attr('src', e.target.result);
+               $('.file-upload-content').show();
+         
+               $('.image-title').html(input.files[0].name);
+             };
+         
+             reader.readAsDataURL(input.files[0]);
+         
+           } else {
+             removeUpload();
+           }
+         }
+         
+         function removeUpload() {
+           $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+           $('.file-upload-content').hide();
+           $('.image-upload-wrap').show();
+         }
+         
+         $('.image-upload-wrap').bind('dragover', function () {
+         		$('.image-upload-wrap').addClass('image-dropping');
+         	});
+         	$('.image-upload-wrap').bind('dragleave', function () {
+         		$('.image-upload-wrap').removeClass('image-dropping');
+         });
+         
          // ----------------------------------------------------------------------------------------------------------------
-         // ---- DESIGN DESCRIPTION
-         // ---------------------------------------------------------------------------------------------------------------- 
+         // ---- XXXX
+         // ----------------------------------------------------------------------------------------------------------------
+         
+           $("#btn_valider").click(function(){
+             var str = $("#inpt").val();
+             var val = $.trim($(".val").val());
+             var props=$('#file').prop('files');
+            file=props[0];
+            alert(file.name);
+         
+             $.ajax({
+                          type: "POST",
+                          url: "../../traitements/socard/structures/maj_nouveaute.php",
+                          data: $('#form_nouveaute').serialize(),
+                          dataType: 'json',
+                          success: function (data) 
+                          {
+                            switch (data.CODE_RETOUR) {
+                              case 'OK':
+                              break;
+                              case 'ANOMALIE':
+                                alert(data.MESSAGE_RETOUR);
+                              break;  
+                              case 'ERREUR':
+                               alert(data.MESSAGE_SQL);
+                              break;                       
+                              default:
+                                break;
+                            }
+                         }
+                 });
+         
              
-              $('#summernote').summernote()
-          
-         // ----------------------------------------------------------------------------------------------------------------
-         // ---- CHARGEMENT DE L IMAGE NOUVAUTE
-         // ----------------------------------------------------------------------------------------------------------------
-          
-          function readURL(input) {
-            if (input.files && input.files[0]) {
-          
-              var reader = new FileReader();
-          
-              reader.onload = function(e) {
-                $('.image-upload-wrap').hide();
-          
-                $('.file-upload-image').attr('src', e.target.result);
-                $('.file-upload-content').show();
-          
-                $('.image-title').html(input.files[0].name);
-              };
-          
-              reader.readAsDataURL(input.files[0]);
-          
-            } else {
-              removeUpload();
-            }
-          }
-          
-          function removeUpload() {
-            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-            $('.file-upload-content').hide();
-            $('.image-upload-wrap').show();
-          }
-          
-          $('.image-upload-wrap').bind('dragover', function () {
-          		$('.image-upload-wrap').addClass('image-dropping');
-          	});
-          	$('.image-upload-wrap').bind('dragleave', function () {
-          		$('.image-upload-wrap').removeClass('image-dropping');
-          });
-          
-          // ----------------------------------------------------------------------------------------------------------------
-          // ---- VALIDATION DU FORMULAIRE
-          // ----------------------------------------------------------------------------------------------------------------
-          
-            $("#btn_valider").click(function(){
+           });
          
-             $img = $('.file-upload-image').attr('src');
-         
-             var formData = new FormData();
-             
-             formData.append('titre', $('#titre').val());
-             formData.append('description', $('#summernote').val());
-             formData.append('file', $img);
-         
-              $.ajax({
-                   type: "POST",
-                   url: "../../traitements/socard/structures/maj_nouveaute.php",
-                   data: formData,
-                   cache: false,
-                   contentType: false,
-                   processData: false,
-                   dataType: 'json',
-                   success: function (data) 
-                   {
-                      switch (data.CODE_RETOUR) {
-                      case 'OK':
-                         location.href='../socard/edition_structure.php';
-                      break;
-                      case 'ANOMALIE':
-                         alert(data.MESSAGE_RETOUR);
-                      break;  
-                      case 'ERREUR':
-                         alert(data.MESSAGE_SQL);
-                      break;                       
-                      default:
-                         break;
-                      }
-                   }
-                  });
-            });
+           var path = (window.URL || window.webkitURL).createObjectURL(file);
+    console.log('path', path);
+    
       </script>
    </body>
 </html>
