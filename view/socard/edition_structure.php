@@ -228,7 +228,9 @@
 
            $('#liste_structure tbody').on('click', '.edit-donnees', function() {
              var data = table.row($(this).parents('tr')).data();
-         	  var $nom_module = "edition_" + data[3].toLowerCase() + '.php';
+             var  $id_structure = data[1];
+
+         	  var $nom_module = "edition_" + data[3].toLowerCase() + '.php?id_structure=' + $id_structure;
               location.href = $nom_module;
            });
 
@@ -321,9 +323,8 @@
                         break;
                      }
                   }
+                });
             });
-            });
-
 
             $('#structure_modale').modal('toggle');
            });
