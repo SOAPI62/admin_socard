@@ -20,43 +20,30 @@ $select["MESSAGE_SQL"]      = '';
 // Leture des parametres en entrée
 // ----------------------------------------------------------------------
 
-$email  = $_POST['email'];
-$pwd    = $_POST['pwd'];
+$titre          = $_POST['titre'];
+$description    = $_POST['description'];
+$file           = $_POST['file'];
 
 // ----------------------------------------------------------------------
 // Vérification si les parametres sont renseignés
 // ----------------------------------------------------------------------
 
-if (!empty($_POST['email']) && !empty($_POST['pwd'])) {
+if (!empty($_POST['titre']) && !empty($_POST['description']) && !empty($_POST['file'])) {
     
     // ----------------------------------------------------------------------
     // Préparation de la requêtes SQL
     // ----------------------------------------------------------------------
 
-    $query = "SELECT `ID_UTILISATEUR` FROM `SOCARD_UTILISATEUR` WHERE `EMAIL`='$email' AND `PWD`='$pwd'";
+    $query = "INSERT INTO `SOCARD_NOUVEAUTE`(`TITRE_NOUVEAUTE`, `DESCRIPTION_NOUVEAUTE`, `IMG_NOUVEAUTE`) VALUES ('$titre','$description','$file')";
 
     try {
         $stmt = $dbh->prepare($query);
         $stmt->execute();
+        $select["CODE_RETOUR"]      = 'OK';
     } catch (PDOException $e) {
         $select["CODE_RETOUR"] = 'ERREUR';
         $select["MESSAGE_SQL"] = 'ERREUR DE TRAITEMENT : ' . $query;
-    } finally {
-        if ($select["CODE_RETOUR"] != 'ERREUR') {
-            if ($stmt->rowCount() > 0) {
-                $select["CODE_RETOUR"] = 'OK';
-
-                // Création de la session utilisateur
-
-                $_SESSION['EMAIL_UTILISATEUR'] = $email;
-                $_SESSION['PWD_UTILISATEUR']   = sha1($pwd);
-                
-            } else {
-                $select["CODE_RETOUR"] = 'ANOMALIE';
-                $select["MESSAGE_RETOUR"] = 'L utilisateur n existe pas !';
-            }
-        }
-    }
+    } 
 } else {
     $select["CODE_RETOUR"] = 'ANOMALIE';
     $select["MESSAGE_RETOUR"] = 'Les données du formulaires sont erronnées !';
