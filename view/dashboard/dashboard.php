@@ -57,175 +57,203 @@
          <!-- Navbar top-->
          <?php
             include '../navigation/nav-top.php';
-         ?>
+            ?>
          <!-- /.navbar top-->
          <!-- Navbar utilisateur-->
          <?php
             include '../navigation/nav-utilisateur.php';
-         ?> 
+            ?> 
          <!-- /.Navbar utilisateur-->
          <!-- Navbar left-->
          <?php
             include '../navigation/nav-left.php';
-         ?>
+            ?>
          <!-- /.Navbar left -->
-            </div>
-            <!-- /.sidebar -->
-         </aside>
-         
-         <!-- Content Wrapper. Contains page content -->
-         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-               <div class="container-fluid">
-                  <div class="row mb-2">
-                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
-                     </div>
-                     <!-- /.col -->
+      </div>
+      <!-- /.sidebar -->
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+         <!-- Content Header (Page header) -->
+         <div class="content-header">
+            <div class="container-fluid">
+               <div class="row mb-2">
+                  <div class="col-sm-6">
+                     <h1 class="m-0">Dashboard</h1>
                   </div>
-                  <!-- /.row -->
+                  <!-- /.col -->
                </div>
-               <!-- /.container-fluid -->
+               <!-- /.row -->
             </div>
-            <!-- /.content-header -->
-            <!-- Main content -->
-            <section class="content">
-               <div class="container-fluid">
-                  <!-- Small boxes (Stat box) -->
-                  <div class="row">
-                     <div class="col-lg-6 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                           <div class="inner">
-                              <h3 id="INSCRITS">0</h3>
-                              <p>Inscrit(s)</p>
-                           </div>
-                           <div class="icon">
-                              <i class="ion ion-bag"></i>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- ./col -->
-                     <div class="col-lg-6 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-success">
-                           <div class="inner">
-                              <h3 id="PARRAINAGES">0</h3>
-                              <p>Parainage(s)</p>
-                           </div>
-                           <div class="icon">
-                              <i class="ion ion-stats-bars"></i>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- ./col -->
-                     <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                           <div class="inner">
-                              <h3 id='IOS_INSCRITS'>0</h3>
-                              <p>IOS</p>
-                           </div>
-                           <div class="icon">
-                              <i class="ion ion-person-add"></i>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- ./col -->
-                     <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                           <div class="inner">
-                              <h3 id='IOS_INSTALLES'>0</h3>
-                              <p>IOS Installé(s)</p>
-                           </div>
-                           <div class="icon">
-                              <i class="ion ion-pie-graph"></i>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                           <div class="inner">
-                              <h3 id='ANDROID_INSCRITS'>0</h3>
-                              <p>Android</p>
-                           </div>
-                           <div class="icon">
-                              <i class="ion ion-pie-graph"></i>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                           <div class="inner">
-                              <h3 id='ANDROID_INSTALLES'>0</h3>
-                              <p>Android Installé(s)</p>
-                           </div>
-                           <div class="icon">
-                              <i class="ion ion-pie-graph"></i>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- ./col -->
-                  </div>
-                  <!-- /.row -->
-                  <!-- /.row (main row) -->
-
-                  <div class="card">
-              <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                  <h3 class="card-title">Evolution du nombre d'inscrits</h3>
-                 </div>
-              </div>
-              <div class="card-body">
-                <div class="d-flex">
-                  <p class="d-flex flex-column">
-                    <span class="text-bold text-lg">32</span>
-                    <span>Nombre d inscrits</span>
-                  </p>
-                  <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i id="pourcentage_inscriptions" class="fas fa-arrow-up"></i> 
-                    </span>
-                    <span class="text-muted">Évolution M-1</span>
-                  </p>
-                </div>
-                <!-- /.d-flex -->
-
-                <div class="position-relative mb-4">
-                  <canvas id="visitors-chart" height="200"></canvas>
-                </div>
-<!--
-                <div class="d-flex flex-row justify-content-end">
-                  <span class="mr-2">
-                    <i class="fas fa-square text-primary"></i> This Week
-                  </span>
-
-                  <span>
-                    <i class="fas fa-square text-gray"></i> Last Week
-                  </span>
-                </div>
-                -->
-              </div>
-            </div>
-
-               </div>
-               <!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
+            <!-- /.container-fluid -->
          </div>
-         <!-- /.content-wrapper -->
-         <footer class="main-footer">
-            www.so-api.com
-         </footer>
-         <!-- Control Sidebar -->
-         <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-         </aside>
-         <!-- /.control-sidebar -->
+         <!-- /.content-header -->
+         <!-- Main content -->
+         <section class="content">
+            <div class="container-fluid">
+               <!-- Small boxes (Stat box) -->
+               <div class="row">
+                  <div class="col-lg-6 col-6">
+                     <!-- small box -->
+                     <div class="small-box bg-info">
+                        <div class="inner">
+                           <h3 id="INSCRITS">0</h3>
+                           <p>Inscrit(s)</p>
+                        </div>
+                        <div class="icon">
+                           <i class="ion ion-bag"></i>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-6 col-6">
+                     <!-- small box -->
+                     <div class="small-box bg-success">
+                        <div class="inner">
+                           <h3 id="PARRAINAGES">0</h3>
+                           <p>Parainage(s)</p>
+                        </div>
+                        <div class="icon">
+                           <i class="ion ion-stats-bars"></i>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-6">
+                     <!-- small box -->
+                     <div class="small-box bg-warning">
+                        <div class="inner">
+                           <h3 id='IOS_INSCRITS'>0</h3>
+                           <p>IOS</p>
+                        </div>
+                        <div class="icon">
+                           <i class="ion ion-person-add"></i>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-6">
+                     <!-- small box -->
+                     <div class="small-box bg-warning">
+                        <div class="inner">
+                           <h3 id='IOS_INSTALLES'>0</h3>
+                           <p>IOS Installé(s)</p>
+                        </div>
+                        <div class="icon">
+                           <i class="ion ion-pie-graph"></i>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-6">
+                     <!-- small box -->
+                     <div class="small-box bg-danger">
+                        <div class="inner">
+                           <h3 id='ANDROID_INSCRITS'>0</h3>
+                           <p>Android</p>
+                        </div>
+                        <div class="icon">
+                           <i class="ion ion-pie-graph"></i>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-6">
+                     <!-- small box -->
+                     <div class="small-box bg-danger">
+                        <div class="inner">
+                           <h3 id='ANDROID_INSTALLES'>0</h3>
+                           <p>Android Installé(s)</p>
+                        </div>
+                        <div class="icon">
+                           <i class="ion ion-pie-graph"></i>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- ./col -->
+               </div>
+               <!-- /.row -->
+               <!-- /.row (main row) -->
+               <div class="card">
+                  <div class="card-header border-0">
+                     <div class="d-flex justify-content-between">
+                        <h3 class="card-title">Evolution du nombre d'inscrits</h3>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <div class="d-flex">
+                    
+                        <p class="ml-auto d-flex flex-column text-right">
+                           <span class="text-success">
+                           <i id="pourcentage_inscriptions" class="fas fa-arrow-up"></i> 
+                           </span>
+                           <span class="text-muted">Évolution M-1</span>
+                        </p>
+                     </div>
+                     <!-- /.d-flex -->
+                     <div class="position-relative mb-4">
+                        <canvas id="visitors-chart" height="200"></canvas>
+                     </div>
+                     <!--
+                        <div class="d-flex flex-row justify-content-end">
+                          <span class="mr-2">
+                            <i class="fas fa-square text-primary"></i> This Week
+                          </span>
+                        
+                          <span>
+                            <i class="fas fa-square text-gray"></i> Last Week
+                          </span>
+                        </div>
+                        -->
+                  </div>
+               </div>
+
+               <div class="card">
+                  <div class="card-header border-0">
+                     <div class="d-flex justify-content-between">
+                        <h3 class="card-title">Evolution du nombre de connexions</h3>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <div class="d-flex">
+                     
+                        <p class="ml-auto d-flex flex-column text-right">
+                           <span class="text-success">
+                           <i id="pourcentage_connexions" class="fas fa-arrow-up"></i> 
+                           </span>
+                           <span class="text-muted">Évolution M-1</span>
+                        </p>
+                     </div>
+                     <!-- /.d-flex -->
+                     <div class="position-relative mb-4">
+                        <canvas id="visitors-chart-2" height="200"></canvas>
+                     </div>
+                     <!--
+                        <div class="d-flex flex-row justify-content-end">
+                          <span class="mr-2">
+                            <i class="fas fa-square text-primary"></i> This Week
+                          </span>
+                        
+                          <span>
+                            <i class="fas fa-square text-gray"></i> Last Week
+                          </span>
+                        </div>
+                        -->
+                  </div>
+               </div>
+
+            </div>
+            <!-- /.container-fluid -->
+         </section>
+         <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <footer class="main-footer">
+         www.so-api.com
+      </footer>
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+         <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
       </div>
       <!-- ./wrapper -->
       <!-- jQuery -->
@@ -264,7 +292,6 @@
       <script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
       <script src="../../dist/js/pages/dashboard.js"></script>
       <script>
-
          // --------------------------------------------------------------------------------------------------
          // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
          // --------------------------------------------------------------------------------------------------
@@ -276,111 +303,23 @@
          success: function(data) {
                      switch (data.REPONSE) {
                            case 'OK':
-
+         
                               var $max                    = data.MAX_INSCRIPTIONS;
                               $('#pourcentage_inscriptions').html(data.EVOLUTION_INSCRIPTIONS+'%');
-
+         
                               var ticksStyle = {
                                  fontColor: '#495057',
                                  fontStyle: 'bold'
                               }
-
+         
                               var mode = 'index'
                               var intersect = true
-
+         
                               var $salesChart = $('#sales-chart')
-
+         
                               var $mois = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']
                               var $nb_inscrit = data.INSCRIPTIONS;
-
-                              var $visitorsChart = $('#visitors-chart')
-                              // eslint-disable-next-line no-unused-vars
-                              var visitorsChart = new Chart($visitorsChart, {
-                                 data: {
-                                 labels: $mois,
-                                 datasets: [{
-                                    type: 'line',
-                                    data: $nb_inscrit,
-                                    backgroundColor: 'transparent',
-                                    borderColor: '#007bff',
-                                    pointBorderColor: '#007bff',
-                                    pointBackgroundColor: '#007bff',
-                                    fill: false
-                                    // pointHoverBackgroundColor: '#007bff',
-                                    // pointHoverBorderColor    : '#007bff'
-                                 }]
-                                 },
-                                 options: {
-                                 maintainAspectRatio: false,
-                                 tooltips: {
-                                    mode: mode,
-                                    intersect: intersect
-                                 },
-                                 hover: {
-                                    mode: mode,
-                                    intersect: intersect
-                                 },
-                                 legend: {
-                                    display: false
-                                 },
-                                 scales: {
-                                    yAxes: [{
-                                       // display: false,
-                                       gridLines: {
-                                       display: true,
-                                       lineWidth: '4px',
-                                       color: 'rgba(0, 0, 0, .2)',
-                                       zeroLineColor: 'transparent'
-                                       },
-                                       ticks: $.extend({
-                                       beginAtZero: true,
-                                       suggestedMax: $max
-                                       }, ticksStyle)
-                                    }],
-                                    xAxes: [{
-                                       display: true,
-                                       gridLines: {
-                                       display: false
-                                       },
-                                       ticks: ticksStyle
-                                    }]
-                                 }
-                                 }
-                              })
-                           break;
-                case 'KO':
-                    break;
-                default:
-                  break;
-            }
-          }
-         });
-
-
-         $.ajax({
-         url: '../../traitements/dashboard/evolution_inscriptions.php',
-         dataType: 'json',
-         async: false,
-         success: function(data) {
-                     switch (data.REPONSE) {
-                           case 'OK':
-
-                              var $max                    = data.MAX_INSCRIPTIONS;
-                              $('#pourcentage_inscriptions').html(data.EVOLUTION_INSCRIPTIONS+'%');
-
-                              var ticksStyle = {
-                                 fontColor: '#495057',
-                                 fontStyle: 'bold'
-                              }
-
-                              var mode = 'index'
-                              var intersect = true
-
-                              var $salesChart = $('#sales-chart')
-
-                              var $mois = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']
-                              var $nb_inscrit = data.INSCRIPTIONS;
-
+         
                               var $visitorsChart = $('#visitors-chart')
                               // eslint-disable-next-line no-unused-vars
                               var visitorsChart = new Chart($visitorsChart, {
@@ -444,12 +383,100 @@
           }
          });
          
-       
-
+         
+         $.ajax({
+         url: '../../traitements/dashboard/evolution_journal.php',
+         dataType: 'json',
+         async: false,
+         success: function(data) {
+                     switch (data.REPONSE) {
+                           case 'OK':
+         
+                              var $max                    = data.MAX_CONNEXIONS;
+                              $('#pourcentage_connexions').html(data.EVOLUTION_CONNEXIONS+'%');
+         
+                              var ticksStyle = {
+                                 fontColor: '#495057',
+                                 fontStyle: 'bold'
+                              }
+         
+                              var mode = 'index'
+                              var intersect = true
+         
+                              var $salesChart = $('#sales-chart')
+         
+                              var $mois = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']
+                              var $nb_inscrit = data.CONNEXIONS;
+         
+                              var $visitorsChart = $('#visitors-chart-2')
+                              // eslint-disable-next-line no-unused-vars
+                              var visitorsChart = new Chart($visitorsChart, {
+                                 data: {
+                                 labels: $mois,
+                                 datasets: [{
+                                    type: 'line',
+                                    data: $nb_inscrit,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#007bff',
+                                    pointBorderColor: '#007bff',
+                                    pointBackgroundColor: '#007bff',
+                                    fill: false
+                                    // pointHoverBackgroundColor: '#007bff',
+                                    // pointHoverBorderColor    : '#007bff'
+                                 }]
+                                 },
+                                 options: {
+                                 maintainAspectRatio: false,
+                                 tooltips: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 hover: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 legend: {
+                                    display: false
+                                 },
+                                 scales: {
+                                    yAxes: [{
+                                       // display: false,
+                                       gridLines: {
+                                       display: true,
+                                       lineWidth: '4px',
+                                       color: 'rgba(0, 0, 0, .2)',
+                                       zeroLineColor: 'transparent'
+                                       },
+                                       ticks: $.extend({
+                                       beginAtZero: true,
+                                       suggestedMax: $max
+                                       }, ticksStyle)
+                                    }],
+                                    xAxes: [{
+                                       display: true,
+                                       gridLines: {
+                                       display: false
+                                       },
+                                       ticks: ticksStyle
+                                    }]
+                                 }
+                                 }
+                              })
+                           break;
+                case 'KO':
+                    break;
+                default:
+                  break;
+            }
+          }
+         });
+         
+         
+         
          // --------------------------------------------------------------------------------------------------
          // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
          // --------------------------------------------------------------------------------------------------
-
+         
          $.ajax({
          url: '../../traitements/dashboard/dashboard.php',
          dataType: 'json',
@@ -475,7 +502,7 @@
          // --------------------------------------------------------------------------------------------------
          // DETECTION CHANGEMENT DU TYPE DE CONTACT
          // --------------------------------------------------------------------------------------------------
-
+         
          $( "#CONTACT_PAR" ).change(function() {
          
           switch ($('#CONTACT_PAR').val()) {
@@ -497,7 +524,7 @@
          // --------------------------------------------------------------------------------------------------
          // PROCEDURE : AJOUT D UN CONTACT
          // --------------------------------------------------------------------------------------------------
-
+         
          $('#AJOUT_CONTACT').click(function() {
          
             var $ajout_ORI_CLIENT = $('#CONTACT_PAR').val();
@@ -518,7 +545,7 @@
             var $ajout_COMMENTAIRE_CLIENT = $('#BLK_ZONE_REMARQUES').val();
          
             message_anomalie = "";
-
+         
             switch ($('#CONTACT_PAR').val()) {
               case 'TEL':
               if ($ajout_POR_CLIENT.trim() == "")
@@ -542,7 +569,7 @@
               case 'MSG':
               break;
           }
-
+         
           if (message_anomalie != '')
           {
             toastr.warning(message_anomalie);
@@ -583,12 +610,12 @@
                     }
                 }
             });
-
+         
              // ENVOIE DE LA SOCARD SI CONTACT PAR TELEPHONE UNIQUEMENT !
-
+         
             var remember = document.getElementById('ENVOI_SOCARD');
             $type_contact = $('#CONTACT_PAR').val();
-
+         
             if ((remember.checked == 1) && ($type_contact == 'TEL'))
             {
               $.ajax({
@@ -616,26 +643,26 @@
          // --------------------------------------------------------------------------------------------------
          // INITIALISATION DES CHAMPS DE LA MODALE "CONTACT" SI CLICK SUR LE BOUTON RACCOURCI
          // --------------------------------------------------------------------------------------------------
-
+         
          $('#BTN_AJOUT_CONTACT').click(function() {
             $('#BLK_TEL').show();
             $('#BLK_MAIL').hide();
             $('#BLK_ZONE_REMARQUES').hide();
-
+         
             $('#NRO_TEL').val('');
             $('#EMAIL').val('');
             $('#NOM_CONTACT').val('');
             $('#PRENOM_CONTACT').val('');
             $('#TYPE_CONTACT').val('NC');
             $('#BLK_ZONE_REMARQUES').val('');
-
+         
             $('#ajout_contact_modale').modal('toggle');
          });
-
+         
          // --------------------------------------------------------------------------------------------------
          // GESTION DES CLICK SUR LA MODALE "CONTACT" POUR OPTIMISER L AFFICHAGE
          // --------------------------------------------------------------------------------------------------
-
+         
          $('#BLK_TYPE_CONTACT').click(function() {
           $('#BLK_ZONE_TYPE_CONTACT').toggle();
          });
@@ -655,12 +682,12 @@
          $('#BLK_CONTACT_PAR').click(function() {
            $('#BLK_ZONE_CONTACT_PAR').toggle();
          })
-
+         
          // --------------------------------------------------------------------------------------------------
          // FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
          // --------------------------------------------------------------------------------------------------
-
-        function checkEmail(email) {
+         
+         function checkEmail(email) {
              var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
              return re.test(email);
          }

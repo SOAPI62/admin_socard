@@ -12,7 +12,7 @@ $select["MESS_ERR"] = '';
 $select["CODE_SQL"] = '';
 
 // Préparation de la requêtes SQL
-$sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `date_creation`= `DATE_PER`  GROUP BY `MOIS_PER`";
+$sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER`  GROUP BY `MOIS_PER`";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 
@@ -22,8 +22,8 @@ $max  = 0;
 $mois_encours   = $today = date("m"); 
 $mois_precedent = $mois_encours -1;
 
-$nb_inscrit_m   = 0;
-$nb_inscrit_m_1 = 0;
+$nb_connexions_m   = 0;
+$nb_connexions_m_1 = 0;
 
 while ($row = $req->fetch())
 {
@@ -36,18 +36,22 @@ while ($row = $req->fetch())
 
     if ( $mois_encours == $row[0] )
     {
-        $nb_inscrit_m = $row[1];
+        $nb_connexions_m = $row[1];
     }
 
-    if ( ($mois_precedent + 1) == $row[0] )
+    if ( ($row[0] + 1) ==  $mois_encours)
     {
-        $nb_inscrit_m_1 = $row[1];
+        $nb_connexions_m_1 = $row[1];
     }
+
 
 }
-$select["INSCRIPTIONS"] = $mois;
-$select["MAX_INSCRIPTIONS"] = $max;
-$select["EVOLUTION_INSCRIPTIONS"] =  ((float)$nb_inscrit_m - (float)$nb_inscrit_m_1) / (float)$nb_inscrit_m_1 * 100;
+
+$select["CONNEXIONS"] = $mois;
+$select["MAX_CONNEXIONS"] = $max;
+$select["EVOLUTION_CONNEXIONS"] = ((float)$nb_connexions_m - (float)$nb_connexions_m_1) / (float)$nb_connexions_m_1 * 100;
+$select["nb_connexions_m_1"] = $nb_connexions_m_1;
+$select["nb_connexions_m"] = $nb_connexions_m;
 
 echo json_encode($select);
 exit(0);
