@@ -471,8 +471,6 @@
           }
          });
          
-         
-         
          // --------------------------------------------------------------------------------------------------
          // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
          // --------------------------------------------------------------------------------------------------
@@ -600,7 +598,7 @@
                     switch (data.REPONSE) {
                         case 'OK':
                             toastr.success('Ajout du Contact !')
-                            $('#ajout_contact_modale').modal('toggle');
+                            $('#structure_modale').modal('toggle');
                             break;
                         case 'KO':
                             toastr.warning(data.MESS_ERR);
