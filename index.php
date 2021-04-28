@@ -120,9 +120,11 @@ $().ready(function() {
     obj_utilisateur = localStorage.getItem("UTILISATEUR");
     str_utilisateur = JSON.parse(obj_utilisateur);
 
+ 
     if (obj_utilisateur){
-      $('#email').val(obj_utilisateur.email);
-      $('#pwd').val(obj_utilisateur.pwd);
+      $('#email').val(str_utilisateur.email);
+      $('#pwd').val(str_utilisateur.pwd);
+      $('#se_souvenir').attr("checked",true);
     }
 
     // ----------------------------------------------------------------------------------------------------------------

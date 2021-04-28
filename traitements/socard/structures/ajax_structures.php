@@ -46,7 +46,8 @@ if( !empty($requestData['search']['value']) )
 }
 else 
 {   
-
+    $query = "SELECT `ID_STRUCTURE`, `POS_STRUCTURE`, `NOM_STRUCTURE`, `ACTIF_STRUCTURE` FROM `SOCARD_STRUCTURE`";
+    
     if ($columns[$requestData['order'][0]['column']] != 'Action')
     {
         $query.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length']."   "; 
@@ -56,7 +57,7 @@ else
         $query.=" LIMIT ".$requestData['start']." ,".$requestData['length']."   "; 
     }
 
-    $query = "SELECT `ID_STRUCTURE`, `POS_STRUCTURE`, `NOM_STRUCTURE`, `ACTIF_STRUCTURE` FROM `SOCARD_STRUCTURE`";
+    
     $stmt = $dbh->prepare($query);
     $stmt->execute();  
 

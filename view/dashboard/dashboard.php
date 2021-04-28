@@ -679,8 +679,23 @@
          
          $('#BLK_CONTACT_PAR').click(function() {
            $('#BLK_ZONE_CONTACT_PAR').toggle();
-         })
-         
+         })    
+               
+         // --------------------------------------------------------------------------------------------------
+         // FONCTION : DECONNEXION
+         // --------------------------------------------------------------------------------------------------
+
+         $('#BTN_DECONNEXION').click(function() {
+            $.ajax({
+               url: '../../traitements/connexion_bdd/deconnexion.php',
+                dataType: 'text',
+                async: false,
+                success: function(data) {
+                  document.location = '../../index.php';
+                }
+               });  
+         });
+
          // --------------------------------------------------------------------------------------------------
          // FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
          // --------------------------------------------------------------------------------------------------

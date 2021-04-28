@@ -64,7 +64,7 @@
             <div class="card-body p-0">
             <button type="button" class="btn btn-primary">Ajouterw</button>
             <button type="button" class="btn btn-primary">Visualisation</button>
-            <button type="button" class="btn btn-primary">Générer</button>
+            <button id='BTN_GENERER' type="button" class="btn btn-primary">Générer</button>
             </div>
          </section>
          <!-- Main content -->
@@ -344,6 +344,35 @@
           $('#liste_structure tbody').on('click', '.edit-pos-bas', function() {
             alert('d');
            });
+
+           $('#BTN_GENERER').click(function() {
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/generer_socard.php",
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     alert(data.CODE_RETOUR);
+
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        alert(data.SOCARD);
+                        break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+                });
+            });
+
+           
+
 
       </script>
    </body>
