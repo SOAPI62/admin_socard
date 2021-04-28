@@ -57,7 +57,7 @@
          <section class="content-header">
             <div class="container-fluid">
                <div class="row mb-2">
-                  <div class="col-sm-4  card-body">
+                  <div class="card-body">
                      <h1 >Structure du bloc PROMOTION</h1>
                   </div>
                </div>
@@ -79,7 +79,7 @@
                      <div class="form-group card-body">
                         <label class="margin">Bouton :</label>
                         <input type="checkbox" name="my-checkbox"  value="other" >
-                        <input type="text" id="bouton" name="bouton" id="otherValue" class="form-control" placeholder="URL du bouton">
+                        <input type="text" id="bouton" name="bouton" value="otherValue" class="form-control" placeholder="URL du bouton">
                      </div>
                   </div>
                </div>
@@ -216,7 +216,7 @@
          // ----------------------------------------------------------------------------------------------------------------
          
          var otherCheckbox           = document.querySelector('input[value="other"]');
-         var otherText               = document.querySelector('input[id="otherValue"]');
+         var otherText               = document.querySelector('input[value="otherValue"]');
          otherText.style.visibility  = 'hidden';
          
          otherCheckbox.onchange = function() {

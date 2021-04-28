@@ -57,7 +57,7 @@
          <section class="content-header">
             <div class="container-fluid">
                <div class="row mb-2">
-                  <div class="col-sm-4  card-body">
+                  <div class="card-body">
                      <h1>Structure du bloc NOUVEAUTE</h1>
                   </div>
                </div>
