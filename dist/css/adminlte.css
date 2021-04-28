@@ -931,11 +931,7 @@ pre code {
     flex: 0 0 41.666667%;
     max-width: 41.666667%;
   }
-  .col-sm-6 {
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
+  
   .col-sm-7 {
     -ms-flex: 0 0 58.333333%;
     flex: 0 0 58.333333%;
@@ -33100,4 +33096,18 @@ a.text-muted:hover {
 
 label:not(.form-check-label):not(.custom-file-label){
   font-weight: normal;
+}
+
+
+
+
+@media (max-width: 1400px) {
+  .row{
+    display: flow-root;
+  }
+  .col-sm-6{
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
 }
