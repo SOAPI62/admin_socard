@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Admin So Card| Structure</title>
+      <meta content="width=device-width, initial-scale=1" name="viewport">
+      <meta content="Webflow" name="generator">
+      <!-- Google Font: Source Sans Pro -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+      <!-- Ionicons -->
+      <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+      <!-- Tempusdominus Bootstrap 4 -->
+      <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+      <!-- iCheck -->
+      <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+      <!-- JQVMap -->
+      <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
+      <!-- Theme style -->
+      <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+      <!-- overlayScrollbars -->
+      <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+      <!-- Daterange picker -->
+      <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+      <!-- summernote -->
+      <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+      <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+   </head>
+   <body class="hold-transition sidebar-mini layout-fixed">
+      <!-- Site wrapper -->
+      <div class="wrapper">
+         <!-- Navbar top -->
+         <?php
+            include '../navigation/nav-top.php';
+            ?>
+         <!-- /.navbar top -->
+         <!-- Navbar utilisateur -->
+         <?php
+            include '../navigation/nav-utilisateur.php';
+            ?>   
+         <!-- /.Navbar utilisateur -->
+         <!-- Navbar left -->
+         <?php
+            include '../navigation/nav-left.php';
+            ?>
+         <!-- /.Navbar left -->
+      </div>
+      <!-- /.sidebar -->
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+         <!-- Content Header (Page header) -->
+         <section class="content-header">
+            <div class="container-fluid">
+               <div class="row mb-2">
+                  <div class="col-sm-6">
+                     <h1>Liste des messages</h1>
+                  </div>
+               </div>
+            </div>
+            <!-- /.container-fluid -->
+            <div class="card-body p-0">
+            <button id="BTN_AJOUTER" type="button" class="btn btn-primary">Ajouter</button>
+            </div>
+         </section>
+         <!-- Main content -->
+         <section class="content">
+            <div class="page-content">
+               <!-- Panel Table Add Row -->
+               <!-- Default box -->
+               <table id="liste_messages" style="width:100%" class="cell-border order-column hover">
+                  <thead>
+                     <tr>
+                        <th>Action</th>
+                        <th>Id</th>
+                        <th>Messages</th>
+                        <th>Statut</th>
+                     </tr>
+                  </thead>
+               </table>
+         </section>
+         <!-- /.content -->
+         </div>
+         <!-- /.content-wrapper -->
+         <div class="modal fade" id="modal-danger">
+            <div class="modal-dialog">
+               <div class="modal-content bg-danger">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Suppression du bloc xxx</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                     <p>Voulez vous supprimer le bloc xxx ?</p>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                     <button type="button" class="btn btn-outline-light" data-dismiss="modal">Annuler</button>
+                     <button type="button" class="btn btn-outline-light">Valider</button>
+                  </div>
+               </div>
+               <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>
+
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- AJOUT D UN CONTACT ( RACCOURCI )                                                                         -->
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <div class="modal fade" id="structure_modale">
+            <div class="modal-dialog modal-xl">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Edition de la structure HTML</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+               
+                     <div class="form-group">
+                        
+                        <div class="form-group"  >
+                        
+                           <div id='nro_structure' style='display:none'></div>
+
+                           <label">Structure HTML</label>
+                           <textarea id="BLK_STRUCTURE_HTML" class="form-control" rows="2" placeholder="..." style="text-transform: uppercase"></textarea>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                     <button id="BTN_MODIF_STRUCTURE" type="button" class="btn btn-primary">Modifier</button>
+                  </div>
+               </div>
+               <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>
+
+         <!-- /.modal -->
+         <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+               <b>Version</b> 3.1.0-rc
+            </div>
+            <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+         </footer>
+         <!-- Control Sidebar -->
+         <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+         </aside>
+         <!-- /.control-sidebar -->
+      </div>
+      <!-- ./wrapper -->
+      <!-- jQuery -->
+      <script src="../../plugins/jquery/jquery.min.js"></script>
+      <!-- Bootstrap 4 -->
+      <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../../dist/js/adminlte.min.js"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="../../dist/js/demo.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+      <script>
+
+          // -------------------------------------------------------------------------------------------------------
+          // ---- TRAITEMENT : DATATABLE DONNEES STRUCTURES
+          // -------------------------------------------------------------------------------------------------------
+
+         var table = $('#liste_messages').DataTable({
+         		dom: '<"top"Bf><"liste"l>rt<p>',
+         		buttons: [
+         		'excel', 'pdf', 'print'
+         		],
+         		"language": {
+         			"lengthMenu": "Afficher : _MENU_",
+         			"oPaginate": {
+         				"sNext": ">",
+         				"sPrevious": "<"
+         			}
+         		},
+         		"lengthMenu": [
+         		[10, 25, 50, 9999],
+         		[10, 25, 50, "Tout"]
+         		],
+         		"responsive": true,
+         		"processing": true,
+         		"serverSide": true,
+         		"ajax": {
+         			"url": "../../traitements/contact/ajax_messages.php",
+         			"data": function() {}
+         		},
+             columnDefs: [
+               { "width": "10%", "targets": 0 },
+               {
+         			"targets": [1],
+         			"visible": false,
+         			"searchable": false
+         		},
+                 {
+         			"targets": [3],
+         			"visible": false,
+         			"searchable": false
+         		},
+         		{
+         			targets: 0,
+         			data: "null",
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-donnees'>Editer</button> <button type='button' class='btn btn-default edit-supp'>Suppr.</button></div>"
+         		}
+         		] 
+         	});
+         
+          // -------------------------------------------------------------------------------------------------------
+          // ---- TRAITEMENT : DONNEES DUNE STRUCTURE
+          // -------------------------------------------------------------------------------------------------------
+
+           $('#liste_structure tbody').on('click', '.edit-donnees', function() {
+             var data = table.row($(this).parents('tr')).data();
+             var  $id_structure = data[1];
+
+         	  var $nom_module = "edition_" + data[3].toLowerCase() + '.php?id_structure=' + $id_structure;
+              location.href = $nom_module;
+           });
+
+          // -------------------------------------------------------------------------------------------------------
+          // ---- TRAITEMENT : SUPPRESSION D UNE STRUCTURE
+          // -------------------------------------------------------------------------------------------------------
+
+          $('#liste_structure tbody').on('click', '.edit-supp', function() {
+            var data = table.row($(this).parents('tr')).data();
+         	var $id_structure = data[1];
+
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/supp_structures.php",
+                  data: 'id_structure=' + $id_structure,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        table.ajax.reload();
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+
+           });
+
+          // -------------------------------------------------------------------------------------------------------
+          // ---- TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
+          // -------------------------------------------------------------------------------------------------------
+
+          $('#liste_structure tbody').on('click', '.edit-structure', function() {
+            var data = table.row($(this).parents('tr')).data();
+         	var $id_structure = data[1];
+
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/lecture_structure.php",
+                  data: 'id_structure=' + $id_structure,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        $('#nro_structure').html($id_structure);
+                        $('#BLK_STRUCTURE_HTML').val(data.STRUCTURE_HTML);
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+
+
+            $('#BTN_MODIF_STRUCTURE').click(function() {
+
+               $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/maj_structure.php",
+                  data: 'id_structure=' + $('#nro_structure').html() + '&structure_html=' + $('#BLK_STRUCTURE_HTML').val(),
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        $('#structure_modale').modal('toggle');
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+                });
+            });
+
+            $('#structure_modale').modal('toggle');
+           });
+      </script>
+   </body>
+</html>
