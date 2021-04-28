@@ -37,14 +37,7 @@
                <label>Envoyer la SOCARD</label>
                <input type="checkbox" id="ENVOI_SOCARD" checked >
                <div id="BLK_ZONE_SOCARD">
-                  <select id="SOCARD" class="form-control select2" style="width: 100%;">
-                     <option value="01" selected="selected">Je ne suis pas disponibile ...</option>
-                     <option value="02">Vous avez essayé de me joindre ...</option>
-                     <option value="03">Suite à notre conversation ...</option>
-                     <option value="04">Je vous communique ma carte ...</option>
-                     <option value="05">Suite à votre passage à l agence ...</option>
-                     <option value="06">Suite à votre commande ...</option>
-                  </select>
+ 
                </div>
             </div>
             <div class="form-group">

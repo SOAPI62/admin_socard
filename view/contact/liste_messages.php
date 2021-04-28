@@ -49,7 +49,11 @@
       </div>
       <!-- /.sidebar -->
       </aside>
-      <!-- Content Wrapper. Contains page content -->
+
+    <!-- -------------------------------------------------------------------------------------------------------- -->
+    <!-- LISTE DES MESSAGES                                                                                       -->
+    <!-- -------------------------------------------------------------------------------------------------------- -->
+
       <div class="content-wrapper">
          <!-- Content Header (Page header) -->
          <section class="content-header">
@@ -62,7 +66,7 @@
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0">
-            <button id="BTN_AJOUTER" type="button" class="btn btn-primary">Ajouter</button>
+            <button id="BTN_AJOUT_MESSAGE" type="button" class="btn btn-primary">Ajouter</button>
             </div>
          </section>
          <!-- Main content -->
@@ -83,22 +87,32 @@
          </section>
          <!-- /.content -->
          </div>
-         <!-- /.content-wrapper -->
-         <div class="modal fade" id="modal-danger">
-            <div class="modal-dialog">
-               <div class="modal-content bg-danger">
+
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- NOUVEAU  MESSAGE                                                                                         -->
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         
+         <div class="modal fade" id="nouveau_message_modale">
+            <div class="modal-dialog modal-xl">
+               <div class="modal-content">
                   <div class="modal-header">
-                     <h4 class="modal-title">Suppression du bloc xxx</h4>
+                     <h4 class="modal-title">Nouveau message</h4>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
                   <div class="modal-body">
-                     <p>Voulez vous supprimer le bloc xxx ?</p>
+                     <div class="form-group">
+                            <label">Message court</label>
+                           <textarea id="AJOUT_MSG_COURT" class="form-control" rows="2" placeholder="..." ></textarea>
+                           </br>
+                           <label">Message long</label>
+                           <textarea id="AJOUT_MSG_LONG" class="form-control" rows="2" placeholder="..." ></textarea>
+
+                      </div>
                   </div>
                   <div class="modal-footer justify-content-between">
-                     <button type="button" class="btn btn-outline-light" data-dismiss="modal">Annuler</button>
-                     <button type="button" class="btn btn-outline-light">Valider</button>
+                     <button id="BTN_NOUVEAU_MESSAGE" type="button" class="btn btn-primary">Ajouter</button>
                   </div>
                </div>
                <!-- /.modal-content -->
@@ -107,32 +121,31 @@
          </div>
 
          <!-- -------------------------------------------------------------------------------------------------------- -->
-         <!-- AJOUT D UN CONTACT ( RACCOURCI )                                                                         -->
+         <!-- EDITION D UN MESSAGE                                                                                     -->
          <!-- -------------------------------------------------------------------------------------------------------- -->
-         <div class="modal fade" id="structure_modale">
+
+         <div class="modal fade" id="edition_message_modale">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h4 class="modal-title">Edition de la structure HTML</h4>
+                     <h4 class="modal-title">Edition d un message</h4>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
                   <div class="modal-body">
-               
                      <div class="form-group">
-                        
-                        <div class="form-group"  >
-                        
-                           <div id='nro_structure' style='display:none'></div>
+                            <div id='ID_MESSAGE' style='display:none'></div>
+                           <label">Message court</label>
+                           <textarea id="MSG_COURT" class="form-control" rows="2" placeholder="..." ></textarea>
+                           </br>
+                           <label">Message long</label>
+                           <textarea id="MSG_LONG" class="form-control" rows="2" placeholder="..." ></textarea>
 
-                           <label">Structure HTML</label>
-                           <textarea id="BLK_STRUCTURE_HTML" class="form-control" rows="2" placeholder="..." style="text-transform: uppercase"></textarea>
-                        </div>
-                     </div>
+                      </div>
                   </div>
                   <div class="modal-footer justify-content-between">
-                     <button id="BTN_MODIF_STRUCTURE" type="button" class="btn btn-primary">Modifier</button>
+                     <button id="BTN_MODIF_MESSAGE" type="button" class="btn btn-primary">Modifier</button>
                   </div>
                </div>
                <!-- /.modal-content -->
@@ -208,35 +221,66 @@
          		{
          			targets: 0,
          			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-donnees'>Editer</button> <button type='button' class='btn btn-default edit-supp'>Suppr.</button></div>"
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-message'>Editer</button> <button type='button' class='btn btn-default edit-supp'>Suppr.</button></div>"
          		}
-         		] 
+         		],
+               "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                     if (aData[3] == "0") {
+                         $('td', nRow).css('background-color', '#8B0000');
+                         $('td', nRow).css('color', 'White');
+                     }
+                 } 
          	});
          
           // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : DONNEES DUNE STRUCTURE
+          // ---- TRAITEMENT : EDITION D UN MESSAGE
           // -------------------------------------------------------------------------------------------------------
 
-           $('#liste_structure tbody').on('click', '.edit-donnees', function() {
+           $('#liste_messages tbody').on('click', '.edit-message', function() {
              var data = table.row($(this).parents('tr')).data();
-             var  $id_structure = data[1];
+             var  $id_message= data[1];
 
-         	  var $nom_module = "edition_" + data[3].toLowerCase() + '.php?id_structure=' + $id_structure;
-              location.href = $nom_module;
+             $.ajax({
+                  type: "POST",
+                  url: "../../traitements/contact/lecture_message.php",
+                  data: 'id_message=' + $id_message,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                            $('#ID_MESSAGE').val(data.ID_MSG);
+                            $('#MSG_COURT').val(data.DESC_COURT_MSG);
+                            $('#MSG_LONG').val(data.DESC_LONG_MSG);
+                            
+                            $('#edition_message_modale').modal('toggle');
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+
            });
 
           // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : SUPPRESSION D UNE STRUCTURE
+          // ---- TRAITEMENT : SUPPRESSION D UN MESSAGE
           // -------------------------------------------------------------------------------------------------------
 
-          $('#liste_structure tbody').on('click', '.edit-supp', function() {
+          $('#liste_messages tbody').on('click', '.edit-supp', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_structure = data[1];
+         	var $id_message = data[1];
 
             $.ajax({
                   type: "POST",
-                  url: "../../traitements/socard/structures/supp_structures.php",
-                  data: 'id_structure=' + $id_structure,
+                  url: "../../traitements/contact/suppression_message.php",
+                  data: 'id_message=' + $id_message,
                   dataType: 'json',
                   success: function (data) 
                   {
@@ -277,6 +321,9 @@
                      case 'OK':
                         $('#nro_structure').html($id_structure);
                         $('#BLK_STRUCTURE_HTML').val(data.STRUCTURE_HTML);
+
+                        $('#edition_message_modale').modal('toggle');
+
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
@@ -290,19 +337,84 @@
                   }
             });
 
+        });
 
-            $('#BTN_MODIF_STRUCTURE').click(function() {
+          // -------------------------------------------------------------------------------------------------------
+          // ---- TRAITEMENT : AJOUT D UN MESSAGE
+          // -------------------------------------------------------------------------------------------------------
 
-               $.ajax({
+          $('#BTN_AJOUT_MESSAGE').click(function() {   
+             $('#AJOUT_MSG_COURT').val('');
+             $('#AJOUT_MSG_LONG').val('');        
+             $('#nouveau_message_modale').modal('toggle');
+          });
+
+          // -------------------------------------------------------------------------------------------------------
+          // ---- TRAITEMENT : VALIDATION D UN NOUVEAU MESSAGE
+          // -------------------------------------------------------------------------------------------------------
+
+          $('#BTN_NOUVEAU_MESSAGE').click(function() {           
+             $('#nouveau_message_modale').modal('toggle');
+
+             var formData = new FormData();
+
+             formData.append('msg_court', $('#AJOUT_MSG_COURT').val());
+             formData.append('msg_long', $('#AJOUT_MSG_LONG').val());
+
+             $.ajax({
                   type: "POST",
-                  url: "../../traitements/socard/structures/maj_structure.php",
-                  data: 'id_structure=' + $('#nro_structure').html() + '&structure_html=' + $('#BLK_STRUCTURE_HTML').val(),
+                  url: "../../traitements/contact/ajout_message.php",
+                  data: formData,
+                  cache: false,
+                   contentType: false,
+                   processData: false,
                   dataType: 'json',
                   success: function (data) 
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                        $('#structure_modale').modal('toggle');
+                        $('#nouveau_message_modale').modal('toggle');
+                        table.ajax.reload();
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+                });
+          });
+
+          // -------------------------------------------------------------------------------------------------------
+          // ---- TRAITEMENT : EVALIDATION DE L EDITION D UN MESSAGE
+          // -------------------------------------------------------------------------------------------------------
+
+            $('#BTN_MODIF_MESSAGE').click(function() {
+
+                var formData = new FormData();
+
+                formData.append('id_message', $('#ID_MESSAGE').val());
+                formData.append('msg_court', $('#MSG_COURT').val());
+                formData.append('msg_long', $('#MSG_LONG').val());
+
+               $.ajax({
+                  type: "POST",
+                  url: "../../traitements/contact/modification_message.php",
+                  data: formData,
+                  cache: false,
+                   contentType: false,
+                   processData: false,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        $('#edition_message_modale').modal('toggle');
+                        table.ajax.reload();
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
@@ -317,8 +429,7 @@
                 });
             });
 
-            $('#structure_modale').modal('toggle');
-           });
+          
       </script>
    </body>
 </html>

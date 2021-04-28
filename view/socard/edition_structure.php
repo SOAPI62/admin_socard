@@ -352,8 +352,6 @@
                   dataType: 'json',
                   success: function (data) 
                   {
-                     alert(data.CODE_RETOUR);
-
                      switch (data.CODE_RETOUR) {
                      case 'OK':
                         alert(data.SOCARD);
