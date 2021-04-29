@@ -192,7 +192,7 @@
                      <div class="position-relative mb-4">
                         <canvas id="visitors-chart" height="200"></canvas>
                      </div>
-                     <!--
+                        <!--
                         <div class="d-flex flex-row justify-content-end">
                           <span class="mr-2">
                             <i class="fas fa-square text-primary"></i> This Week
@@ -695,21 +695,14 @@
          $('#BLK_CONTACT_PAR').click(function() {
            $('#BLK_ZONE_CONTACT_PAR').toggle();
          })    
-               
+
          // --------------------------------------------------------------------------------------------------
          // FONCTION : DECONNEXION
          // --------------------------------------------------------------------------------------------------
-
-         $('#BTN_DECONNEXION').click(function() {
-            $.ajax({
-               url: '../../traitements/connexion_bdd/deconnexion.php',
-                dataType: 'text',
-                async: false,
-                success: function(data) {
-                  document.location = '../../index.php';
-                }
-               });  
-         });
+               
+         <?php
+            include '../fonction/_deconnexion.php';
+         ?>
       
          // ---------------`-----------------------------------------------------------------------------------
          // FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL

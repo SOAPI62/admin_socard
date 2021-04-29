@@ -119,7 +119,7 @@
                <div class="form-group card-body">
                   <label class="margin">Avis :</label>
                   <input type="checkbox" name="my-checkbox"  value="other" >
-                  <input type="text" id="avis" name="avis" id="otherValue" class="form-control" placeholder="URL du bouton">
+                  <input type="text" id="avis" name="avis" value="otherValue" class="form-control" placeholder="URL du bouton">
                </div>
             </div>
             </div>
@@ -128,12 +128,9 @@
          <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-      <footer class="main-footer">
-         <div class="float-right d-none d-sm-block">
-            <b>Version</b> 3.1.0-rc
-         </div>
-         <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-      </footer>
+      <?php
+         include '../navigation/footer.php';
+      ?>
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
          <!-- Control sidebar content goes here -->
@@ -198,13 +195,22 @@
          $('.image-upload-wrap').bind('dragleave', function () {
          $('.image-upload-wrap').removeClass('image-dropping');
          });
+
+         // --------------------------------------------------------------------------------------------------
+         // FONCTION : DECONNEXION
+         // --------------------------------------------------------------------------------------------------
+               
+         <?php
+            include '../fonction/_deconnexion.php';
+         ?>
+
          
          // ----------------------------------------------------------------------------------------------------------------
          // ---- DETECTION SI AFFICHAGE URL DE LA PGE PROMOTION 
          // ----------------------------------------------------------------------------------------------------------------
          
          var otherCheckbox           = document.querySelector('input[value="other"]');
-         var otherText               = document.querySelector('input[id="otherValue"]');
+         var otherText               = document.querySelector('input[value="otherValue"]');
          otherText.style.visibility  = 'hidden';
          
          otherCheckbox.onchange = function() {
@@ -215,6 +221,8 @@
            otherText.style.visibility = 'hidden';
          }
          };
+
+         
 
 
          
