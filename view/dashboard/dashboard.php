@@ -590,7 +590,7 @@
           else
           {
             $.ajax({
-                url: '../../../_creagcom/base/AJAX/clients/prospect_ajout.php',
+                url: '../../../../_creagcom/base/AJAX/clients/prospect_ajout.php',
                 data: 'ajout_ORI_CLIENT=' + $ajout_ORI_CLIENT +
                     '&ajout_TYP_CLIENT=' + $ajout_TYP_CLIENT +
                     '&ajout_CIV1_CLIENT=' + $ajout_CIV1_CLIENT +
@@ -632,7 +632,7 @@
             if ((remember.checked == 1) && ($type_contact == 'TEL'))
             {
               $.ajax({
-                url: '../../../_creagcom/base/AJAX/socard/envoi_sms_socard.php',
+                url: '../../traitements/contact/envoi_sms_socard.php',
                 data: 'nro_tel=' + $ajout_POR_CLIENT + '&type_message=' + $('#SOCARD').val(),
                 dataType: 'json',
                 async: false,

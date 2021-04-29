@@ -1,7 +1,11 @@
 <?php
 session_start();
 
-//print_r($_SESSION);
+// ----------------------------------------------------------------------
+// Connexion à la base de données
+// ----------------------------------------------------------------------
+
+include '../connexion_bdd/conn.php';
 
 // Récupération des variables URL
 $nro_tel      = $_GET['nro_tel'];
@@ -26,28 +30,21 @@ $select["NRO_CONTRAT"]  = '';
 
 $message ='';
 
-switch ($type_message) {
-        case '01':
-        $message = "Bonjour, je ne suis pas disponible pour le moment. Je vous communique ma carte de visite digitale pour rester en contact : https://urlr.me/FxNZP" ;
-        break;
-        case '02':
-        $message = "Bonjour, vous avez essayé de me joindre. Je vous communique ma carte de visite digitale pour rester en contact : https://urlr.me/FxNZP" ;
-        break;
-        case '03':
-        $message = "Bonjour, suite à notre conversation tél, e vous communique ma carte de visite digitale pour rester en contact : https://urlr.me/FxNZP" ;
-        break;
-        case '04':
-        $message = "Bonjour, je vous communique ma carte de visite digitale pour rester en contact : https://urlr.me/FxNZP" ;
-        break;
-        case '05':
-        $message = "Bonjour, suite à votre passage à l agence, e vous communique ma carte de visite digitale pour rester en contact : https://urlr.me/FxNZP" ;
-        break;
-        case '06':
-        $message = "Bonjour, suite à votre commande, je vous communique ma carte de visite digitale pour rester en contact : https://urlr.me/FxNZP" ;
-        break;
-        default:
-        break;
-}
+$query = "SELECT `ID_MSG`, `DESC_COURT_MSG`, `DESC_MSG`, `ACTIF_MSG` FROM `SOCARD_MESSAGES` WHERE `ID_MSG`='$type_message'";
+
+try {
+        $stmt = $dbh->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch();
+    } catch (PDOException $e) {
+        $select["CODE_RETOUR"] = 'ERREUR';
+        $select["MESSAGE_SQL"] = 'ERREUR DE TRAITEMENT : ' . $query;
+    } finally {
+        if ($select["CODE_RETOUR"] != 'ERREUR') {
+            $select["CODE_RETOUR"]      = 'OK';
+        $message                        =  $row[2];                          
+        }
+    }
 
 if ($message != '')
 {
