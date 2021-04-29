@@ -1,7 +1,7 @@
 <?php
 
 // Connexion à la base de données
-include '../../inc/conn.php';
+include '../../connexion_bdd/conn.php';
 
 // Récupération des variables URL
 $id_socard           = $_GET['id_socard'];

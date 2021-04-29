@@ -21,21 +21,15 @@
                         </a>
                         <ul class="nav nav-treeview">
                           <li class="nav-item">
-                            <a href="#" class="nav-link">
+                          <a href="../contact/liste_contacts.php" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Liste</p>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Ajout</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
                             <a href="../contact/liste_messages.php" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Messages</p>
+                            <p>Messages SMS</p>
                             </a>
                           </li>
                         </ul>
