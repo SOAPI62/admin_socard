@@ -19,7 +19,7 @@
       <!-- JQVMap -->
       <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
       <!-- Theme style -->
-      <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+      <link rel="stylesheet" href="../../dist/css/adminlte.css">
       <!-- overlayScrollbars -->
       <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
       <!-- Daterange picker -->
@@ -60,7 +60,7 @@
             <div class="container-fluid">
                <div class="row mb-2">
                   <div class="col-sm-6">
-                     <h1>Liste des contacts</h1>
+                     <h1 class="h1-responsive">Liste des contacts</h1>
                   </div>
                </div>
             </div>
@@ -355,7 +355,7 @@
          		{
          			targets: 0,
          			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'>Editer</button> <button type='button' class='btn btn-default edit-supp'>Suppr.</button></div>"
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button></div>"
          		},
                {
          			"targets": [1],

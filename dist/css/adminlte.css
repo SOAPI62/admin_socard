@@ -33111,3 +33111,32 @@ label:not(.form-check-label):not(.custom-file-label){
     max-width: 100%;
 }
 }
+
+
+
+@media (max-width: 500px) {
+  .h1-responsive{
+    text-align: center;
+  }
+  #BTN_AJOUT_CONTACT{
+    display: block;
+    margin : auto;
+  }
+  #BTN_AJOUT_MESSAGE{
+    display: block;
+    margin : auto;
+  }
+  .BLOCK-BTN{
+    text-align: center;
+  }
+  .top{
+    float: left;
+    margin-left: 5px;
+    
+  }
+  .liste{
+    float: left;
+    margin-left: 10px;
+    margin-top: 8px;
+  }
+}

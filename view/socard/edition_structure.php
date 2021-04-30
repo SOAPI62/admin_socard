@@ -19,7 +19,7 @@
       <!-- JQVMap -->
       <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
       <!-- Theme style -->
-      <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+      <link rel="stylesheet" href="../../dist/css/adminlte.css">
       <!-- overlayScrollbars -->
       <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
       <!-- Daterange picker -->
@@ -56,12 +56,12 @@
             <div class="container-fluid">
                <div class="row mb-2">
                   <div class="col-sm-6">
-                     <h1>Structure de la So Card</h1>
+                     <h1 class="h1-responsive" >Structure de la So Card</h1>
                   </div>
                </div>
             </div>
             <!-- /.container-fluid -->
-            <div class="card-body p-0">
+            <div class="card-body p-0 BLOCK-BTN">
             <button type="button" class="btn btn-primary">Ajouterw</button>
             <button type="button" class="btn btn-primary">Visualisation</button>
             <button id='BTN_GENERER' type="button" class="btn btn-primary">Générer</button>
@@ -208,7 +208,7 @@
          		{
          			targets: 0,
          			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-donnees'>Données</button> <button type='button' class='btn btn-default edit-supp'>Suppr.</button><button type='button' class='btn btn-default edit-structure'>Structure</button><button type='button' class='btn btn-default edit-pos-haut'>+</button><button type='button' class='btn btn-default edit-pos-bas'>-</button></div>"
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-donnees'><i class='fas fa-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-structure'><i class='fas fa-puzzle-piece'></i></button><button type='button' class='btn btn-default edit-pos-haut'>+</button><button type='button' class='btn btn-default edit-pos-bas'>-</button></div>"
          		}
          		],
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {

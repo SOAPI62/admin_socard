@@ -4,7 +4,7 @@
 // ! Connexion à la base de données
 // !----------------------------------------------------------------------
 
-include '../connexion_bdd/conn_crm.php';
+include '../connexion_bdd/conn.php';
 
 // !----------------------------------------------------------------------
 // ! Initialisation des variables de sortie de la procédure
@@ -33,7 +33,7 @@ if (!empty($_POST['id_contact'])) {
 
     $query = "SELECT `CD_CLIENT`, `ACTIF_Client`, `SUPPORT_COM` FROM `CLIENTS` WHERE `CD_CLIENT`='$id_contact'";
  
-    $stmt = $dbh_crm->prepare($query);
+    $stmt = $dbh->prepare($query);
     $stmt->execute();
     $result = $stmt->fetch();
 
@@ -45,7 +45,7 @@ if (!empty($_POST['id_contact'])) {
 
     $query = "UPDATE `CLIENTS` SET  `ACTIF_Client`= '$etat' WHERE `CD_CLIENT`='$id_contact'";
 
-    $stmt = $dbh_crm->prepare($query);
+    $stmt = $dbh->prepare($query);
     $stmt->execute();
 
     $select["CODE_RETOUR"]      = 'OK';
