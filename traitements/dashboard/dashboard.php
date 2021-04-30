@@ -12,31 +12,31 @@ $select["MESS_ERR"] = '';
 $select["CODE_SQL"] = '';
 
 // Préparation de la requêtes SQL
-$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='ios' and `app_install`=0";
+$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='ios' and `app_install`=0 and `date_creation` <>'0000-00-00'";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 $row = $req->fetch();
 $select["IOS_INSCRITS"] = $row[0];
 
-$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='ios' and `app_install`=1";
+$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='ios' and `app_install`=1 and `date_creation` <>'0000-00-00'";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 $row = $req->fetch();
 $select["IOS_INSTALLES"] = $row[0];
 
-$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='android'";
+$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='android' and `date_creation` <>'0000-00-00'";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 $row = $req->fetch();
 $select["ANDROID_INSCRITS"] = $row[0];
 
-$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='android' and `app_install`=1";
+$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `agent`='android' and `app_install`=1 and `date_creation` <>'0000-00-00'";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 $row = $req->fetch();
 $select["ANDROID_INSTALLES"] = $row[0];
 
-$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `id_origine`<>'/' ";
+$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `id_origine`<>'/' and `date_creation` <>'0000-00-00'x";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 $row = $req->fetch();

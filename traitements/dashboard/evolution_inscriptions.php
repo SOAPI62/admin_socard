@@ -8,11 +8,11 @@ include '../connexion_bdd/conn.php';
 $select = array();
 $select["REPONSE"] = 'OK';
 $select["CODE_ERR"] = 0;
-$select["MESS_ERR"] = '';
+$select["MESS_ERR"] = '';   
 $select["CODE_SQL"] = '';
 
 // Préparation de la requêtes SQL
-$sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `date_creation`= `DATE_PER`  GROUP BY `MOIS_PER`";
+$sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `MOIS_PER`";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 
