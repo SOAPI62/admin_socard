@@ -36,7 +36,7 @@ $req->execute($tab);
 $row = $req->fetch();
 $select["ANDROID_INSTALLES"] = $row[0];
 
-$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `id_origine`<>'/' and `date_creation` <>'0000-00-00'x";
+$sql = "SELECT count(*) FROM `SOCARD_INSTAL` WHERE `id_origine`<>'/' and `date_creation` <>'0000-00-00'";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 $row = $req->fetch();

@@ -101,7 +101,7 @@
                            <p>Inscrit(s)</p>
                         </div>
                         <div class="icon">
-                           <i class="ion ion-bag"></i>
+                        <i class=" ion ion-ios-people"></i>
                         </div>
                      </div>
                   </div>
@@ -114,7 +114,7 @@
                            <p>Parainage(s)</p>
                         </div>
                         <div class="icon">
-                           <i class="ion ion-stats-bars"></i>
+                        <i class="ion ion-ios-personadd"></i>
                         </div>
                      </div>
                   </div>
@@ -127,7 +127,7 @@
                            <p>IOS</p>
                         </div>
                         <div class="icon">
-                           <i class="ion ion-person-add"></i>
+                        <i class="ion ion-social-apple"></i>
                         </div>
                      </div>
                   </div>
@@ -140,7 +140,7 @@
                            <p>IOS Installé(s)</p>
                         </div>
                         <div class="icon">
-                           <i class="ion ion-pie-graph"></i>
+                        <i class="ion ion-upload"></i>
                         </div>
                      </div>
                   </div>
@@ -152,7 +152,7 @@
                            <p>Android</p>
                         </div>
                         <div class="icon">
-                           <i class="ion ion-pie-graph"></i>
+                           <i class="ion ion-social-android"></i>
                         </div>
                      </div>
                   </div>
@@ -164,7 +164,7 @@
                            <p>Android Installé(s)</p>
                         </div>
                         <div class="icon">
-                           <i class="ion ion-pie-graph"></i>
+                        <i class="ion ion-upload"></i>
                         </div>
                      </div>
                   </div>
