@@ -323,6 +323,9 @@
 
          $('#periode_inscrit').val('semaine');
          graphique_evolution_inscription($('#periode_inscrit').val());
+
+         $('#periode_connexion').val('semaine');
+         graphique_evolution_connexion($('#periode_connexion').val());
          
          
          

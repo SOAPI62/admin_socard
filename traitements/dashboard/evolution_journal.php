@@ -15,6 +15,67 @@ $select["MESS_ERR"] = '';
 $select["CODE_SQL"] = '';
 
 switch ($mode_conn) {
+    case 'semaine':
+        $periodicite = [];
+        $semaine = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+        for ($i=0; $i < 53; $i++) { 
+            $periodicite[$i] =  $i;
+        }
+        
+        $max              = 0;
+        $nb_connexion_s   = 0;
+        $nb_connexion_s_1 = 0;
+
+        $sql = "SELECT `SEMAINE`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER` GROUP BY `SEMAINE`";
+        $req = $dbh->prepare($sql);
+        $req->execute($tab);
+        
+        while ($row = $req->fetch())
+        {
+            $indice = (int)$row[0]; 
+            $semaine[$indice] = $row[1];           
+
+            $d = date("d"); 
+            $m = date("m"); 
+            $y = date("Y"); 
+
+            $semaine_encours = ISOWeek($y , $m , $d);
+            $semaine_precedent = $semaine_encours - 1;
+
+            if ( $semaine_encours == $row[0] )
+            {
+                $nb_connexion_s = $row[1];
+            }
+
+            if ( ($semaine_precedent + 1) == $row[0] )
+            {
+                $nb_connexion_s_1 = $row[1];
+            }
+
+            if ($max < $row[1] ) {
+                $max = $row[1];
+            }
+        }
+
+        $select["CONNEXIONS"]         = $semaine;
+        $select["MAX_CONNEXIONS"]     = $max;
+        $select["PERIODICITE"]        = $periodicite;
+
+        if ((float)$nb_connexion_s_1 == 0)
+        {
+            $select["EVOLUTION_CONNEXIONS"] = -100;
+
+        }
+        else {
+            $select["EVOLUTION_CONNEXIONS"] =  ((float)$nb_connexion_s - (float)$nb_connexion_s_1) / (float)$nb_connexion_s_1 * 100;
+        }
+
+        $select["nb_connexion_s"] = $nb_connexion_s;
+        $select["nb_connexion_s_1"] = $nb_connexion_s_1;
+
+        break; 
+
     case 'mois':
         $periodicite =  ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
         $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER`  GROUP BY `MOIS_PER`";
@@ -54,8 +115,17 @@ switch ($mode_conn) {
 
         $select["CONNEXIONS"]           = $mois;
         $select["MAX_CONNEXIONS"]       = $max;
-        $select["EVOLUTION_CONNEXIONS"] = ((float)$nb_connexions_m - (float)$nb_connexions_m_1) / (float)$nb_connexions_m_1 * 100;
+        if ((float)$nb_connexion_m_1 == 0)
+        {
+            $select["EVOLUTION_CONNEXIONS"] = -100;
+
+        }
+        else {
+            $select["EVOLUTION_CONNEXIONS"] =  ((float)$nb_connexion_m - (float)$nb_connexion_m_1) / (float)$nb_connexion_m_1 * 100;
+        }
+
         $select["PERIODICITE"]          = $periodicite;
+
         break;
 
     case 'trimestre':
@@ -99,13 +169,13 @@ switch ($mode_conn) {
         $select["CONNEXIONS"]           = $trimestre;
         $select["MAX_CONNEXIONS"]       = $max;
 
-        if ((float)$nb_inscrit_t_1 == 0)
+        if ((float)$nb_connexion_t_1 == 0)
         {
             $select["EVOLUTION_CONNEXIONS"] = -100;
 
         }
         else {
-            $select["EVOLUTION_CONNEXIONS"] =  ((float)$nb_inscrit_t - (float)$nb_inscrit_t_1) / (float)$nb_inscrit_t_1 * 100;
+            $select["EVOLUTION_CONNEXIONS"] =  ((float)$nb_connexion_t - (float)$nb_connexion_t_1) / (float)$nb_connexion_t_1 * 100;
         }
 
          $select["PERIODICITE"]          = $periodicite;
@@ -115,6 +185,17 @@ switch ($mode_conn) {
         # code...
         break;
 }
+
+function ISOWeek($y , $m , $d){
+    $week=strftime("%W", mktime(0, 0, 0, $m, $d, $y)); 
+     $dow0101=getdate(mktime(0, 0, 0, 1, 1, $y)); 
+     if ($dow0101["wday"]>1 && 
+     $dow0101["wday"]<5) 
+     $week++; 
+     elseif ($week==0) 
+     $week=53; 
+     return(substr("00" . $week, -2)); 
+   }
 
 echo json_encode($select);
 exit(0);
