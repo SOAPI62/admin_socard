@@ -81,7 +81,6 @@
                         <th>CODE</th>
                         <th>SUPPORT</th>
                         <th>ORIGINE</th>
-                        <th>TYPE</th>
                         <th>NOM</th>
                         <th>TEL</th>
                         <th>EMAIL</th>
@@ -351,7 +350,7 @@
          			"data": function() {}
          		},
              columnDefs: [
-               { "width": "10%", "targets": 0 },
+               { "width": "5%", "targets": 0 },
          		{
          			targets: 0,
          			data: "null",
@@ -368,13 +367,13 @@
          			"searchable": false
          		},
                  {
-         			"targets": [8],
+         			"targets": [7],
          			"visible": false,
          			"searchable": false
          		},
          		],
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                     if (aData[8] == "INACTIF") {
+                     if (aData[7] == "INACTIF") {
                          $('td', nRow).css('background-color', '#8B0000');
                          $('td', nRow).css('color', 'White');
                      }

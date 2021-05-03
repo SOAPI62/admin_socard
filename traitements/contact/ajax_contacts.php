@@ -12,11 +12,10 @@ $columns = array(
     2 => 'CD_CLIENT',
     3 => 'SUPPORT_COM',
     4 => 'ORI_CLIENT',
-    5 => 'TYP_CLIENT',
-    6 => 'NOM1_CLIENT',
-    7 => 'POR_CLIENT',
-    8 => 'EMAIL_CLIENT',
-    9 => 'ACTIF_Client '
+    5 => 'NOM1_CLIENT',
+    6 => 'POR_CLIENT',
+    7 => 'EMAIL_CLIENT',
+    8 => 'ACTIF_Client '
 );
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
@@ -73,7 +72,6 @@ while( $row=$stmt->fetch() ) {  // preparing an array
     $nestedData[] = $row["CD_CLIENT"];
     $nestedData[] = $row["SUPPORT_COM"];
     $nestedData[] = $row["ORI_CLIENT"];
-    $nestedData[] = $row["TYP_CLIENT"];
     $nestedData[] = $row["NOM1_CLIENT"];
     $nestedData[] = $row["POR_CLIENT"];
     $nestedData[] = $row["EMAIL_CLIENT"];
