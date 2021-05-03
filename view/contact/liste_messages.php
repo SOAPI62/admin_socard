@@ -204,7 +204,7 @@
          			"data": function() {}
          		},
              columnDefs: [
-               { "width": "10%", "targets": 0 },
+               { "width": "5%", "targets": 0 },
                {
          			"targets": [1],
          			"visible": false,
