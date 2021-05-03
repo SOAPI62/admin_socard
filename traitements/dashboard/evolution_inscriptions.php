@@ -13,6 +13,7 @@ $select["CODE_SQL"] = '';
 
 // Préparation de la requêtes SQL
 $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `MOIS_PER`";
+
 $req = $dbh->prepare($sql);
 $req->execute($tab);
 
@@ -20,7 +21,9 @@ $mois = [0,0,0,0,0,0,0,0,0,0,0,0];
 $max  = 0;
 
 $mois_encours   = $today = date("m"); 
-$mois_precedent = $mois_encours -1;
+
+
+$mois_precedent = $mois_encours - 1;
 
 $nb_inscrit_m   = 0;
 $nb_inscrit_m_1 = 0;
@@ -45,9 +48,21 @@ while ($row = $req->fetch())
     }
 
 }
+
+
 $select["INSCRIPTIONS"] = $mois;
 $select["MAX_INSCRIPTIONS"] = $max;
-$select["EVOLUTION_INSCRIPTIONS"] =  ((float)$nb_inscrit_m - (float)$nb_inscrit_m_1) / (float)$nb_inscrit_m_1 * 100;
+
+if ((float)$nb_inscrit_m_1 == 0)
+{
+    $select["EVOLUTION_INSCRIPTIONS"] = -100;
+
+}
+else {
+    $select["EVOLUTION_INSCRIPTIONS"] =  ((float)$nb_inscrit_m - (float)$nb_inscrit_m_1) / (float)$nb_inscrit_m_1 * 100;
+
+    
+}
 
 echo json_encode($select);
 exit(0);
