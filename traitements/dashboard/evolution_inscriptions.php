@@ -154,12 +154,12 @@ switch ($mode) {
                 $max = $row[1];
             }
 
-            if ( $mois_encours == $row[0] )
+            if ( $trimestre_encours == $row[0] )
             {
                 $nb_inscrit_t = $row[1];
             }
 
-            if ( ($mois_precedent + 1) == $row[0] )
+            if ( ($trimestre_precedent + 1) == $row[0] )
             {
                 $nb_inscrit_t_1 = $row[1];
             }

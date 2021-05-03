@@ -2,7 +2,7 @@
 session_start();
 
 try {
-	$dbh = new PDO('mysql:host=localhost;dbname=SOCARD', 'root', 'root');
+	$dbh = new PDO('mysql:host=localhost;dbname=SOCARD', 'root', '');
 	//$dbh = new PDO('mysql:host=localhost;dbname=SOCARD', 'root', '');
 	//$dbh = new PDO('mysql:host=db708531664.db.1and1.com;dbname=db708531664', 'dbo708531664', 'Stamand00');
 
