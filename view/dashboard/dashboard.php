@@ -172,10 +172,21 @@
                </div>
                <!-- /.row -->
                <!-- /.row (main row) -->
+               <form id="form_dashboard" enctype="multipart/form-data">
                <div class="card">
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Evolution du nombre d'inscrits</h3>
+                        <div class="card-body">
+                        <label >Evolution du nombre d'inscrits par :</label>
+                        <select id="periode_inscrit">
+                           <option value='annee'>année</option>
+                           <option value='mois'>mois</option>
+                           <option value='semestre'>semestre</option>
+                           <option value='trimestre'>trimestre</option>
+                           <option value='semaine'>semaine</option>
+                           <option value='jour'>jour</option>
+                        </select>
+                        </div>
                      </div>
                   </div>
                   <div class="card-body">
@@ -209,7 +220,17 @@
                <div class="card">
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Evolution du nombre de connexions</h3>
+                        <div class="card-body">
+                        <label >Evolution du nombre de connexions par :</label>
+                        <select id="periode_connexion">
+                           <option value='annee'>année</option>
+                           <option value='mois'>mois</option>
+                           <option value='semestre'>semestre</option>
+                           <option value='trimestre'>trimestre</option>
+                           <option value='semaine'>semaine</option>
+                           <option value='jour'>jour</option>
+                        </select>
+                        </div>
                      </div>
                   </div>
                   <div class="card-body">
@@ -223,7 +244,7 @@
                         </p>
                      </div>
                      <!-- /.d-flex -->
-                     <div class="position-relative mb-4">
+                     <div class="position-relative mb-4" id="canvas-reload">
                         <canvas id="visitors-chart-2" height="200"></canvas>
                      </div>
                      <!--
@@ -239,6 +260,7 @@
                         -->
                   </div>
                </div>
+               </form>
 
             </div>
             <!-- /.container-fluid -->
@@ -307,97 +329,8 @@
                 }
                });  
 
-         // --------------------------------------------------------------------------------------------------
-         // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
-         // --------------------------------------------------------------------------------------------------
          
-         $.ajax({
-         url: '../../traitements/dashboard/evolution_inscriptions.php',
-         dataType: 'json',
-         async: false,
-         success: function(data) {
-                     switch (data.REPONSE) {
-                           case 'OK':
-         
-                              var $max                    = data.MAX_INSCRIPTIONS;
-                              $('#pourcentage_inscriptions').html(data.EVOLUTION_INSCRIPTIONS+'%');
-         
-                              var ticksStyle = {
-                                 fontColor: '#495057',
-                                 fontStyle: 'bold'
-                              }
-         
-                              var mode = 'index'
-                              var intersect = true
-         
-                              var $salesChart = $('#sales-chart')
-         
-                              var $mois = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']
-                              var $nb_inscrit = data.INSCRIPTIONS;
-         
-                              var $visitorsChart = $('#visitors-chart')
-                              // eslint-disable-next-line no-unused-vars
-                              var visitorsChart = new Chart($visitorsChart, {
-                                 data: {
-                                 labels: $mois,
-                                 datasets: [{
-                                    type: 'line',
-                                    data: $nb_inscrit,
-                                    backgroundColor: 'transparent',
-                                    borderColor: '#007bff',
-                                    pointBorderColor: '#007bff',
-                                    pointBackgroundColor: '#007bff',
-                                    fill: false
-                                    // pointHoverBackgroundColor: '#007bff',
-                                    // pointHoverBorderColor    : '#007bff'
-                                 }]
-                                 },
-                                 options: {
-                                 maintainAspectRatio: false,
-                                 tooltips: {
-                                    mode: mode,
-                                    intersect: intersect
-                                 },
-                                 hover: {
-                                    mode: mode,
-                                    intersect: intersect
-                                 },
-                                 legend: {
-                                    display: false
-                                 },
-                                 scales: {
-                                    yAxes: [{
-                                       // display: false,
-                                       gridLines: {
-                                       display: true,
-                                       lineWidth: '4px',
-                                       color: 'rgba(0, 0, 0, .2)',
-                                       zeroLineColor: 'transparent'
-                                       },
-                                       ticks: $.extend({
-                                       beginAtZero: true,
-                                       suggestedMax: $max
-                                       }, ticksStyle)
-                                    }],
-                                    xAxes: [{
-                                       display: true,
-                                       gridLines: {
-                                       display: false
-                                       },
-                                       ticks: ticksStyle
-                                    }]
-                                 }
-                                 }
-                              })
-                           break;
-                case 'KO':
-                    break;
-                default:
-                  break;
-            }
-          }
-         });
-         
+         graphique_evolution_inscription('mois');
          
          $.ajax({
          url: '../../traitements/dashboard/evolution_journal.php',
@@ -694,8 +627,113 @@
          
          $('#BLK_CONTACT_PAR').click(function() {
            $('#BLK_ZONE_CONTACT_PAR').toggle();
-         })    
+         })
+         
+         // --------------------------------------------------------------------------------------------------
+         // GESTION DU RELOAD GRAPHIQUE SELON PERIODE
+         // --------------------------------------------------------------------------------------------------
 
+         $('#periode_connexion').change(function() {
+            $mode =  $('#periode_connexion').val();
+
+            graphique_evolution_inscription($mode);
+         });
+
+
+         function graphique_evolution_inscription($mode){
+            // --------------------------------------------------------------------------------------------------
+         // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
+         // --------------------------------------------------------------------------------------------------
+         
+         $.ajax({
+         url: '../../traitements/dashboard/evolution_inscriptions.php',
+         data: 'mode=' + $mode,
+         dataType: 'json',
+         async: false,
+         success: function(data) {
+                     switch (data.REPONSE) {
+                           case 'OK':
+                              $periodicite = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
+                              
+                              var $max                    = data.MAX_INSCRIPTIONS;
+                              $('#pourcentage_inscriptions').html(data.EVOLUTION_INSCRIPTIONS+'%');
+         
+                              var ticksStyle = {
+                                 fontColor: '#495057',
+                                 fontStyle: 'bold'
+                              }
+         
+                              var mode = 'index'
+                              var intersect = true
+         
+                              var $salesChart = $('#sales-chart')
+         
+                              
+                              var $nb_inscrit = data.INSCRIPTIONS;
+         
+                              var $visitorsChart = $('#visitors-chart')
+                              // eslint-disable-next-line no-unused-vars
+                              var visitorsChart = new Chart($visitorsChart, {
+                                 data: {
+                                 labels: $periodicite,
+                                 datasets: [{
+                                    type: 'line',
+                                    data: $nb_inscrit,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#007bff',
+                                    pointBorderColor: '#007bff',
+                                    pointBackgroundColor: '#007bff',
+                                    fill: false
+                                    // pointHoverBackgroundColor: '#007bff',
+                                    // pointHoverBorderColor    : '#007bff'
+                                 }]
+                                 },
+                                 options: {
+                                 maintainAspectRatio: false,
+                                 tooltips: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 hover: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 legend: {
+                                    display: false
+                                 },
+                                 scales: {
+                                    yAxes: [{
+                                       // display: false,
+                                       gridLines: {
+                                       display: true,
+                                       lineWidth: '4px',
+                                       color: 'rgba(0, 0, 0, .2)',
+                                       zeroLineColor: 'transparent'
+                                       },
+                                       ticks: $.extend({
+                                       beginAtZero: true,
+                                       suggestedMax: $max
+                                       }, ticksStyle)
+                                    }],
+                                    xAxes: [{
+                                       display: true,
+                                       gridLines: {
+                                       display: false
+                                       },
+                                       ticks: ticksStyle
+                                    }]
+                                 }
+                                 }
+                              })
+                           break;
+                case 'KO':
+                    break;
+                default:
+                  break;
+            }
+          }
+         });
+         }
          // --------------------------------------------------------------------------------------------------
          // FONCTION : DECONNEXION
          // --------------------------------------------------------------------------------------------------
