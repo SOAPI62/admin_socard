@@ -177,14 +177,12 @@
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
                         <div class="card-body">
-                        <label >Evolution du nombre d'inscrits par :</label>
+                        <label >Evolution du nombre d'inscrits par </label>
                         <select id="periode_inscrit">
-                           <option value='annee'>année</option>
-                           <option value='mois'>mois</option>
-                           <option value='semestre'>semestre</option>
-                           <option value='trimestre'>trimestre</option>
-                           <option value='semaine'>semaine</option>
-                           <option value='jour'>jour</option>
+                            <option value='semaine' selected>semaine</option>
+                            <option value='mois'>mois</option>
+                            <option value='trimestre'>trimestre</option>
+                           
                         </select>
                         </div>
                      </div>
@@ -329,8 +327,8 @@
                 }
                });  
 
-         
-         graphique_evolution_inscription('mois');
+         $('#periode_inscrit').val('semaine');
+         graphique_evolution_inscription($('#periode_inscrit').val());
          
          $.ajax({
          url: '../../traitements/dashboard/evolution_journal.php',
@@ -633,8 +631,8 @@
          // GESTION DU RELOAD GRAPHIQUE SELON PERIODE
          // --------------------------------------------------------------------------------------------------
 
-         $('#periode_connexion').change(function() {
-            $mode =  $('#periode_connexion').val();
+         $('#periode_inscrit').change(function() {
+            $mode =  $('#periode_inscrit').val();
 
             graphique_evolution_inscription($mode);
          });
@@ -653,9 +651,9 @@
          success: function(data) {
                      switch (data.REPONSE) {
                            case 'OK':
-                              $periodicite = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
-                              
-                              var $max                    = data.MAX_INSCRIPTIONS;
+                              //$periodicite = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
+                              $periodicite = data.PERIODICITE;
+                              var $max     = data.MAX_INSCRIPTIONS;
                               $('#pourcentage_inscriptions').html(data.EVOLUTION_INSCRIPTIONS+'%');
          
                               var ticksStyle = {
