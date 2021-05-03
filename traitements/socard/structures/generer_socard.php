@@ -28,7 +28,7 @@ $stmt->execute();
 $fichier_socard = '';
 
 while ($row = $stmt->fetch()) {
-    $fichier_socard .= $row[2];
+    $fichier_socard .= html_entity_decode($row[2]);
 }
 
 $select["CODE_RETOUR"]      = 'OK';
