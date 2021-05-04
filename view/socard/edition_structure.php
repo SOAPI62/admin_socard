@@ -62,7 +62,6 @@
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0 BLOCK-BTN">
-            <button type="button" class="btn btn-primary">Ajouterw</button>
             <button type="button" class="btn btn-primary">Visualisation</button>
             <button id='BTN_GENERER' type="button" class="btn btn-primary">Générer</button>
             </div>
