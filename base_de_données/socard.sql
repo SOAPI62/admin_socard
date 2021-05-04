@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  mar. 04 mai 2021 à 12:16
+-- Généré le :  mar. 04 mai 2021 à 15:35
 -- Version du serveur :  5.7.25
 -- Version de PHP :  7.3.1
 
@@ -2864,6 +2864,7 @@ CREATE TABLE `SOCARD_CAMPAGNES_SMS` (
   `NOM_CAMPAGNE` varchar(100) NOT NULL,
   `MESSAGE_CAMPAGNE` varchar(300) NOT NULL,
   `DATE_CAMPAGNE` date NOT NULL,
+  `HEURE_CAMPAGNE` time NOT NULL,
   `NB_EMISSION` int(11) NOT NULL,
   `ACTIF_CAMPAGNE` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2872,8 +2873,8 @@ CREATE TABLE `SOCARD_CAMPAGNES_SMS` (
 -- Déchargement des données de la table `SOCARD_CAMPAGNES_SMS`
 --
 
-INSERT INTO `SOCARD_CAMPAGNES_SMS` (`ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE`) VALUES
-(1, 'TEST', 'jkksjkjskfj kjfsj fj sdjkf jsdk', '2021-05-04', 10, 1);
+INSERT INTO `SOCARD_CAMPAGNES_SMS` (`ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `HEURE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE`) VALUES
+(1, 'TEST', 'jkksjkjskfj kjfsj fj sdjkf jsdk', '2021-05-04', '12:45:00', 10, 1);
 
 -- --------------------------------------------------------
 
