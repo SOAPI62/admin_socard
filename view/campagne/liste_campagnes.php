@@ -77,14 +77,13 @@
                <table id="liste_contacts" style="width:100%" class="cell-border order-column hover">
                   <thead>
                      <tr>
-                     <th>Numéro de campagne</th>
+                        <th>NUMÉRO DE CAMPAGNE</th>
                         <th>CODE</th>
                         <th>SUPPORT</th>
                         <th>Nom</th>
                         <th>Date d'emission</th>
                         <th>Nb d'émission</th>
                         <th>ACTIF</th>
-                     </tr>
                      </tr>
                   </thead>
                </table>
@@ -94,7 +93,7 @@
 
 
          <!-- -------------------------------------------------------------------------------------------------------- -->
-         <!-- AJOUT D UN CONTACT                                                                                       -->                                                           
+         <!-- AJOUT D UNE CAMPAGNE                                                                                     -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
          <div class="modal fade" id="ajout_contact_modale">
@@ -124,10 +123,10 @@
                         </div>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button id="VALIDATION_CAMPAGNE" type="button" class="btn btn-primary">Valider</button>
+                    <div class="modal-footer">
+                        <button id="VALIDATION_CAMPAGNE" type="button" class="btn btn-success">Valider</button>
                         <button id="ANNULATION_CAMPAGNE" type="button" class="btn btn-primary">Annuler</button>
-                        <button id="TEST_CAMPAGNE" type="button" class="btn btn-primary">Tester</button>
+                        <button id="TEST_CAMPAGNE" type="button" class="btn btn-primary btn-custom">Tester</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -502,7 +501,7 @@
         $('#BTN_AJOUT_CONTACT').click(function() {
            $('#BLK_TEL').show();
            $('#BLK_MAIL').hide();
-           $('#BLK_ZONE_REMARQUES').hide();
+           $('#BLK_ZONE_REMARQUES').show();
         
            $('#NRO_TEL').val('');
            $('#EMAIL').val('');

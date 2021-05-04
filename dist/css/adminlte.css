@@ -33140,3 +33140,7 @@ label:not(.form-check-label):not(.custom-file-label){
     margin-top: 8px;
   }
 }
+
+.btn-custom {
+  background: #ff0000 !important;
+}

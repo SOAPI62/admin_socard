@@ -62,7 +62,7 @@
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0 BLOCK-BTN">
-            <button type="button" class="btn btn-primary">Visualisation</button>
+            <button type="button" class="btn btn-primary"  onclick="Redirection();" >Visualisation</button>
             <button id='BTN_GENERER' type="button" class="btn btn-primary">Générer</button>
             </div>
          </section>
@@ -164,6 +164,14 @@
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
       <script>
+         
+          // -------------------------------------------------------------------------------------------------------
+          // ---- FONCTION REDIRECTION VERS NOUVELLE FENETRE : VISUALISATION
+          // -------------------------------------------------------------------------------------------------------
+
+         function Redirection() {
+            var myWindow = window.open("../../structures/socard-temporaire.html", "");
+         }
 
           // -------------------------------------------------------------------------------------------------------
           // ---- TRAITEMENT : DATATABLE DONNEES STRUCTURES
