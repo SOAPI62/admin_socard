@@ -219,7 +219,7 @@
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
                         <div class="card-body">
-                        <label >Evolution du nombre de connexions par :</label>
+                        <label >Evolution du nombre de connexions par </label>
                         <select id="periode_connexion">
                            <option value='semaine' selected>semaine</option>
                            <option value='mois'>mois</option>

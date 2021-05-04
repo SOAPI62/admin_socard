@@ -51,5 +51,22 @@
                           </li>
                         </ul>
                       </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-calendar-plus"></i>
+                        <p>
+                          Campagne
+                        <i class="right fas fa-angle-left"></i>
+                        </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                            <a href="../campagne/liste_campagnes.php" class="nav-link">
+                            <i class="fas fa-list-ul nav-icon"></i>
+                            <p>Liste</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
                   </ul>
                 </nav>
