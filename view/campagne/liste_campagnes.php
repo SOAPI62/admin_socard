@@ -125,7 +125,7 @@
                     </div>
                     <div class="modal-footer">
                         <button id="VALIDATION_CAMPAGNE" type="button" class="btn btn-success">Valider</button>
-                        <button id="ANNULATION_CAMPAGNE" type="button" class="btn btn-primary">Annuler</button>
+                        <button id="ANNULATION_CAMPAGNE" type="button" class="btn btn-primary btn-info">Annuler</button>
                         <button id="TEST_CAMPAGNE" type="button" class="btn btn-primary btn-custom">Tester</button>
                     </div>
                 </div>
