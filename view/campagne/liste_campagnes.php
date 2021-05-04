@@ -479,7 +479,45 @@
         // ! -------------------------------------------------------------------------------------------------------
 
         $('#VALIDATION_CAMPAGNE').click(function() {
-                
+               if($('#NOM_CAMPAGNE').val() == '' || $('#DATE_EMISSION').val() == '' || $('#HEURE_EMISSION').val() == '' || $('#BLK_ZONE_MESSAGE').val() == ''){
+                    alert('erreur');
+               } 
+               else{
+                var formData = new FormData();
+
+                formData.append('nom_campagne', $('#NOM_CAMPAGNE').val());
+                formData.append('date_campagne', $('#DATE_EMISSION').val());
+                formData.append('heure_campagne', $('#HEURE_EMISSION').val());
+                formData.append('message_campagne', $('#BLK_ZONE_MESSAGE').val());
+
+                $.ajax({
+                    type: "POST",
+                    url: "../../traitements/campagnes/ajout_campagne.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function (data) 
+                    {
+                        switch (data.CODE_RETOUR) {
+                        case 'OK':
+                        $('#nouveau_message_modale').modal('toggle');
+                        table.ajax.reload();
+                        break;
+                        case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                        break;  
+                        case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                        break;                       
+                        default:
+                        break;
+                        }
+                    }
+                });
+               }
+              
         });
 
         // ! -------------------------------------------------------------------------------------------------------
