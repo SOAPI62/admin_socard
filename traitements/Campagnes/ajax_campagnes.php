@@ -11,13 +11,14 @@ $columns = array(
     1 => 'ID_CAMPAGNE',
     2 => 'NOM_CAMPAGNE',
     3 => 'DATE_CAMPAGNE',
-    4 => 'NB_EMISSION',
-    5 => 'ACTIF_CAMPAGNE'
+    4 => 'HEURE_CAMPAGNE',
+    5 => 'NB_EMISSION',
+    6 => 'ACTIF_CAMPAGNE'
 );
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
 
-$query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS`";
+$query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `HEURE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS`";
 $stmt = $dbh->prepare($query);
 $stmt->execute();  
 $totalData = $stmt->rowCount();
@@ -28,7 +29,7 @@ $totalFiltered = $totalData;
 if( !empty($requestData['search']['value']) ) 
 {
     // if there is a search parameter
-    $query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS`";
+    $query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `HEURE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS`";
     $query.=" WHERE NOM_CAMPAGNE LIKE '%".$requestData['search']['value']."%' OR DATE_CAMPAGNE LIKE '%".$requestData['search']['value']."%' ";    // $requestData['search']['value'] contains search parameter
 
     $stmt = $dbh->prepare($query);
@@ -44,7 +45,7 @@ if( !empty($requestData['search']['value']) )
 }
 else 
 {   
-    $query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS`";
+    $query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `HEURE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS`";
     
     if ($columns[$requestData['order'][0]['column']] != 'Action')
     {
@@ -69,9 +70,9 @@ while( $row=$stmt->fetch() ) {  // preparing an array
     $nestedData[] = $row["ID_CAMPAGNE"];
     $nestedData[] = $row["NOM_CAMPAGNE"];
     $nestedData[] = $row["DATE_CAMPAGNE"];
+    $nestedData[] = $row["HEURE_CAMPAGNE"];    
     $nestedData[] = $row["NB_EMISSION"];
     
-
     if ($row["ACTIF_CAMPAGNE"] == 1)
     {
         $nestedData[] = 'ACTIF';

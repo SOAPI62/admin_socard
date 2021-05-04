@@ -80,7 +80,8 @@
                         <th>Action</th>
                         <th>N°</th>
                         <th>Nom</th>
-                        <th>Date d'emission</th>
+                        <th>Date</th>
+                        <th>Heure</th>
                         <th>Nb d'émission</th>
                         <th>Actif</th>
                      </tr>
@@ -97,7 +98,7 @@
          <div class="modal fade" id="ajout_campagne_modale">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                    <div id="DIV_ALERT" class="alert alert-warning alert-dismissible">
+                    <div id="DIV_ALERT" class="alert alert-warning alert-dismissible" style="display:none">
                     <h5>Attention !</h5>
                     <label>Vous n'avez pas assez de crédits !</label>
                     </div>
@@ -162,7 +163,7 @@
                         <div class="form-group">
                             <label>Date d'émission</label>
                             <input id="MAJ_DATE_EMISSION" type="date" value="0000-00-00">
-                            <input id="HEURE_EMISSION" type="time">
+                            <input id="MAJ_HEURE_EMISSION" type="time">
                         </div>
                         <div class="form-group"  >
                             <label >Message </label>
@@ -209,9 +210,8 @@
       // ! ---- INITIALISATION  
       // ! -------------------------------------------------------------------------------------------------------
 
-      var $nb_credits_sms = 10;
 
-      var $nb_contact = 20;
+      var $nb_contact = 0;
 
       var $nb_caracteres_max = 160;
 
@@ -256,13 +256,13 @@
          			"searchable": false
          		},
                {
-         			"targets": [5],
+         			"targets": [6],
          			"visible": false,
          			"searchable": false
          		}
          		],
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                     if (aData[5] == "INACTIF") {
+                     if (aData[6] == "INACTIF") {
                          $('td', nRow).css('background-color', '#8B0000');
                          $('td', nRow).css('color', 'White');
                      }
@@ -288,6 +288,9 @@
                      case 'OK':
                         $('#MAJ_NOM_CAMPAGNE').val(data.NOM_CAMPAGNE);
                         $('#MAJ_DATE_EMISSION').val(data.DATE_CAMPAGNE);
+                        $heure = data.HEURE_CAMPAGNE;
+                        $heure =  $heure.substr(0,5);
+                        $('#MAJ_HEURE_EMISSION').val($heure);
                         $('#MAJ_BLK_ZONE_MESSAGE').val(data.MESSAGE_CAMPAGNE);
 
                         $maj_message = $('#MAJ_BLK_ZONE_MESSAGE').val();
@@ -295,7 +298,6 @@
 
                         $('#MAJ_NB_CARACTERES_RESTANTS').html('[' + ($nb_caracteres_max - $lg_maj_message ) + ']');
                         
-
                         $('#maj_campagne_modale').modal('toggle');
                      break;
                      case 'ANOMALIE':
@@ -392,9 +394,52 @@
         // ! -------------------------------------------------------------------------------------------------------
         
         $('#BTN_AJOUT_CAMPAGNE').click(function() {
-            if ( $nb_contact < $nb_credits_sms) {
-                $("#DIV_ALERT").css("display", "none");
-            }
+
+         $.ajax({
+                  type: "POST",
+                  url: "../../traitements/contact/nb_contacts_actif.php",
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        $nb_contact =  data.NB_CONTACTS_ACTIF;
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+
+         $.ajax({
+                  type: "POST",
+                  url: "../../traitements/isendpro/nb_credits.php",
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        if ( $nb_contact > data.NB_CREDITS) {
+                           $("#DIV_ALERT").css("display", "block");
+                        }
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
         });
 
         // ! -------------------------------------------------------------------------------------------------------
@@ -434,7 +479,7 @@
         // ! -------------------------------------------------------------------------------------------------------
 
         $('#VALIDATION_CAMPAGNE').click(function() {
-               alert('VALIDATION CAMPAGNE');
+                
         });
 
         // ! -------------------------------------------------------------------------------------------------------
