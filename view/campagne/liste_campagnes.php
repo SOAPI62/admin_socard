@@ -66,7 +66,7 @@
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0">
-            <button id="BTN_AJOUT_CONTACT" type="button" class="btn btn-primary">Ajouter</button>
+            <button id="BTN_AJOUT_CAMPAGNE" type="button" class="btn btn-primary">Ajouter</button>
             </div>
          </section>
          <!-- Main content -->
@@ -74,16 +74,15 @@
             <div class="page-content">
                <!-- Panel Table Add Row -->
                <!-- Default box -->
-               <table id="liste_contacts" style="width:100%" class="cell-border order-column hover">
+               <table id="liste_campagnes" style="width:100%" class="cell-border order-column hover">
                   <thead>
                      <tr>
-                        <th>NUMÉRO DE CAMPAGNE</th>
-                        <th>CODE</th>
-                        <th>SUPPORT</th>
+                        <th>Action</th>
+                        <th>N°</th>
                         <th>Nom</th>
                         <th>Date d'emission</th>
                         <th>Nb d'émission</th>
-                        <th>ACTIF</th>
+                        <th>Actif</th>
                      </tr>
                   </thead>
                </table>
@@ -91,16 +90,15 @@
          <!-- /.content -->
          </div>
 
-
          <!-- -------------------------------------------------------------------------------------------------------- -->
          <!-- AJOUT D UNE CAMPAGNE                                                                                     -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
-         <div class="modal fade" id="ajout_contact_modale">
+         <div class="modal fade" id="ajout_campagne_modale">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Ajout d'une campagne</h4>
+                        <h4 class="modal-title">Ajout d'une campagne SMS</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -114,12 +112,13 @@
                         </div>
                         <div class="form-group">
                         <div class="form-group">
-                            <label id="BLK_CONTACT_PAR">Date d'émission</label>
-                            <input id="date" type="date" value="2021-05-03">
+                            <label>Date d'émission</label>
+                            <input id="DATE_EMISSION" type="date" value="2021-05-03">
                         </div>
                         <div class="form-group"  >
-                            <label id="BLK_REMARQUES">Message </label>
-                            <textarea id="BLK_ZONE_REMARQUES" class="form-control" rows="2" placeholder="..." style="text-transform: uppercase"></textarea>
+                            <label >Message </label>
+                            <label id="NB_CARACTERES_RESTANTS">[000]</label>
+                            <textarea id="BLK_ZONE_MESSAGE" class="form-control" rows="5" placeholder="..." ></textarea>
                         </div>
                         </div>
                     </div>
@@ -132,10 +131,50 @@
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
-         </div>
+         </div>         
 
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- EDITION D UNE CAMPAGNE                                                                                     -->                                                           
+         <!-- -------------------------------------------------------------------------------------------------------- -->
 
-         
+         <div class="modal fade" id="maj_campagne_modale">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Mise à jour d'une campagne SMS</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                        <label>Nom de la campagne</label>
+                        <div class="input-group" >
+                            <input id="MAJ_NOM_CAMPAGNE" type="text" class="form-control" placeholder="Saisir le nom de la campagne" style="text-transform: uppercase">
+                        </div>
+                        </div>
+                        <div class="form-group">
+                        <div class="form-group">
+                            <label>Date d'émission</label>
+                            <input id="MAJ_DATE_EMISSION" type="date" value="0000-00-00">
+                        </div>
+                        <div class="form-group"  >
+                            <label >Message </label>
+                            <label id="MAJ_NB_CARACTERES_RESTANTS">[000]</label>
+                            <textarea id="MAJ_BLK_ZONE_MESSAGE" class="form-control" rows="5" placeholder="..." ></textarea>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="MAJ_VALIDATION_CAMPAGNE" type="button" class="btn btn-success">Valider</button>
+                        <button id="MAJ_ANNULATION_CAMPAGNE" type="button" class="btn btn-primary">Annuler</button>
+                        <button id="MAJ_TEST_CAMPAGNE" type="button" class="btn btn-primary btn-custom">Tester</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>     
 
          <!-- /.modal -->
          <?php
@@ -160,25 +199,20 @@
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
       <script>
 
-         // --------------------------------------------------------------------------------------------------
-         // LISTE DES MESSAGES SMS
-         // --------------------------------------------------------------------------------------------------
+      // ! -------------------------------------------------------------------------------------------------------
+      // ! ---- INITIALISATION  
+      // ! -------------------------------------------------------------------------------------------------------
 
-         $.ajax({
-               url: '../../traitements/contact/liste_select_messages.php',
-                dataType: 'json',
-                async: false,
-                success: function(data) {
-                  $('#BLK_ZONE_SOCARD').html(data.HTML);
-                 
-                }
-               }); 
+      var $nb_nb_credits_sms = 10;
 
-      // -------------------------------------------------------------------------------------------------------
-      // ---- TRAITEMENT : DATATABLE DONNEES MESSAGES
-      // -------------------------------------------------------------------------------------------------------
+      var $nb_caracteres_max = 150;
+      $('#NB_CARACTERES_RESTANTS').html('[' + $nb_caracteres_max + ']');
 
-         var table = $('#liste_contacts').DataTable({
+      // ! -------------------------------------------------------------------------------------------------------
+      // ! ---- LISTE CRUD : CAMPAGNE
+      // ! -------------------------------------------------------------------------------------------------------
+
+         var table = $('#liste_campagnes').DataTable({
          		dom: '<"top"Bf><"liste"l>rt<p>',
          		buttons: [
          		'excel', 'pdf', 'print'
@@ -198,7 +232,7 @@
          		"processing": true,
          		"serverSide": true,
          		"ajax": {
-         			"url": "../../traitements/contact/ajax_contacts.php",
+         			"url": "../../traitements/campagnes/ajax_campagnes.php",
          			"data": function() {}
          		},
              columnDefs: [
@@ -206,50 +240,54 @@
          		{
          			targets: 0,
          			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button></div>"
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-campagne'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button></div>"
          		},
                {
          			"targets": [1],
          			"visible": false,
          			"searchable": false
          		},
-                 {
-         			"targets": [2],
+               {
+         			"targets": [5],
          			"visible": false,
          			"searchable": false
-         		},
-                 {
-         			"targets": [7],
-         			"visible": false,
-         			"searchable": false
-         		},
+         		}
          		],
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                     if (aData[7] == "INACTIF") {
+                     if (aData[5] == "INACTIF") {
                          $('td', nRow).css('background-color', '#8B0000');
                          $('td', nRow).css('color', 'White');
                      }
                  } 
          	});
          
-          //  -------------------------------------------------------------------------------------------------------
-          //  ---- TRAITEMENT : EDITION D UN MESSAGE
-          //  -------------------------------------------------------------------------------------------------------
+          //  ! -------------------------------------------------------------------------------------------------------
+          //  ! ---- TRAITEMENT : EDITION D UN MESSAGE
+          //  ! -------------------------------------------------------------------------------------------------------
 
-           $('#liste_messages tbody').on('click', '.edit-message', function() {
+           $('#liste_campagnes tbody').on('click', '.edit-campagne', function() {
              var data = table.row($(this).parents('tr')).data();
-             var  $id_message= data[1];
-         
+             var $id_campagne= data[1];
+
              $.ajax({
                   type: "POST",
-                  url: "../../traitements/contact/lecture_message.php",
-                  data: 'id_message=' + $id_message,
+                  url: "../../traitements/campagnes/lecture_campagne.php",
+                  data: 'id_campagne=' + $id_campagne,
                   dataType: 'json',
                   success: function (data) 
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                            $('#edition_message_modale').modal('toggle');
+                        $('#MAJ_NOM_CAMPAGNE').val(data.NOM_CAMPAGNE);
+                        $('#MAJ_DATE_EMISSION').val(data.DATE_CAMPAGNE);
+                        $('#MAJ_BLK_ZONE_MESSAGE').val(data.MESSAGE_CAMPAGNE);
+
+                        $message = $('#MAJ_BLK_ZONE_MESSAGE').val();
+                        $lg_message = $message.length;
+
+                        $('#MAJ_NB_CARACTERES_RESTANTS').html('[' + ($nb_caracteres_max - $lg_message ) + ']');
+
+                        $('#maj_campagne_modale').modal('toggle');
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
@@ -265,18 +303,18 @@
 
            });
 
-          // --------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : SUPPRESSION D UN CONTACT
-          // -------------------------------------------------------------------------------------------------------
+          // ! --------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : SUPPRESSION D UN CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
 
-          $('#liste_contacts tbody').on('click', '.edit-supp', function() {
+          $('#liste_campagnes tbody').on('click', '.edit-supp', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_contact = data[1];
+         	var $id_campagne = data[1];
 
             $.ajax({
                   type: "POST",
-                  url: "../../traitements/contact/suppression_contact.php",
-                  data: 'id_contact=' + $id_contact,
+                  url: "../../traitements/campagnes/suppression_campagne.php",
+                  data: 'id_campagne=' + $id_campagne,
                   dataType: 'json',
                   success: function (data) 
                   {
@@ -297,17 +335,17 @@
             });
            });
   
-          // -------------------------------------------------------------------------------------------------------
-          // ---- APPEL DE LA FENETRE AJOUT CONTACT
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- APPEL DE LA FENETRE AJOUT CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
 
-           $('#BTN_AJOUT_CONTACT').click(function() {
-               $('#ajout_contact_modale').modal('toggle');
+           $('#BTN_AJOUT_CAMPAGNE').click(function() {
+               $('#ajout_campagne_modale').modal('toggle');
            });
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
+          // ! -------------------------------------------------------------------------------------------------------
 
           $('#liste_contacts tbody').on('click', '.edit-contact', function() {
             var data = table.row($(this).parents('tr')).data();
@@ -361,23 +399,18 @@
             });
 
         });
-
-          
-
-         // --------------------------------------------------------------------------------------------------
-         // FONCTION : DECONNEXION
-         // --------------------------------------------------------------------------------------------------
+ 
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : DECONNEXION
+         // ! --------------------------------------------------------------------------------------------------
                
          <?php
             include '../fonction/_deconnexion.php';
          ?>
 
-          
-
-        
-        // --------------------------------------------------------------------------------------------------
-        // PROCEDURE : AJOUT D UN CONTACT
-        // --------------------------------------------------------------------------------------------------
+        // ! --------------------------------------------------------------------------------------------------
+        // ! PROCEDURE : AJOUT D UN CONTACT
+        // ! --------------------------------------------------------------------------------------------------
         
         $('#AJOUT_CONTACT').click(function() {
         
@@ -494,9 +527,9 @@
          }
         });
         
-        // --------------------------------------------------------------------------------------------------
-        // INITIALISATION DES CHAMPS DE LA MODALE "CONTACT" SI CLICK SUR LE BOUTON RACCOURCI
-        // --------------------------------------------------------------------------------------------------
+        // ! --------------------------------------------------------------------------------------------------
+        // ! INITIALISATION DES CHAMPS DE LA MODALE "CONTACT" SI CLICK SUR LE BOUTON RACCOURCI
+        // ! --------------------------------------------------------------------------------------------------
         
         $('#BTN_AJOUT_CONTACT').click(function() {
            $('#BLK_TEL').show();
@@ -513,9 +546,9 @@
            $('#ajout_contact_modale').modal('toggle');
         });
         
-        // --------------------------------------------------------------------------------------------------
-        // GESTION DES CLICK SUR LA MODALE "CONTACT" POUR OPTIMISER L AFFICHAGE
-        // --------------------------------------------------------------------------------------------------
+        // ! --------------------------------------------------------------------------------------------------
+        // ! GESTION DES CLICK SUR LA MODALE "CONTACT" POUR OPTIMISER L AFFICHAGE
+        // ! --------------------------------------------------------------------------------------------------
         
         $('#BLK_TYPE_CONTACT').click(function() {
          $('#BLK_ZONE_TYPE_CONTACT').toggle();
