@@ -62,7 +62,7 @@
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0 BLOCK-BTN">
-            <button type="button" class="btn btn-primary"  onclick="Redirection();" >Visualisation</button>
+            <button type="button" class="btn btn-primary"  onclick="socard_temporaire();" >Visualisation</button>
             <button id='BTN_GENERER' type="button" class="btn btn-primary">Générer</button>
             </div>
          </section>
@@ -163,15 +163,10 @@
       <script src="../../dist/js/demo.js"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-      <script>
-         
-          // -------------------------------------------------------------------------------------------------------
-          // ---- FONCTION REDIRECTION VERS NOUVELLE FENETRE : VISUALISATION
-          // -------------------------------------------------------------------------------------------------------
 
-         function Redirection() {
-            var myWindow = window.open("../../structures/socard-temporaire.html", "");
-         }
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+      <script>
+      
 
           // -------------------------------------------------------------------------------------------------------
           // ---- TRAITEMENT : DATATABLE DONNEES STRUCTURES
@@ -332,34 +327,20 @@
 
             $('#structure_modale').modal('toggle');
            });
-
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : MODIFICATION DE LA POSITION DE LA STRUTURE VERS LE HAUT
-          // -------------------------------------------------------------------------------------------------------
-
-          $('#liste_structure tbody').on('click', '.edit-pos-haut', function() {
-            alert('c');
-           });
-
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : MODIFICATION DE LA POSITION DE LA STRUTURE VERS LE BAS
-          // -------------------------------------------------------------------------------------------------------
-
-          $('#liste_structure tbody').on('click', '.edit-pos-bas', function() {
-            alert('d');
-           });
+ 
 
            $('#BTN_GENERER').click(function() {
             $.ajax({
                   type: "POST",
                   url: "../../traitements/socard/structures/generer_socard.php",
+                  data: "mode=production",
                   dataType: 'json',
                   success: function (data) 
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                        alert(data.SOCARD);
-                        break;
+                         toastr.success('Mise à jour de la SOCARD effectuée !');
+                         break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
                      break;  
@@ -372,6 +353,37 @@
                   }
                 });
             });
+
+          // -------------------------------------------------------------------------------------------------------
+          // ---- FONCTION REDIRECTION VERS NOUVELLE FENETRE : VISUALISATION
+          // -------------------------------------------------------------------------------------------------------
+
+          function socard_temporaire() {
+
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/generer_socard.php",
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                         toastr.success('Génération de la SOCARD temporaire effectuée !');
+                         break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+                });
+
+            var myWindow = window.open("../../structures/socard-temporaire.html", "");
+         }
 
          // --------------------------------------------------------------------------------------------------
          // FONCTION : DECONNEXION
