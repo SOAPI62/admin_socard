@@ -32,8 +32,9 @@ if (!empty($_POST['titre']) && !empty($_POST['description']) && !empty($_POST['f
     
     // ? --- Préparation de la requêtes SQL
 
-    $query = "INSERT INTO `SOCARD_NOUVEAUTE`(`TITRE_NOUVEAUTE`, `DESCRIPTION_NOUVEAUTE`, `IMG_NOUVEAUTE`) VALUES ('$titre','$description','$file')";
-
+     $query  = "INSERT INTO `SOCARD_NOUVEAUTE`(`TITRE_NOUVEAUTE`, `DESCRIPTION_NOUVEAUTE`, `IMG_NOUVEAUTE`) VALUES ('$titre', '$description', '$file') ";
+     $query .= "ON DUPLICATE KEY UPDATE `DESCRIPTION_NOUVEAUTE`='$description', `TITRE_NOUVEAUTE`='$titre', `IMG_NOUVEAUTE`='$file'";
+ 
     try {
         $stmt = $dbh->prepare($query);
         $stmt->execute();

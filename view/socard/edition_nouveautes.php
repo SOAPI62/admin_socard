@@ -107,7 +107,7 @@
                            </div>
                         </div>
                         <div class="file-upload-content">
-                           <img class="file-upload-image" src="#" alt="your image" />
+                           <img class="file-upload-image" src="#" alt="" />
                            <div class="image-title-wrap">
                               <button type="button" onclick="removeUpload()" class="remove-image">Supprimer <span class="image-title">Télécharger une image</span></button>
                            </div>
@@ -153,12 +153,10 @@
       <!-- AdminLTE for demo purposes -->
       <script src="../../dist/js/demo.js"></script>   
       <script>    
-
-      $( document ).ready(function() {
-         // ----------------------------------------------------------------------------------------------------------------
-         // ---- DESIGN DESCRIPTION
-         // ---------------------------------------------------------------------------------------------------------------- 
-             
+ 
+         // ! ----------------------------------------------------------------------------------------------------------------
+         // ! ---- LECTURE DES DONNES DE LA STRUCTURE : NOUVEAUTE
+         // ! ---------------------------------------------------------------------------------------------------------------- 
   
          $.ajax({
                type: "POST",
@@ -189,9 +187,9 @@
                }
             });
           
-         // ----------------------------------------------------------------------------------------------------------------
-         // ---- CHARGEMENT DE L IMAGE NOUVAUTE
-         // ----------------------------------------------------------------------------------------------------------------
+         // ! ----------------------------------------------------------------------------------------------------------------
+         // ! ---- CHARGEMENT DE L IMAGE NOUVAUTE
+         // ! ----------------------------------------------------------------------------------------------------------------
           
           function readURL(input) {
             if (input.files && input.files[0]) {
@@ -213,31 +211,10 @@
               removeUpload();
             }
           }
-          
-          function removeUpload() {
-            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-            $('.file-upload-content').hide();
-            $('.image-upload-wrap').show();
-          }
-          
-          $('.image-upload-wrap').bind('dragover', function () {
-          		$('.image-upload-wrap').addClass('image-dropping');
-          	});
-          	$('.image-upload-wrap').bind('dragleave', function () {
-          		$('.image-upload-wrap').removeClass('image-dropping');
-          });
-
-         // --------------------------------------------------------------------------------------------------
-         // FONCTION : DECONNEXION
-         // --------------------------------------------------------------------------------------------------
-               
-         <?php
-            include '../fonction/_deconnexion.php';
-         ?>
-          
-          // ----------------------------------------------------------------------------------------------------------------
-          // ---- VALIDATION DU FORMULAIRE
-          // ----------------------------------------------------------------------------------------------------------------
+      
+          // ! ----------------------------------------------------------------------------------------------------------------
+          // ! ---- VALIDATION DE LA MISE A JOUR DU FORMULAIRE : NOUVEAUTE
+          // ! ----------------------------------------------------------------------------------------------------------------
           
             $("#btn_valider").click(function(){
          
@@ -274,11 +251,33 @@
                       }
                    }
                   });
-
             });
-      });
 
-      
+         // ! ----------------------------------------------------------------------------------------------------------------
+         // ! ---- GESTION CSS DE L UPLOAD
+         // ! ----------------------------------------------------------------------------------------------------------------
+
+          function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+          }
+          
+          $('.image-upload-wrap').bind('dragover', function () {
+          		$('.image-upload-wrap').addClass('image-dropping');
+          });
+
+          $('.image-upload-wrap').bind('dragleave', function () {
+          		$('.image-upload-wrap').removeClass('image-dropping');
+          });
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : DECONNEXION
+         // ! --------------------------------------------------------------------------------------------------
+               
+         <?php
+            include '../fonction/_deconnexion.php';
+         ?>      
 
       </script>
    </body>
