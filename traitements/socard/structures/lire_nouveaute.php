@@ -19,16 +19,16 @@ $select["MESSAGE_SQL"]      = '';
 // Préparation de la requêtes SQL
 // ----------------------------------------------------------------------
 
-$query = "SELECT `ID_NOUVEAUTE`, `TITRE_NOUVEAUTE`, `DESCRIPTION_NOUVEAUTE`, `IMG_NOUVEAUTE` FROM `SOCARD_NOUVEAUTE`";
+$query = "SELECT   `TITRE_NOUVEAUTE`, `DESCRIPTION_NOUVEAUTE`, `IMG_NOUVEAUTE` FROM `SOCARD_NOUVEAUTE`";
 
 $stmt = $dbh->prepare($query);
 $stmt->execute();
 $result = $stmt->fetch();
 
 $select["CODE_RETOUR"]              = 'OK';
-$select["TITRE_NOUVEAUTE"]          =  $result[1];
-$select["DESCRIPTION_NOUVEAUTE"]    =  $result[2];
-$select["IMG_NOUVEAUTE"]            =  $result[3];
+$select["TITRE_NOUVEAUTE"]          =  $result[0];
+$select["DESCRIPTION_NOUVEAUTE"]    =  $result[1];
+$select["IMG_NOUVEAUTE"]            =  $result[2];
 
 // ------------------------------------------------------------------------------------------------------------------------------
 // FIN DU TRAITEMENT

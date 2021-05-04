@@ -21,7 +21,10 @@ $select["STRUCTURE_HTML"]   = '';
 // ----------------------------------------------------------------------
 
 $id_structure    = $_POST['id_structure'];
+
 $structure_html  = htmlentities($_POST['structure_html'],ENT_QUOTES);
+$structure_html  = str_replace("&#x27;"," ", $structure_html);
+
 
 // ----------------------------------------------------------------------
 // Vérification si les parametres sont renseignés

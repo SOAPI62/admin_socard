@@ -1,8 +1,0 @@
-    <div id="BOUTIQUE" class="section wide purple boutique">
-      <div class="wrap">
-        <a href="{{URL_BOUTIQQUE}}" target="_blank" class="link-block-7 w-inline-block">
-          <h2 class="heading-4 cheque_cadeau">{{BTN_TITRE_BOUTIQQUE}}</h2>
-          <p class="paragraph-2 boutique">Consulter notre boutique</p>
-        </a>
-      </div>
-    </div>
