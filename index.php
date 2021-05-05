@@ -97,7 +97,8 @@ if($_SESSION['EMAIL_UTILISATEUR'] == ''){
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery Validate Form-->
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+<script src=http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js></script>
+<script src=http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->

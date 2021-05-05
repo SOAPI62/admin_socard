@@ -194,6 +194,50 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
+         </div>
+
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- EDITION D UNE CAMPAGNE                                                                                     -->                                                           
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="visu_campagne_modale">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Visualisation d'une campagne SMS</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                        <label>Nom de la campagne</label>
+                        <div class="input-group" >
+                            <input id="VISU_NOM_CAMPAGNE" type="text" class="form-control" placeholder="Saisir le nom de la campagne"  style="text-transform: uppercase" disabled>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                        <div class="form-group">
+                            <label>Date d'émission</label>
+                            <input id="VISU_DATE_EMISSION" type="date" value="0000-00-00" disabled>
+                            <label>Heure d'émission</label>
+                            <select id="VISU_HEURE_EMISSION" disabled>
+                              <option value="18:00">18:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group"  >
+                            <label >Message </label>
+                            <textarea id="VISU_BLK_ZONE_MESSAGE" class="form-control" rows="5" placeholder="..." disabled></textarea>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="VISU_ANNULATION_CAMPAGNE" type="button" class="btn btn-primary btn-info">Fermer</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
          </div>     
 
          <!-- /.modal -->
@@ -316,7 +360,14 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         }
                         else
                         {
-                           toastr.error('La campagne a déjà été émise !');
+                           $('#VISU_NOM_CAMPAGNE').val(data.NOM_CAMPAGNE);
+                           $('#VISU_DATE_EMISSION').val(data.DATE_CAMPAGNE);
+                           $heure = data.HEURE_CAMPAGNE;
+                           $heure =  $heure.substr(0,5);
+                           $('#VISU_HEURE_EMISSION').val($heure);
+                           $('#VISU_BLK_ZONE_MESSAGE').val(data.MESSAGE_CAMPAGNE);
+                           
+                           $('#visu_campagne_modale').modal('toggle');
                         }
 
                      break;
@@ -389,6 +440,14 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
           $('#MAJ_ANNULATION_CAMPAGNE').click(function() {
                $('#maj_campagne_modale').modal('toggle');
+           });
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- FERMETURE DE LA FENETRE VISU CAMPAGNE
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#VISU_ANNULATION_CAMPAGNE').click(function() {
+               $('#visu_campagne_modale').modal('toggle');
            });
 
          // ! --------------------------------------------------------------------------------------------------

@@ -260,6 +260,45 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         -->
                   </div>
                </div>
+               <div class="card">
+                  <div class="card-header border-0">
+                     <div class="d-flex justify-content-between">
+                        <div class="card-body">
+                        <label >Evolution du nombre d'inscriptions pendant </label>
+                        <select id="periode_connexion">
+                           <option value='semaine' selected>semaine</option>
+                           <option value='jour_j'>jour J</option>
+                        </select>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <div class="d-flex">
+                     
+                        <p class="ml-auto d-flex flex-column text-right">
+                           <span class="text-success">
+                           <i id="pourcentage_connexions" class="fas fa-arrow-up"></i> 
+                           </span>
+                           <span class="text-muted">Évolution M-1</span>
+                        </p>
+                     </div>
+                     <!-- /.d-flex -->
+                     <div class="position-relative mb-4" id="canvas-reload">
+                        <canvas id="visitors-chart-2" height="200"></canvas>
+                     </div>
+                     <!--
+                        <div class="d-flex flex-row justify-content-end">
+                          <span class="mr-2">
+                            <i class="fas fa-square text-primary"></i> This Week
+                          </span>
+                        
+                          <span>
+                            <i class="fas fa-square text-gray"></i> Last Week
+                          </span>
+                        </div>
+                        -->
+                  </div>
+               </div>
                </form>
 
             </div>
