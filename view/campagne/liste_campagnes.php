@@ -170,7 +170,7 @@
                             <input id="MAJ_DATE_EMISSION" type="date" value="0000-00-00">
                             <label>Heure d'émission</label>
                             <select id="MAJ_HEURE_EMISSION">
-                              <option value="">18:00</option>
+                              <option value="18:00">18:00</option>
                             </select>
                         </div>
                         <div class="form-group"  >
