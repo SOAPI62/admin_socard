@@ -1,3 +1,8 @@
+<?php
+session_start();
+if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']))
+{
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -403,3 +408,7 @@ $('.image-upload-wrap').bind('dragover', function () {
 </script>
 </body>
 </html>
+<?php 
+}
+else { header( 'Location: ../../index.php');}
+?>

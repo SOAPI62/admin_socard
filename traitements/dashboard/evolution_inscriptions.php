@@ -63,7 +63,8 @@ switch ($mode) {
 
         }
         else {
-            $select["EVOLUTION_INSCRIPTIONS"] =  ((float)$nb_inscrit_m - (float)$nb_inscrit_m_1) / (float)$nb_inscrit_m_1 * 100;
+            $evo_mois = ((float)$nb_inscrit_m - (float)$nb_inscrit_m_1) / (float)$nb_inscrit_m_1 * 100;  
+            $select["EVOLUTION_INSCRIPTIONS"] =  number_format($evo_mois,2);
         }
 
         break;
@@ -121,7 +122,8 @@ switch ($mode) {
 
         }
         else {
-            $select["EVOLUTION_INSCRIPTIONS"] =  ((float)$nb_inscrit_s - (float)$nb_inscrit_s_1) / (float)$nb_inscrit_s_1 * 100;
+            $evo_semaine = ((float)$nb_inscrit_s - (float)$nb_inscrit_s_1) / (float)$nb_inscrit_s_1 * 100;
+            $select["EVOLUTION_INSCRIPTIONS"] =  number_format($evo_semaine,2);
         }
 
         $select["nb_inscrit_s"] = $nb_inscrit_s;
@@ -174,7 +176,8 @@ switch ($mode) {
 
         }
         else {
-            $select["EVOLUTION_INSCRIPTIONS"] =  ((float)$nb_inscrit_t - (float)$nb_inscrit_t_1) / (float)$nb_inscrit_t_1 * 100;
+            $evo_trimestre = ((float)$nb_inscrit_t - (float)$nb_inscrit_t_1) / (float)$nb_inscrit_t_1 * 100;
+            $select["EVOLUTION_INSCRIPTIONS"] =  number_format($evo_trimestre,2);
         }
 
         break; 

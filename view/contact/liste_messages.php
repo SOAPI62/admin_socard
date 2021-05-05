@@ -1,3 +1,8 @@
+<?php
+session_start();
+if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']))
+{
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -439,3 +444,7 @@
       </script>
    </body>
 </html>
+<?php 
+}
+else { header( 'Location: ../../index.php');}
+?>

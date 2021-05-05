@@ -1,5 +1,8 @@
-
-
+<?php
+session_start();
+if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']))
+{
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -506,12 +509,20 @@
                var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
                var jour_semaine = tab_jour[ladate.getDay()];
 
-               if ($('#NOM_CAMPAGNE').val() == '' || $('#DATE_EMISSION').val() == '' || $('#HEURE_EMISSION').val() == '' || $('#BLK_ZONE_MESSAGE').val() == '')
-               {
-                    alert('erreur --> champs non renseigné');
+               if ($('#NOM_CAMPAGNE').val() == ''){
+                     toastr.error('Le nom de la campagne n\'est pas renseigné');
+               }
+               else if ($('#DATE_EMISSION').val() == ''){
+                     toastr.error('La date d\'émission de la campagne n\'est pas renseignée');
+               }
+               else if ($('#HEURE_EMISSION').val() == ''){
+                     toastr.error('L\'heure d\'émission de la campagne n\'est pas renseignée');
+               }
+               else if ($('#BLK_ZONE_MESSAGE').val() == ''){
+                     toastr.error('Le message de la campagne n\'est pas renseigné');
                }
                else if (jour_semaine == "Dimanche"){
-                     alert('IMPOSSIBLE --> DIMANCHE');
+                     toastr.error('Vous ne pouvez pas faire de campagne le dimanche !');
                }
                else
                {
@@ -662,3 +673,7 @@
       </script>
    </body>
 </html>
+<?php 
+}
+else { header( 'Location: ../../index.php');}
+?>

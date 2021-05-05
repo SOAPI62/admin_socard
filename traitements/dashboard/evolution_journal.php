@@ -68,7 +68,8 @@ switch ($mode_conn) {
 
         }
         else {
-            $select["EVOLUTION_CONNEXIONS"] =  ((float)$nb_connexion_s - (float)$nb_connexion_s_1) / (float)$nb_connexion_s_1 * 100;
+            $evo_semaine = ((float)$nb_connexion_s - (float)$nb_connexion_s_1) / (float)$nb_connexion_s_1 * 100;
+            $select["EVOLUTION_CONNEXIONS"] =  number_format($evo_semaine,2);
         }
 
         $select["nb_connexion_s"] = $nb_connexion_s;
@@ -121,7 +122,9 @@ switch ($mode_conn) {
 
         }
         else {
-            $select["EVOLUTION_CONNEXIONS"] =  ((float)$nb_connexion_m - (float)$nb_connexion_m_1) / (float)$nb_connexion_m_1 * 100;
+
+            $evo_mois = ((float)$nb_connexion_m - (float)$nb_connexion_m_1) / (float)$nb_connexion_m_1 * 100;
+            $select["EVOLUTION_CONNEXIONS"] =  number_format($evo_mois,2);
         }
 
         $select["PERIODICITE"]          = $periodicite;
@@ -175,7 +178,8 @@ switch ($mode_conn) {
 
         }
         else {
-            $select["EVOLUTION_CONNEXIONS"] =  ((float)$nb_connexion_t - (float)$nb_connexion_t_1) / (float)$nb_connexion_t_1 * 100;
+            $evo_trimeste = ((float)$nb_connexion_t - (float)$nb_connexion_t_1) / (float)$nb_connexion_t_1 * 100;
+            $select["EVOLUTION_CONNEXIONS"] =  number_format($evo_trimestre,2);
         }
 
          $select["PERIODICITE"]          = $periodicite;
