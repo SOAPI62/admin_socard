@@ -153,6 +153,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                         <input id="ID_CAMPAGNE" type="text" class="form-control"  style="display:none">
+
                         <div class="form-group">
                         <label>Nom de la campagne</label>
                         <div class="input-group" >
@@ -204,17 +206,15 @@
       <script src="../../dist/js/demo.js"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
       <script>
 
       // ! -------------------------------------------------------------------------------------------------------
       // ! ---- INITIALISATION  
       // ! -------------------------------------------------------------------------------------------------------
 
-
       var $nb_contact = 0;
-
       var $nb_caracteres_max = 160;
-
 
       // ! -------------------------------------------------------------------------------------------------------
       // ! ---- LISTE CRUD : CAMPAGNE
@@ -286,19 +286,28 @@
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                        $('#MAJ_NOM_CAMPAGNE').val(data.NOM_CAMPAGNE);
-                        $('#MAJ_DATE_EMISSION').val(data.DATE_CAMPAGNE);
-                        $heure = data.HEURE_CAMPAGNE;
-                        $heure =  $heure.substr(0,5);
-                        $('#MAJ_HEURE_EMISSION').val($heure);
-                        $('#MAJ_BLK_ZONE_MESSAGE').val(data.MESSAGE_CAMPAGNE);
+                        if (data.NB_EMISSION == 0)
+                        {
+                           $('#ID_CAMPAGNE').val(data.ID_CAMPAGNE);
+                           $('#MAJ_NOM_CAMPAGNE').val(data.NOM_CAMPAGNE);
+                           $('#MAJ_DATE_EMISSION').val(data.DATE_CAMPAGNE);
+                           $heure = data.HEURE_CAMPAGNE;
+                           $heure =  $heure.substr(0,5);
+                           $('#MAJ_HEURE_EMISSION').val($heure);
+                           $('#MAJ_BLK_ZONE_MESSAGE').val(data.MESSAGE_CAMPAGNE);
 
-                        $maj_message = $('#MAJ_BLK_ZONE_MESSAGE').val();
-                        $lg_maj_message = $maj_message.length;
+                           $maj_message = $('#MAJ_BLK_ZONE_MESSAGE').val();
+                           $lg_maj_message = $maj_message.length;
 
-                        $('#MAJ_NB_CARACTERES_RESTANTS').html('[' + ($nb_caracteres_max - $lg_maj_message ) + ']');
-                        
-                        $('#maj_campagne_modale').modal('toggle');
+                           $('#MAJ_NB_CARACTERES_RESTANTS').html('[' + ($nb_caracteres_max - $lg_maj_message ) + ']');
+                           
+                           $('#maj_campagne_modale').modal('toggle');
+                        }
+                        else
+                        {
+                           toastr.error('La campagne a déjà été émise !');
+                        }
+
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
@@ -331,6 +340,7 @@
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
+                        toastr.success('La campagne a été supprimé !');
                         table.ajax.reload();
                      break;
                      case 'ANOMALIE':
@@ -383,7 +393,6 @@
         // ! --------------------------------------------------------------------------------------------------
         
         $('#BTN_AJOUT_CAMPAGNE').click(function() {
-        
            $('#NOM_CAMPAGNE').val('');
            $('#BLK_ZONE_MESSAGE').val('');
            $('#NB_CARACTERES_RESTANTS').html('[' + $nb_caracteres_max + ']');
@@ -446,10 +455,12 @@
         // ! ---- GESTION NOMBRE DE CARACTERES MESSAGE : CREATION CAMPAGNE 
         // ! -------------------------------------------------------------------------------------------------------
 
-        $('#BLK_ZONE_MESSAGE').keypress(function() {
+        $('#BLK_ZONE_MESSAGE').keypress(function() 
+        {
             $message = $('#BLK_ZONE_MESSAGE').val();
             $lg_message = $message.length + 1;
-             if(($nb_caracteres_max - $lg_message) < 0)
+
+             if (($nb_caracteres_max - $lg_message) < 0)
             {
                 return false;
             }
@@ -462,14 +473,17 @@
         // ! ---- GESTION NOMBRE DE CARACTERES MESSAGE : EDITION CAMPAGNE 
         // ! -------------------------------------------------------------------------------------------------------
 
-        $('#MAJ_BLK_ZONE_MESSAGE').keypress(function() {
+        $('#MAJ_BLK_ZONE_MESSAGE').keypress(function() 
+        {
             $maj_message = $('#MAJ_BLK_ZONE_MESSAGE').val();
             $lg_maj_message = $maj_message.length + 1;
-             if(($nb_caracteres_max - $lg_maj_message) < 0)
+
+             if (($nb_caracteres_max - $lg_maj_message) < 0)
             {
                 return false;
             }
-            else{
+            else
+            {
                 $('#MAJ_NB_CARACTERES_RESTANTS').html('[' + ($nb_caracteres_max - $lg_maj_message)  + ']');
             }
         });
@@ -479,16 +493,18 @@
         // ! -------------------------------------------------------------------------------------------------------
 
         $('#VALIDATION_CAMPAGNE').click(function() {
-               if($('#NOM_CAMPAGNE').val() == '' || $('#DATE_EMISSION').val() == '' || $('#HEURE_EMISSION').val() == '' || $('#BLK_ZONE_MESSAGE').val() == ''){
+               if ($('#NOM_CAMPAGNE').val() == '' || $('#DATE_EMISSION').val() == '' || $('#HEURE_EMISSION').val() == '' || $('#BLK_ZONE_MESSAGE').val() == '')
+               {
                     alert('erreur');
                } 
-               else{
+               else
+               {
                 var formData = new FormData();
 
-                formData.append('nom_campagne', $('#NOM_CAMPAGNE').val());
-                formData.append('date_campagne', $('#DATE_EMISSION').val());
-                formData.append('heure_campagne', $('#HEURE_EMISSION').val());
-                formData.append('message_campagne', $('#BLK_ZONE_MESSAGE').val());
+                formData.append('NOM_CAMPAGNE', $('#NOM_CAMPAGNE').val());
+                formData.append('DATE_EMISSION', $('#DATE_EMISSION').val());
+                formData.append('HEURE_EMISSION', $('#HEURE_EMISSION').val());
+                formData.append('BLK_ZONE_MESSAGE', $('#BLK_ZONE_MESSAGE').val());
 
                 $.ajax({
                     type: "POST",
@@ -502,7 +518,7 @@
                     {
                         switch (data.CODE_RETOUR) {
                         case 'OK':
-                        $('#nouveau_message_modale').modal('toggle');
+                        $('#ajout_campagne_modale').modal('toggle');
                         table.ajax.reload();
                         break;
                         case 'ANOMALIE':
@@ -521,11 +537,31 @@
         });
 
         // ! -------------------------------------------------------------------------------------------------------
-        // ! ---- TEST AJOUT CAMPAGNE
+        // ! ---- TEST D ENVOI DU SMS
         // ! -------------------------------------------------------------------------------------------------------
 
-        $('#TEST_CAMPAGNE').click(function() {
-               alert('TEST CAMPAGNE');
+        $('#MAJ_TEST_CAMPAGNE').click(function() {
+
+         $.ajax({
+                    type: "POST",
+                    url: "../../traitements/isendpro/comptage_caracteres.php",
+                    data: 'message=' + $('#BLK_ZONE_MESSAGE').val() ,
+                    dataType: 'json',
+                    success: function (data) 
+                    {
+                        switch (data.CODE_RETOUR) {
+                        case 'OK':
+                           envoie_SMS_test($('#MAJ_BLK_ZONE_MESSAGE').val());
+                        break;
+                        case 'ANOMALIE':
+                        toastr.error(data.MESSAGE_RETOUR);
+                        break;  
+                        default:
+                        break;
+                        }
+                    }
+                });
+ 
         });
 
         // ! -------------------------------------------------------------------------------------------------------
@@ -533,17 +569,71 @@
         // ! -------------------------------------------------------------------------------------------------------
 
         $('#MAJ_VALIDATION_CAMPAGNE').click(function() {
-               alert('VALIDATION MAJ CAMPAGNE');
+         if($('#MAJ_NOM_CAMPAGNE').val() == '' || $('#MAJ_DATE_EMISSION').val() == '' || $('#MAJ_HEURE_EMISSION').val() == '' || $('#MAJ_BLK_ZONE_MESSAGE').val() == ''){
+                    alert('erreur');
+               } 
+               else{
+                var formData = new FormData();
+
+                formData.append('ID_CAMPAGNE', $('#ID_CAMPAGNE').val());
+                formData.append('NOM_CAMPAGNE', $('#MAJ_NOM_CAMPAGNE').val());
+                formData.append('DATE_EMISSION', $('#MAJ_DATE_EMISSION').val());
+                formData.append('HEURE_EMISSION', $('#MAJ_HEURE_EMISSION').val());
+                formData.append('BLK_ZONE_MESSAGE', $('#MAJ_BLK_ZONE_MESSAGE').val());
+
+                $.ajax({
+                    type: "POST",
+                    url: "../../traitements/campagnes/maj_campagne.php",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function (data) 
+                    {
+                        switch (data.CODE_RETOUR) {
+                        case 'OK':
+                        $('#maj_campagne_modale').modal('toggle');
+                        table.ajax.reload();
+                        break;
+                        case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                        break;  
+                        case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                        break;                       
+                        default:
+                        break;
+                        }
+                    }
+                });
+               }
         });
 
-        // ! -------------------------------------------------------------------------------------------------------
-        // ! ---- TEST MAJ CAMPAGNE
-        // ! -------------------------------------------------------------------------------------------------------
-
-        $('#MAJ_TEST_CAMPAGNE').click(function() {
-               alert('TEST MAJ CAMPAGNE');
-        });
-
+        function envoie_SMS_test($message) 
+        {
+         $.ajax({
+                    type: "POST",
+                    url: "../../traitements/isendpro/envoi_sms.php",
+                    data: 'message=' + $message,
+                    dataType: 'json',
+                    success: function (data) 
+                    {
+                        switch (data.CODE_RETOUR) {
+                        case 'OK':
+                           toastr.success('Sms de test envoyé !');
+                           $('#maj_campagne_modale').modal('toggle');
+                           table.ajax.reload();
+                        break;
+                        case 'ANOMALIE':
+                        toastr.error(data.MESSAGE_ERREUR);
+                        break;  
+                        default:
+                        break;
+                        }
+                    }
+                });
+        }
 
       </script>
    </body>

@@ -9,20 +9,24 @@ $select["CODE_RETOUR"]       = '';
 $select["NB_CARACTERES"]     = '';
 $select["MESSAGE_ERREUR"]    = '';
 
+// ! ----------------------------------------------------------------------
+// ! Chargement des parametres de l URL
+// ! ----------------------------------------------------------------------
+
 $MESSAGE = $_POST['message'];
 
 // ! ----------------------------------------------------------------------
 // ! Envoi requete
 // ! ----------------------------------------------------------------------
+
 $ch = curl_init();
 
-$url = 'https://apirest.isendpro.com/cgi-bin/comptage';
+$url = 'https://apirest.isendpro.com/cgi-bin/sms';
 $params = array(
     'keyid'     =>  'fb7a50eae6922d075ba029702a3da002',
-    'num'       =>  '0685318827',
+    'num'       =>  '+33685318827',
     'sms'       =>  $MESSAGE,
-    'emetteur'  =>  'SOSHOOTING',
-    'comptage'  =>  1
+    'emetteur'  =>  'SOSHOOTING'
 );
 $options = array(
     CURLOPT_URL => $url,
@@ -34,46 +38,37 @@ $options = array(
 curl_setopt_array($ch, $options);
 
 $response = curl_exec($ch);
-
 curl_close($ch);
 
 // ! ----------------------------------------------------------------------
 // ! Traitement du retour
 // ! ----------------------------------------------------------------------
-
+ 
 $reponsejson=json_decode($response);
 $repetat=$reponsejson->etat->etat;
 if (!isset($repetat->code)){
     $repetat=$reponsejson->etat->etat[0];
 }
 
-// ! Erreur generale
-
+// Erreur generale
 if (!isset($repetat->tel)){
-
+    $select["CODE_RETOUR"]       = 'ANOMALIE';
+    $select["MESSAGE_ERREUR"]    = 'Code erreur ' . $repetat->code . ' : ' . $repetat->message;
+// Erreur specifique au numero de telephone 
+}else if (isset($repetat->tel) && ($repetat->code!=0)){
     $select["CODE_RETOUR"]       = 'ANOMALIE';
     $select["MESSAGE_ERREUR"]    = $repetat->code . ' ' . $repetat->message;
- 
-// ! Infos de comptage
-}else{
-
-    if ($repetat->nb_sms > 1)
-    {
-        $select["CODE_RETOUR"]       = 'ANOMALIE';
-        $select["NB_CARACTERES"]     = $repetat->nb_caractere;
-        $select["MESSAGE_ERREUR"]    = 'Le message doit couter 1 sms ! (' . $repetat->nb_sms . ')';
-
-    }
-    else {
-        $select["CODE_RETOUR"]       = 'OK';
-        $select["NB_CARACTERES"]     = $repetat->nb_caractere;
-    }
+// Envoi OK    
+}else if (isset($repetat->tel) && ($repetat->code==0)){
+    $select["CODE_RETOUR"]       = 'OK';
 }
+
 // ! ------------------------------------------------------------------------------------------------------------------------------
 // ! FIN DU TRAITEMENT
 // ! ------------------------------------------------------------------------------------------------------------------------------
 
 echo json_encode($select);
 exit(0);
+
 
 ?>
