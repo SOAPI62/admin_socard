@@ -66,7 +66,7 @@
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0">
-            <button id="BTN_AJOUT_CAMPAGNE" type="button" class="btn btn-primary">Ajouter</button>
+            <button id="BTN_AJOUT_CAMPAGNE" type="button" data-toggle="dropdown" class="btn btn-primary">Ajouter</button>
             </div>
          </section>
          <!-- Main content -->
@@ -95,8 +95,8 @@
          <!-- AJOUT D UNE CAMPAGNE                                                                                     -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
-         <div class="modal fade" id="ajout_campagne_modale">
-            <div class="modal-dialog modal-xl">
+         <div class="modal fade dropdown" tabindex="-1" role="dialog" aria-hidden="true" id="ajout_campagne_modale">
+            <div class="modal-dialog modal-xl ">
                 <div class="modal-content">
                     <div id="DIV_ALERT" class="alert alert-warning alert-dismissible" style="display:none">
                     <h5>Attention !</h5>
@@ -117,9 +117,12 @@
                         </div>
                         <div class="form-group">
                         <div class="form-group">
-                            <label>Date et heure d'émission</label>
+                            <label>Date d'émission</label>
                             <input id="DATE_EMISSION" type="date" value="<?php echo date('Y-m-d'); ?>">
-                            <input id="HEURE_EMISSION" type="time" value="<?php echo date('H:i'); ?>">
+                            <label>Heure d'émission</label>
+                            <select id="HEURE_EMISSION">
+                              <option value="18:00" selected >18:00</option>
+                            </select>
                         </div>
                         <div class="form-group"  >
                             <label >Message </label>
@@ -129,8 +132,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="VALIDATION_CAMPAGNE" type="button" class="btn btn-success">Valider</button>
                         <button id="ANNULATION_CAMPAGNE" type="button" class="btn btn-primary btn-info">Annuler</button>
+                        <button id="VALIDATION_CAMPAGNE" type="button" class="btn btn-success">Valider</button>
                         <button id="TEST_CAMPAGNE" type="button" class="btn btn-primary btn-custom">Tester</button>
                     </div>
                 </div>
@@ -143,7 +146,7 @@
          <!-- EDITION D UNE CAMPAGNE                                                                                     -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
-         <div class="modal fade" id="maj_campagne_modale">
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="maj_campagne_modale">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -165,7 +168,10 @@
                         <div class="form-group">
                             <label>Date d'émission</label>
                             <input id="MAJ_DATE_EMISSION" type="date" value="0000-00-00">
-                            <input id="MAJ_HEURE_EMISSION" type="time">
+                            <label>Heure d'émission</label>
+                            <select id="MAJ_HEURE_EMISSION">
+                              <option value="">18:00</option>
+                            </select>
                         </div>
                         <div class="form-group"  >
                             <label >Message </label>
@@ -175,8 +181,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button id="MAJ_ANNULATION_CAMPAGNE" type="button" class="btn btn-primary btn-info">Annuler</button>
                         <button id="MAJ_VALIDATION_CAMPAGNE" type="button" class="btn btn-success">Valider</button>
-                        <button id="MAJ_ANNULATION_CAMPAGNE" type="button" class="btn btn-primary">Annuler</button>
                         <button id="MAJ_TEST_CAMPAGNE" type="button" class="btn btn-primary btn-custom">Tester</button>
                     </div>
                 </div>
@@ -493,10 +499,18 @@
         // ! -------------------------------------------------------------------------------------------------------
 
         $('#VALIDATION_CAMPAGNE').click(function() {
+
+               var ladate= new Date($('#DATE_EMISSION').val());
+               var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+               var jour_semaine = tab_jour[ladate.getDay()];
+
                if ($('#NOM_CAMPAGNE').val() == '' || $('#DATE_EMISSION').val() == '' || $('#HEURE_EMISSION').val() == '' || $('#BLK_ZONE_MESSAGE').val() == '')
                {
-                    alert('erreur');
-               } 
+                    alert('erreur --> champs non renseigné');
+               }
+               else if (jour_semaine == "Dimanche"){
+                     alert('IMPOSSIBLE --> DIMANCHE');
+               }
                else
                {
                 var formData = new FormData();
@@ -634,6 +648,14 @@
                     }
                 });
         }
+
+        function test_dimanche(){
+         var ladate= $('#_DATE_EMISSION').val();
+         document.write("ladate.getDay() = "+ladate.getDay()+"<BR>");
+         var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+         document.write("Nous sommes un "+tab_jour[ladate.getDay()])
+        }
+
 
       </script>
    </body>

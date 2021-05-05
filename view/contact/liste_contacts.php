@@ -98,7 +98,7 @@
          <!-- AJOUT D UN CONTACT                                                                                       -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
-         <div class="modal fade" id="ajout_contact_modale">
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="ajout_contact_modale">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
@@ -194,7 +194,7 @@
          <!-- EDITION D UN CONTACT                                                                                       -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
-         <div class="modal fade" id="maj_contact_modale">
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="maj_contact_modale">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">

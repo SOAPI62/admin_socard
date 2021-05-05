@@ -92,7 +92,7 @@
          <!-- NOUVEAU  MESSAGE                                                                                         -->
          <!-- -------------------------------------------------------------------------------------------------------- -->
          
-         <div class="modal fade" id="nouveau_message_modale">
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="nouveau_message_modale">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
@@ -124,7 +124,7 @@
          <!-- EDITION D UN MESSAGE                                                                                     -->
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
-         <div class="modal fade" id="edition_message_modale">
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="edition_message_modale">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
