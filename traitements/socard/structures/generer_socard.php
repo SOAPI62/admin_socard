@@ -10,7 +10,6 @@ include '../../connexion_bdd/conn.php';
 // ! ! Lecture des parametres
 // ! ! ----------------------------------------------------------------------
 
-
 $mode = $_POST['mode'];
 
 // ! ! ----------------------------------------------------------------------
@@ -114,9 +113,7 @@ if ($mode == 'production')
         $select["CODE_RETOUR"]      = 'ANOMALIE';
         $select["MESSAGE_RETOUR"]   = "La copie $file du fichier a échoué...\n";
     }
-
 }
-
 
 $select["SOCARD"]           =  $block_socard;
 
@@ -124,6 +121,6 @@ $select["SOCARD"]           =  $block_socard;
 // ! FIN DU TRAITEMENT
 // ! ------------------------------------------------------------------------------------------------------------------------------
 
-//echo json_encode($select);
+echo json_encode($select);
 exit(0);
 ?>

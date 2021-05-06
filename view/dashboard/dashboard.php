@@ -178,6 +178,38 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                <!-- /.row -->
                <!-- /.row (main row) -->
                <form id="form_dashboard" enctype="multipart/form-data">
+
+               <div class="card">
+                  <div class="card-header border-0">
+                     <div class="d-flex justify-content-between">
+                        <div class="card-body">
+                        <label >Evolution du nombre d'inscriptions pendant </label>
+                        <select id="periode_inscription_">
+                           <option value='semaine' selected>Cette semaine</option>
+                        </select>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-body">
+              
+                     <!-- /.d-flex -->
+                     <div class="position-relative mb-4" id="canvas-reload">
+                        <canvas id="visitors-chart-3" height="200"></canvas>
+                     </div>
+                     <!--
+                        <div class="d-flex flex-row justify-content-end">
+                          <span class="mr-2">
+                            <i class="fas fa-square text-primary"></i> This Week
+                          </span>
+                        
+                          <span>
+                            <i class="fas fa-square text-gray"></i> Last Week
+                          </span>
+                        </div>
+                        -->
+                  </div>
+               </div>
+               
                <div class="card">
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
@@ -260,45 +292,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         -->
                   </div>
                </div>
-               <div class="card">
-                  <div class="card-header border-0">
-                     <div class="d-flex justify-content-between">
-                        <div class="card-body">
-                        <label >Evolution du nombre d'inscriptions pendant </label>
-                        <select id="periode_connexion">
-                           <option value='semaine' selected>semaine</option>
-                           <option value='jour_j'>jour J</option>
-                        </select>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="card-body">
-                     <div class="d-flex">
-                     
-                        <p class="ml-auto d-flex flex-column text-right">
-                           <span class="text-success">
-                           <i id="pourcentage_connexions" class="fas fa-arrow-up"></i> 
-                           </span>
-                           <span class="text-muted">Évolution M-1</span>
-                        </p>
-                     </div>
-                     <!-- /.d-flex -->
-                     <div class="position-relative mb-4" id="canvas-reload">
-                        <canvas id="visitors-chart-2" height="200"></canvas>
-                     </div>
-                     <!--
-                        <div class="d-flex flex-row justify-content-end">
-                          <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> This Week
-                          </span>
-                        
-                          <span>
-                            <i class="fas fa-square text-gray"></i> Last Week
-                          </span>
-                        </div>
-                        -->
-                  </div>
-               </div>
+
                </form>
 
             </div>
@@ -353,9 +347,11 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
       <script src="../../dist/js/pages/dashboard.js"></script>
       <script>
-
-
        
+         // ! --------------------------------------------------------------------------------------------------
+         // ! INITIALISATION DE LA LISTE DES MESSAGES SMS DANS LE CAS D UN AJOUT D UN CONTACT
+         // ! --------------------------------------------------------------------------------------------------
+
          $.ajax({
                url: '../../traitements/contact/liste_select_messages.php',
                 dataType: 'json',
@@ -371,11 +367,12 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          $('#periode_connexion').val('semaine');
          graphique_evolution_connexion($('#periode_connexion').val());
          
+         $('#periode_inscription_').val('semaine');
+         graphique_evolution_inscription_($('#periode_inscription_').val());
          
-         
-         // --------------------------------------------------------------------------------------------------
-         // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! AFFICHAGE DES DONNÉES STAT DE LA SOCARD
+         // ! --------------------------------------------------------------------------------------------------
          
          $.ajax({
          url: '../../traitements/dashboard/dashboard.php',
@@ -399,9 +396,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           }
          });
          
-         // --------------------------------------------------------------------------------------------------
-         // DETECTION CHANGEMENT DU TYPE DE CONTACT
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! DETECTION CHANGEMENT DU TYPE DE CONTACT
+         // ! --------------------------------------------------------------------------------------------------
          
          $( "#CONTACT_PAR" ).change(function() {
          
@@ -448,24 +445,24 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
             switch ($('#CONTACT_PAR').val()) {
               case 'TEL':
-              if ($ajout_POR_CLIENT.trim() == "")
-              {
-               message_anomalie = "Téléphone non renseigné !";
-              }
-              break;
+               if ($ajout_POR_CLIENT.trim() == "")
+               {
+                  message_anomalie = "Téléphone non renseigné !";
+               }
+               break;
               case 'MAIL':
-              if ($ajout_EMAIL_CLIENT.trim() != "")
-              {
-                if (!checkEmail($ajout_EMAIL_CLIENT))
-                {
-                  message_anomalie = "Adresse mail non conforme !";
-                }
-              }
-              else
-              {
-                message_anomalie = "Adresse mail non renseigné !";
-              }
-              break;
+               if ($ajout_EMAIL_CLIENT.trim() != "")
+               {
+                  if (!checkEmail($ajout_EMAIL_CLIENT))
+                  {
+                     message_anomalie = "Adresse mail non conforme !";
+                  }
+               }
+               else
+               {
+                  message_anomalie = "Adresse mail non renseigné !";
+               }
+               break;
               case 'MSG':
               break;
           }
@@ -493,7 +490,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                     '&ajout_CPOSTAL_CLIENT=' + $ajout_CPOSTAL_CLIENT +
                     '&ajout_VILLE_CLIENT=' + $ajout_VILLE_CLIENT +
                     '&ajout_EMAIL_CLIENT=' + $ajout_EMAIL_CLIENT + 
-                    '&ajout_COMMENTAIRE_CLIENT=' + $ajout_COMMENTAIRE_CLIENT,
+                    '&ajout_COMMENTAIRE_CLIENT=' + $ajout_COMMENTAIRE_CLIENT + 
+                    '&ajout_SUPPORT_COM=SOCARD' ,
                 dataType: 'json',
                 async: false,
                 success: function(data) {
@@ -583,9 +581,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
            $('#BLK_ZONE_CONTACT_PAR').toggle();
          })
          
-         // --------------------------------------------------------------------------------------------------
-         // GESTION DU RELOAD GRAPHIQUE SELON PERIODE
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! GESTION DU RELOAD GRAPHIQUE SELON PERIODE
+         // ! --------------------------------------------------------------------------------------------------
 
          $('#periode_inscrit').change(function() {
             $mode =  $('#periode_inscrit').val();
@@ -593,12 +591,21 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             graphique_evolution_inscription($mode);
          });
 
+         // ! --------------------------------------------------------------------------------------------------
+         // ! GENERATION DU GRAPHISME : NOMBRE D INSCRIPTION POUR CHAQUE JOUR DE LA SEMAINE ENCOURS
+         // ! --------------------------------------------------------------------------------------------------
 
-         function graphique_evolution_inscription($mode){
-            // --------------------------------------------------------------------------------------------------
+         $('#periode_inscription_').change(function() {
+            $mode =  $('#periode_inscription_').val();
+            graphique_evolution_inscription_($('#periode_inscription_').val());
+         });
+
+         // --------------------------------------------------------------------------------------------------
          // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
          // --------------------------------------------------------------------------------------------------
-         
+
+         function graphique_evolution_inscription($mode){
+
          $.ajax({
          url: '../../traitements/dashboard/evolution_inscriptions.php',
          data: 'mode=' + $mode,
@@ -626,6 +633,100 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                               var $nb_inscrit = data.INSCRIPTIONS;
          
                               var $visitorsChart = $('#visitors-chart')
+                              // eslint-disable-next-line no-unused-vars
+                              var visitorsChart = new Chart($visitorsChart, {
+                                 data: {
+                                 labels: $periodicite,
+                                 datasets: [{
+                                    type: 'line',
+                                    data: $nb_inscrit,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#007bff',
+                                    pointBorderColor: '#007bff',
+                                    pointBackgroundColor: '#007bff',
+                                    fill: false
+                                    // pointHoverBackgroundColor: '#007bff',
+                                    // pointHoverBorderColor    : '#007bff'
+                                 }]
+                                 },
+                                 options: {
+                                 maintainAspectRatio: false,
+                                 tooltips: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 hover: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 legend: {
+                                    display: false
+                                 },
+                                 scales: {
+                                    yAxes: [{
+                                       // display: false,
+                                       gridLines: {
+                                       display: true,
+                                       lineWidth: '4px',
+                                       color: 'rgba(0, 0, 0, .2)',
+                                       zeroLineColor: 'transparent'
+                                       },
+                                       ticks: $.extend({
+                                       beginAtZero: true,
+                                       suggestedMax: $max
+                                       }, ticksStyle)
+                                    }],
+                                    xAxes: [{
+                                       display: true,
+                                       gridLines: {
+                                       display: false
+                                       },
+                                       ticks: ticksStyle
+                                    }]
+                                 }
+                                 }
+                              })
+                           break;
+                case 'KO':
+                    break;
+                default:
+                  break;
+            }
+          }
+         });
+         }
+
+         function graphique_evolution_inscription_($mode){
+            // --------------------------------------------------------------------------------------------------
+            // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
+            // --------------------------------------------------------------------------------------------------
+         
+         $.ajax({
+         url: '../../traitements/dashboard/evolution_inscriptions_.php',
+         data: 'mode=' + $mode,
+         dataType: 'json',
+         async: false,
+         success: function(data) {
+                     switch (data.REPONSE) {
+                           case 'OK':
+                              //$periodicite = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
+                              $periodicite = data.PERIODICITE;
+                              var $max     = data.MAX_INSCRIPTIONS;
+          
+                              var ticksStyle = {
+                                 fontColor: '#495057',
+                                 fontStyle: 'bold'
+                              }
+         
+                              var mode = 'index'
+                              var intersect = true
+         
+                              var $salesChart = $('#sales-chart')
+         
+                              
+                              var $nb_inscrit = data.INSCRIPTIONS;
+         
+                              var $visitorsChart = $('#visitors-chart-3')
                               // eslint-disable-next-line no-unused-vars
                               var visitorsChart = new Chart($visitorsChart, {
                                  data: {
