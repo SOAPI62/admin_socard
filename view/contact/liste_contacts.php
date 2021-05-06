@@ -72,6 +72,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             <!-- /.container-fluid -->
             <div class="card-body p-0">
             <button id="BTN_AJOUT_CONTACT" type="button" class="btn btn-primary">Ajouter</button>
+            <button id="BTN_IMPORT_CONTACT" type="button" class="btn btn-primary">Importer</button>
             </div>
          </section>
          <!-- Main content -->
@@ -194,6 +195,42 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             <!-- /.modal-dialog -->
          </div>
 
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- IMPORT CONTACT                                                                                           -->                                                           
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+
+         <div class="modal fade dropdown" tabindex="-1" role="dialog" aria-hidden="true" id="import_contact_modale">
+            <div class="modal-dialog modal-xl ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Import de contact</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <select  id="IMPORT_SUPPORT" class="form-control import-support" style="width: 40%;" style="display: none;">
+                              <option value="TIDIO" selected="selected">TIDIO</option>
+                           </select>
+                        </div>
+                        <div class="input_file">
+                           <label for="file" class="file_label">
+                           <i class="fa fa-upload" aria-hidden="true"></i>
+                           Importez votre fichier csv
+                           </label>
+                           <input id="file" type="file" name="file-csv" accept=".csv" />
+                        </div>
+                     </div>
+                    <div class="modal-footer">
+                        <button id="ANNULATION_IMPORT" type="button" class="btn btn-primary btn-info">Annuler</button>
+                        <button id="VALIDATION_IMPORT" type="button" class="btn btn-success">Valider</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>  
 
          <!-- -------------------------------------------------------------------------------------------------------- -->
          <!-- EDITION D UN CONTACT                                                                                       -->                                                           
@@ -313,9 +350,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
       <script>
 
-         // --------------------------------------------------------------------------------------------------
-         // LISTE DES MESSAGES SMS
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! LISTE DES MESSAGES SMS
+         // ! --------------------------------------------------------------------------------------------------
 
          $.ajax({
                url: '../../traitements/contact/liste_select_messages.php',
@@ -327,9 +364,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                 }
                }); 
 
-      // -------------------------------------------------------------------------------------------------------
-      // ---- TRAITEMENT : DATATABLE DONNEES MESSAGES
-      // -------------------------------------------------------------------------------------------------------
+      // ! -------------------------------------------------------------------------------------------------------
+      // ! ---- TRAITEMENT : DATATABLE DONNEES MESSAGES
+      // ! -------------------------------------------------------------------------------------------------------
 
          var table = $('#liste_contacts').DataTable({
          		dom: '<"top"Bf><"liste"l>rt<p>',
@@ -359,7 +396,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          		{
          			targets: 0,
          			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button></div>"
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-desactive'><i class='fas fa-user-slash'></i></button></div>"
          		},
                {
          			"targets": [1],
@@ -385,9 +422,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                  } 
          	});
          
-          //  -------------------------------------------------------------------------------------------------------
-          //  ---- TRAITEMENT : EDITION D UN MESSAGE
-          //  -------------------------------------------------------------------------------------------------------
+          // !  -------------------------------------------------------------------------------------------------------
+          // !  ---- TRAITEMENT : EDITION D UN MESSAGE
+          // !  -------------------------------------------------------------------------------------------------------
 
            $('#liste_messages tbody').on('click', '.edit-message', function() {
              var data = table.row($(this).parents('tr')).data();
@@ -418,9 +455,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
            });
 
-          // --------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : SUPPRESSION D UN CONTACT
-          // -------------------------------------------------------------------------------------------------------
+          // ! --------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : SUPPRESSION D UN CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
 
           $('#liste_contacts tbody').on('click', '.edit-supp', function() {
             var data = table.row($(this).parents('tr')).data();
@@ -449,18 +486,42 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
             });
            });
-  
-          // -------------------------------------------------------------------------------------------------------
-          // ---- APPEL DE LA FENETRE AJOUT CONTACT
-          // -------------------------------------------------------------------------------------------------------
+
+          // ! --------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : DÉSACTIVATION D UN CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#liste_contacts tbody').on('click', '.edit-desactive', function() {
+            alert('desactivation du contact');
+           });
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- APPEL DE LA MODALE AJOUT CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
 
            $('#BTN_AJOUT_CONTACT').click(function() {
                $('#ajout_contact_modale').modal('toggle');
            });
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
-          // -------------------------------------------------------------------------------------------------------
+           // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- APPEL DE LA FENETRE IMPORT CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#BTN_IMPORT_CONTACT').click(function() {
+               $('#import_contact_modale').modal('toggle');
+           });
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- FERMETURE DE LA MODALE IMPORT CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#ANNULATION_IMPORT').click(function() {
+               $('#import_contact_modale').modal('toggle');
+           });
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
+          // ! -------------------------------------------------------------------------------------------------------
 
           $('#liste_contacts tbody').on('click', '.edit-contact', function() {
             var data = table.row($(this).parents('tr')).data();
@@ -515,9 +576,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
         });
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : AJOUT D UN MESSAGE
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : AJOUT D UN MESSAGE
+          // ! -------------------------------------------------------------------------------------------------------
 
           $('#BTN_AJOUT_MESSAGE').click(function() {   
              $('#AJOUT_MSG_COURT').val('');
@@ -525,9 +586,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
              $('#nouveau_message_modale').modal('toggle');
           });
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : VALIDATION D UN NOUVEAU MESSAGE
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : VALIDATION D UN NOUVEAU MESSAGE
+          // ! -------------------------------------------------------------------------------------------------------
 
           $('#BTN_NOUVEAU_MESSAGE').click(function() {           
              $('#nouveau_message_modale').modal('toggle');
@@ -565,17 +626,17 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                 });
           });
 
-         // --------------------------------------------------------------------------------------------------
-         // FONCTION : DECONNEXION
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : DECONNEXION
+         // ! --------------------------------------------------------------------------------------------------
                
          <?php
             include '../fonction/_deconnexion.php';
          ?>
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : EVALIDATION DE L EDITION D UN MESSAGE
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : EVALIDATION DE L EDITION D UN MESSAGE
+          // ! -------------------------------------------------------------------------------------------------------
 
             $('#BTN_MODIF_MESSAGE').click(function() {
 
@@ -613,9 +674,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                 });
             });
 
-            // --------------------------------------------------------------------------------------------------
-         // DETECTION CHANGEMENT DU TYPE DE CONTACT
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! DETECTION CHANGEMENT DU TYPE DE CONTACT
+         // ! --------------------------------------------------------------------------------------------------
          
          $( "#CONTACT_PAR" ).change(function() {
             switch ($('#CONTACT_PAR').val()) {
@@ -652,9 +713,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
         });
 
         
-        // --------------------------------------------------------------------------------------------------
-        // PROCEDURE : AJOUT D UN CONTACT
-        // --------------------------------------------------------------------------------------------------
+        // ! --------------------------------------------------------------------------------------------------
+        // ! PROCEDURE : AJOUT D UN CONTACT
+        // ! --------------------------------------------------------------------------------------------------
         
         $('#AJOUT_CONTACT').click(function() {
         
@@ -742,7 +803,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                }
            });
         
-            // ENVOIE DE LA SOCARD SI CONTACT PAR TELEPHONE UNIQUEMENT !
+            // ! ENVOIE DE LA SOCARD SI CONTACT PAR TELEPHONE UNIQUEMENT !
         
            var remember = document.getElementById('ENVOI_SOCARD');
            $type_contact = $('#CONTACT_PAR').val();
@@ -771,9 +832,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          }
         });
         
-        // --------------------------------------------------------------------------------------------------
-        // INITIALISATION DES CHAMPS DE LA MODALE "CONTACT" SI CLICK SUR LE BOUTON RACCOURCI
-        // --------------------------------------------------------------------------------------------------
+        // ! --------------------------------------------------------------------------------------------------
+        // ! INITIALISATION DES CHAMPS DE LA MODALE "CONTACT" SI CLICK SUR LE BOUTON RACCOURCI
+        // ! --------------------------------------------------------------------------------------------------
         
         $('#BTN_AJOUT_CONTACT').click(function() {
            $('#BLK_TEL').show();
@@ -790,9 +851,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
            $('#ajout_contact_modale').modal('toggle');
         });
         
-        // --------------------------------------------------------------------------------------------------
-        // GESTION DES CLICK SUR LA MODALE "CONTACT" POUR OPTIMISER L AFFICHAGE
-        // --------------------------------------------------------------------------------------------------
+        // ! --------------------------------------------------------------------------------------------------
+        // ! GESTION DES CLICK SUR LA MODALE "CONTACT" POUR OPTIMISER L AFFICHAGE
+        // ! --------------------------------------------------------------------------------------------------
         
         $('#BLK_TYPE_CONTACT').click(function() {
          $('#BLK_ZONE_TYPE_CONTACT').toggle();
@@ -833,6 +894,22 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
         $('#MAJ_BLK_CONTACT_PAR').click(function() {
           $('#MAJ_BLK_ZONE_CONTACT_PAR').toggle();
         }) 
+
+  
+        // ! --------------------------------------------------------------------------------------------------
+        // ! UPLOAD FICHIER
+        // ! --------------------------------------------------------------------------------------------------
+
+      $("#file").on("change", function (e) {
+         var files = $(this)[0].files;
+         if (files.length >= 2) {
+               $(".file_label").text(files.length + " Files Ready To Upload");
+         } else {
+               var fileName = e.target.value.split("\\").pop();
+               $(".file_label").text(fileName);
+         }
+      });
+
 
 
       </script>

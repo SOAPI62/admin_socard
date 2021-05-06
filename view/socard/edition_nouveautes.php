@@ -105,7 +105,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         </div>
                      </div>
                      <div >
-                        <div class="image-upload-wrap  ">
+                        <div class="image-upload-wrap ">
                            <input class="file-upload-input" id="file" name="files" type='file' onchange="readURL(this);" accept="image/*" />
                            <div class="drag-text">
                               <h3>cliquez ou glissez un fichier</h3>

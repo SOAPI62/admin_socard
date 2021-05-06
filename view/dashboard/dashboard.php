@@ -301,9 +301,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-      <footer class="main-footer">
-         www.so-api.com
-      </footer>
+      <?php
+            include '../navigation/footer.php';
+      ?>
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
          <!-- Control sidebar content goes here -->
