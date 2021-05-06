@@ -215,20 +215,21 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                               <option value="TIDIO" selected="selected">TIDIO</option>
                            </select>
                         </div>
-                        <form id="form_import" enctype="multipart/form-data">
+                        <form id="form_import" method="post" action="">
                         <div class="input_file">
                            <label for="file" class="file_label">
                            <i class="fa fa-upload" aria-hidden="true"></i>
                            Importez votre fichier csv
                            </label>
-                           <input id="file" type="file" name="file-csv" accept=".csv" />
+                           <input id="file" classe="file_csv" type="file" name="file-csv" accept=".csv" />
                         </div>
-                        </form>
+                        
                      </div>
                     <div class="modal-footer">
                         <button id="ANNULATION_IMPORT" type="button" class="btn btn-primary btn-info">Annuler</button>
-                        <button id="VALIDATION_IMPORT" type="button" class="btn btn-success">Valider</button>
+                        <button id="VALIDATION_IMPORT" type="submit" class="btn btn-success">Valider</button>
                     </div>
+                    </form>
                 </div>
                 <!-- /.modal-content -->
             </div>
@@ -556,12 +557,17 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           // ! ---- VALIDATION DE L IMPORT DU FICHIER CSV
           // ! -------------------------------------------------------------------------------------------------------
 
-          $('#VALIDATION_IMPORT').click(function() {
-               
+          $('#form_import').on('submit', function(e){
+             e.preventDefault();
+
             $.ajax({
-                  type: "POST",
-                  url: "../../traitements/contact/import_contact.php",
+                  type: "POST",             
+                  data: new FormData(this), 
+                  contentType: false,       
+                  cache: false,             
+                  processData:false,        
                   dataType: 'json',
+                  url: "../../traitements/contact/import_contact.php",
                   success: function (data) 
                   {                     
                      switch (data.CODE_RETOUR) {
