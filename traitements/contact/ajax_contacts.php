@@ -15,7 +15,8 @@ $columns = array(
     5 => 'NOM1_CLIENT',
     6 => 'POR_CLIENT',
     7 => 'EMAIL_CLIENT',
-    8 => 'ACTIF_Client '
+    8 => 'ACTIF_Client ',
+    9 => 'EXCLU '
 );
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
@@ -84,8 +85,15 @@ while( $row=$stmt->fetch() ) {  // preparing an array
         $nestedData[] = 'INACTIF';
     }
     
-
-
+    if ($row["EXCLU_SMS"] == 1)
+    {
+        $nestedData[] = 'SMS';
+    }
+    else
+     {
+        $nestedData[] = '';
+     }
+    
     $data[] = $nestedData;
 }
 

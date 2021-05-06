@@ -91,6 +91,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         <th>TEL</th>
                         <th>EMAIL</th>
                         <th>ACTIF</th>
+                        <th>EXCLU</th>
                      </tr>
                      </tr>
                   </thead>
@@ -348,6 +349,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script src="../../dist/js/demo.js"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
       <script>
 
          // ! --------------------------------------------------------------------------------------------------
@@ -360,7 +362,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                 async: false,
                 success: function(data) {
                   $('#BLK_ZONE_SOCARD').html(data.HTML);
-                 
                 }
                }); 
 
@@ -415,10 +416,16 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          		},
          		],
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                     if (aData[7] == "INACTIF") {
-                         $('td', nRow).css('background-color', '#8B0000');
+                  if (aData[8] != "") {
+                         $('td', nRow).css('background-color', '#FFA500');
                          $('td', nRow).css('color', 'White');
                      }
+
+                  if (aData[7] == "INACTIF") {
+                        $('td', nRow).css('background-color', '#8B0000');
+                        $('td', nRow).css('color', 'White');
+                  }
+
                  } 
          	});
          
@@ -492,7 +499,31 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           // ! -------------------------------------------------------------------------------------------------------
 
           $('#liste_contacts tbody').on('click', '.edit-desactive', function() {
-            alert('desactivation du contact');
+            var data = table.row($(this).parents('tr')).data();
+         	var $id_contact = data[1];
+
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/contact/exclu_sms_contact.php",
+                  data: 'id_contact=' + $id_contact,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        table.ajax.reload();
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
            });
 
           // ! -------------------------------------------------------------------------------------------------------
@@ -518,6 +549,37 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           $('#ANNULATION_IMPORT').click(function() {
                $('#import_contact_modale').modal('toggle');
            });
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- VALIDATION DE L IMPORT DU FICHIER CSV
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#VALIDATION_IMPORT').click(function() {
+               
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/contact/import_contact.php",
+                  dataType: 'json',
+                  success: function (data) 
+                  {                     
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        toastr.success(data.MESSAGE_RETOUR);
+                        $('#import_contact_modale').modal('toggle');
+                        table.ajax.reload();
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+          });
 
           // ! -------------------------------------------------------------------------------------------------------
           // ! ---- TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
@@ -791,7 +853,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                success: function(data) {
                    switch (data.REPONSE) {
                        case 'OK':
-                           toastr.success('Ajout du Contact !')
+                           toastr.success('Ajout du contact !')
                            $('#structure_modale').modal('toggle');
                            break;
                        case 'KO':

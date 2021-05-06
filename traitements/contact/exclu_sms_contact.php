@@ -1,14 +1,13 @@
 <?php
-
-// !----------------------------------------------------------------------
+// ! ----------------------------------------------------------------------
 // ! Connexion à la base de données
-// !----------------------------------------------------------------------
+// ! ----------------------------------------------------------------------
 
 include '../connexion_bdd/conn.php';
 
-// !----------------------------------------------------------------------
+// ! ----------------------------------------------------------------------
 // ! Initialisation des variables de sortie de la procédure
-// !----------------------------------------------------------------------
+// ! ----------------------------------------------------------------------
 
 $select                     = [];
 $select["CODE_RETOUR"]      = '';
@@ -32,7 +31,8 @@ if (!empty($_POST['id_contact'])) {
     // ! ----------------------------------------------------------------------
 
     $query = "SELECT  `EXCLU_SMS` FROM `CLIENTS` WHERE `CD_CLIENT`='$id_contact'";
- 
+    echo $sql;
+
     $stmt = $dbh->prepare($query);
     $stmt->execute();
     $result = $stmt->fetch();
@@ -43,7 +43,8 @@ if (!empty($_POST['id_contact'])) {
 
     $etat = $result[0] ? '0' : '1';
 
-    $query = "UPDATE `CLIENTS` SET  `EXCLU_SMS `= '$etat' WHERE `CD_CLIENT`='$id_contact'";
+    $query = "UPDATE `CLIENTS` SET  `EXCLU_SMS`= '$etat' WHERE `CD_CLIENT`='$id_contact'";
+    echo $sql;
     $stmt = $dbh->prepare($query);
     $stmt->execute();
 
