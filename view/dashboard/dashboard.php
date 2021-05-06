@@ -424,22 +424,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
          $('#AJOUT_CONTACT').click(function() {
          
-            var $ajout_ORI_CLIENT = $('#CONTACT_PAR').val();
-            var $ajout_TYP_CLIENT = $('#TYPE_CONTACT').val();
-            var $ajout_CIV1_CLIENT = '';
-            var $ajout_NOM1_CLIENT = $('#NOM_CONTACT').val();
-            var $ajout_PNOM1_CLIENT = $('#PRENOM_CONTACT').val();
-            var $ajout_CIV2_CLIENT = '';
-            var $ajout_NOM2_CLIENT = '';
-            var $ajout_PNOM2_CLIENT = '';
-            var $ajout_TEL_CLIENT = '';
-            var $ajout_POR_CLIENT = $('#NRO_TEL').val();
-            var $ajout_EMAIL_CLIENT = $('#EMAIL').val();
-            var $ajout_ADR1_CLIENT = '';
-            var $ajout_ADR2_CLIENT = '';
-            var $ajout_CPOSTAL_CLIENT = '';
-            var $ajout_VILLE_CLIENT = '';
-            var $ajout_COMMENTAIRE_CLIENT = $('#BLK_ZONE_REMARQUES').val();
+        èè
          
             message_anomalie = "";
          
