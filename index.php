@@ -1,8 +1,3 @@
-<?php
-session_start();
-if($_SESSION['EMAIL_UTILISATEUR'] == ''){
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -211,10 +206,3 @@ $().ready(function() {
 
 </body>
 </html>
-
-<?php 
-    }
-    else {
-        header('Location: view/dashboard/dashboard.php');
-    }
-?>

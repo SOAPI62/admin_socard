@@ -215,6 +215,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                               <option value="TIDIO" selected="selected">TIDIO</option>
                            </select>
                         </div>
+                        <form id="form_import" enctype="multipart/form-data">
                         <div class="input_file">
                            <label for="file" class="file_label">
                            <i class="fa fa-upload" aria-hidden="true"></i>
@@ -222,6 +223,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                            </label>
                            <input id="file" type="file" name="file-csv" accept=".csv" />
                         </div>
+                        </form>
                      </div>
                     <div class="modal-footer">
                         <button id="ANNULATION_IMPORT" type="button" class="btn btn-primary btn-info">Annuler</button>
