@@ -40,6 +40,16 @@ $stmt->execute();
 $row  = $stmt->fetch();
 
 // ! ----------------------------------------------------------------------
+// ! Lecture de la structure BOUTIQUE
+// ! ----------------------------------------------------------------------
+
+$query = "SELECT `ID_STRUCTURE`, `POS_STRUCTURE`, `NOM_STRUCTURE`, `HTML_STRUCTURE`, `ACTIF_STRUCTURE` FROM `SOCARD_STRUCTURE` WHERE `NOM_STRUCTURE`='BOUTIQUE' ";
+$stmt = $dbh->prepare($query);
+$stmt->execute();
+$boutique       = $stmt->fetch();
+$bloc_boutique  = html_entity_decode($boutique[3]);
+
+// ! ----------------------------------------------------------------------
 // ! Lecture des données : NOUVEAUTES
 // ! ----------------------------------------------------------------------
 
@@ -63,6 +73,7 @@ $block_nouveaute = str_replace("{{IMG_NOUVEAUTE}}", $row1[3], $block_nouveaute);
 
 $block_socard = $contents;
 $block_socard = str_replace("{{BLOC_NOUVEAUTE}}", $block_nouveaute, $block_socard);
+$block_socard = str_replace("{{BLOC_BOUTIQUE}}", $bloc_boutique , $block_socard);
 
 // ! ----------------------------------------------------------------------
 // ! Création du fichier temoraire de la SOCARD temporaire

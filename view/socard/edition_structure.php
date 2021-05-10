@@ -117,7 +117,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          <!-- -------------------------------------------------------------------------------------------------------- -->
          <!-- AJOUT D UN CONTACT ( RACCOURCI )                                                                         -->
          <!-- -------------------------------------------------------------------------------------------------------- -->
-         <div class="modal fade" id="structure_modale">
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="structure_modale">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
@@ -127,13 +127,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                      </button>
                   </div>
                   <div class="modal-body">
-               
                      <div class="form-group">
-                        
                         <div class="form-group"  >
-                        
                            <div id='nro_structure' style='display:none'></div>
-
                            <label">Structure HTML</label>
                            <textarea id="BLK_STRUCTURE_HTML" class="form-control" rows="2" placeholder="..." style="text-transform: uppercase"></textarea>
                         </div>
@@ -151,7 +147,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          <!-- -------------------------------------------------------------------------------------------------------- -->
          <!-- GESTION DE LA VERSION.                                                                                   -->
          <!-- -------------------------------------------------------------------------------------------------------- -->
-         <div class="modal fade" id="version_modale">
+         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="version_modale">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
@@ -168,13 +164,13 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         
                            <div id='nro_structure' style='display:none'></div>
 
-                           <label">Structure HTML</label>
+                           <label">Version</label>
                            <input id="BLK_VERSION" class="form-control"  ></input>
                         </div>
                      </div>
                   </div>
                   <div class="modal-footer justify-content-between">
-                     <button id="BTN_MODIF_VERSION type="button" class="btn btn-primary">Valider</button>
+                     <button id="BTN_MODIF_VERSION" type="button" class="btn btn-primary">Valider</button>
                   </div>
                </div>
                <!-- /.modal-content -->
@@ -400,7 +396,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             });
 
           // ! -------------------------------------------------------------------------------------------------------
-          // ! TRAITEMENT : GESTION DU NUMERO DE VERSIONS
+          // ! TRAITEMENT : GESTION DU NUMERO DE VERSION
           // ! -------------------------------------------------------------------------------------------------------
 
           $('#BTN_VERSION').click(function() {
@@ -427,10 +423,35 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                      }
                   }
                 });
-
          });
 
-
+         $('#BTN_MODIF_VERSION').click(function() {
+            
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/versionning/maj_version.php",
+                  data:"NRO_VERSION=" + $('#BLK_VERSION').val(),
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                         toastr.success('Mise à jour de la version SOCARD effectuée !');
+                         $('#version_modale').modal('toggle');
+                         break;
+                     case 'ANOMALIE':
+                        toastr.error(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        toastr.error(data.MESSAGE_RETOUR);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+                });
+         });
+         
           // ! -------------------------------------------------------------------------------------------------------
           // !  FONCTION : REDIRECTION VERS NOUVELLE FENETRE : VISUALISATION
           // ! -------------------------------------------------------------------------------------------------------
