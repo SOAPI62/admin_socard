@@ -33118,11 +33118,11 @@ label:not(.form-check-label):not(.custom-file-label){
   .h1-responsive{
     text-align: center;
   }
-  #BTN_AJOUT_CONTACT{
+  #BTN_AJOUT_MESSAGE{
     display: block;
     margin : auto;
   }
-  #BTN_AJOUT_MESSAGE{
+  #BTN_AJOUT_CAMPAGNE{
     display: block;
     margin : auto;
   }
@@ -33139,7 +33139,10 @@ label:not(.form-check-label):not(.custom-file-label){
     margin-left: 10px;
     margin-top: 8px;
   }
+  
+
 }
+
 
 .btn-custom {
   background: #ff0000 !important;
@@ -33178,3 +33181,15 @@ label:not(.form-check-label):not(.custom-file-label){
     margin-right: 5px
 }
 
+.form_error { 
+  color: #FF4F4F;
+}
+
+
+td.details-control {
+  background: url('../img/details_open.png') no-repeat center center;
+  cursor: pointer;
+}
+tr.shown td.details-control {
+  background: url('../img/details_close.png') no-repeat center center;
+}

@@ -70,7 +70,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                </div>
             </div>
             <!-- /.container-fluid -->
-            <div class="card-body p-0">
+            <div class="card-body p-0 BLOCK-BTN">
             <button id="BTN_AJOUT_CONTACT" type="button" class="btn btn-primary">Ajouter</button>
             <button id="BTN_IMPORT_CONTACT" type="button" class="btn btn-primary">Importer</button>
             </div>
@@ -83,7 +83,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                <table id="liste_contacts" style="width:100%" class="cell-border order-column hover">
                   <thead>
                      <tr>
-                     <th>Action</th>
+                        <th>Detail</th>
+                        <th>Action</th>
                         <th>CODE</th>
                         <th>SUPPORT</th>
                         <th>ORIGINE</th>
@@ -92,7 +93,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         <th>EMAIL</th>
                         <th>ACTIF</th>
                         <th>EXCLU</th>
-                     </tr>
                      </tr>
                   </thead>
                </table>
@@ -371,7 +371,24 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       // ! -------------------------------------------------------------------------------------------------------
       // ! ---- TRAITEMENT : DATATABLE DONNEES MESSAGES
       // ! -------------------------------------------------------------------------------------------------------
-
+            
+         function format ( d ) {
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+               '<tr>'+
+                     '<td>Full name:</td>'+
+                     '<td>hello</td>'+
+               '</tr>'+
+               '<tr>'+
+                     '<td>Extension number:</td>'+
+                     '<td>hello</td>'+
+               '</tr>'+
+               '<tr>'+
+                     '<td>Extra info:</td>'+
+                     '<td>And any further details here (images etc)...</td>'+
+               '</tr>'+
+            '</table>';
+         }
          var table = $('#liste_contacts').DataTable({
          		dom: '<"top"Bf><"liste"l>rt<p>',
          		buttons: [
@@ -396,41 +413,65 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          			"data": function() {}
          		},
              columnDefs: [
-               { "width": "5%", "targets": 0 },
+               {
+                  "width": '1%',
+                  "className":'details-control',
+                  "orderable": false,
+                  "data": null,
+                  "defaultContent": '',
+                  "targets": 0,
+               },
          		{
-         			targets: 0,
-         			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-desactive'><i class='fas fa-user-slash'></i></button></div>"
+                  "width": "5%",
+         			"targets": [1],
+         			"data": null,
+         			"defaultContent": "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-desactive'><i class='fas fa-user-slash'></i></button></div>"
          		},
                {
-         			"targets": [1],
-         			"visible": false,
-         			"searchable": false
-         		},
-                 {
          			"targets": [2],
          			"visible": false,
          			"searchable": false
          		},
                  {
-         			"targets": [7],
+         			"targets": [3],
+         			"visible": false,
+         			"searchable": false
+         		},
+                 {
+         			"targets": [8],
          			"visible": false,
          			"searchable": false
          		},
          		],
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                  if (aData[8] != "") {
+                  if (aData[9] != "") {
                          $('td', nRow).css('background-color', '#FFA500');
                          $('td', nRow).css('color', 'White');
                      }
 
-                  if (aData[7] == "INACTIF") {
+                  if (aData[8] == "INACTIF") {
                         $('td', nRow).css('background-color', '#8B0000');
                         $('td', nRow).css('color', 'White');
                   }
 
                  } 
          	});
+            // Add event listener for opening and closing details
+               $('#liste_contacts tbody').on('click', 'td.details-control', function () {
+                  var tr = $(this).closest('tr');
+                  var row = table.row( tr );
+            
+                  if ( row.child.isShown() ) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+                  }
+                  else {
+                        // Open this row
+                        row.child( format(row.data()) ).show();
+                        tr.addClass('shown');
+                  }
+               } );
          
           // !  -------------------------------------------------------------------------------------------------------
           // !  ---- TRAITEMENT : EDITION D UN MESSAGE
@@ -705,7 +746,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          ?>
 
           // ! -------------------------------------------------------------------------------------------------------
-          // ! ---- TRAITEMENT : EVALIDATION DE L EDITION D UN MESSAGE
+          // ! ---- TRAITEMENT : VALIDATION DE L EDITION D UN MESSAGE
           // ! -------------------------------------------------------------------------------------------------------
 
             $('#BTN_MODIF_MESSAGE').click(function() {

@@ -7,21 +7,24 @@ include '../connexion_bdd/conn.php';
 $requestData= $_REQUEST;
 
 $columns = array( 
-    0 => 'Action', 
-    1 => 'SUPPORT_COM',
-    2 => 'CD_CLIENT',
-    3 => 'SUPPORT_COM',
-    4 => 'ORI_CLIENT',
-    5 => 'NOM1_CLIENT',
-    6 => 'POR_CLIENT',
-    7 => 'EMAIL_CLIENT',
-    8 => 'ACTIF_Client ',
-    9 => 'EXCLU '
+    0 => 'Detail', 
+    1 => 'Action', 
+    2 => 'SUPPORT_COM',
+    3 => 'CD_CLIENT',
+    4 => 'SUPPORT_COM',
+    5 => 'ORI_CLIENT',
+    6 => 'NOM1_CLIENT',
+    7 => 'POR_CLIENT',
+    8 => 'EMAIL_CLIENT',
+    9 => 'ACTIF_Client ',
+    10 => 'EXCLU '
 );
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
 
 $query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`,`SUPPORT_COM`  FROM `CLIENTS` WHERE `SUPPORT_COM`='SOCARD'";
+echo $query;
+
 $stmt = $dbh->prepare($query);
 $stmt->execute();  
 $totalData = $stmt->rowCount();
@@ -50,9 +53,9 @@ else
 {   
     $query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`,`SUPPORT_COM`  FROM `CLIENTS` WHERE `SUPPORT_COM`='SOCARD'";
     
-    if ($columns[$requestData['order'][0]['column']] != 'Action')
+    if ($columns[$requestData['order'][1]['column']] != 'Action')
     {
-        $query.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length']."   "; 
+        $query.=" ORDER BY ". $columns[$requestData['order'][1]['column']]."   ".$requestData['order'][1]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length']."   "; 
     } 
     else
     {
@@ -69,6 +72,7 @@ $data = array();
 while( $row=$stmt->fetch() ) {  // preparing an array
     $nestedData=array(); 
 
+    $nestedData[] = "";
     $nestedData[] = "";
     $nestedData[] = $row["CD_CLIENT"];
     $nestedData[] = $row["SUPPORT_COM"];
