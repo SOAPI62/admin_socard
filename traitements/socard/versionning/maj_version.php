@@ -6,6 +6,12 @@
 include '../../connexion_bdd/conn.php';
 
 // ! ----------------------------------------------------------------------
+// ! LECTURE DES PARAMETRES EN ENTRÉE
+// ! ----------------------------------------------------------------------
+
+$nro_version = $_POST['NRO_VERSION'];
+
+// ! ----------------------------------------------------------------------
 // ! Initialisation des variables de sortie de la procédure
 // ! ----------------------------------------------------------------------
 
@@ -20,13 +26,9 @@ $select["VERSION"]  = 0;
 // ! LECTURE DE LA VERSION ACTUELLE DE LA SOCARD
 // ! ----------------------------------------------------------------------
 
-$sql = "SELECT `id_card`, `nro_version` FROM `SOCARD_VERSION` WHERE `id_card`=1";
+$sql = "UPDATE `SOCARD_VERSION` SET  `nro_version`='$nro_version'";
 $req = $dbh->prepare($sql);
 $req->execute($tab);
-$row = $req->fetch();
-$version_actuelle = $row[1];
-
-$select["VERSION"] = $version_actuelle;
 
 // ! ----------------------------------------------------------------------
 // ! FIN DE TRAITEMENT
