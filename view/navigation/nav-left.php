@@ -11,6 +11,24 @@
                         </p>
                         </a>
                       </li>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-address-card"></i>
+                        <p>
+                          So Card
+                        <i class="right fas fa-angle-left"></i>
+                        </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                            <a href="../socard/edition_structure.php" class="nav-link">
+                            <i class="fas fa-puzzle-piece nav-icon"></i>
+                            <p>Structure</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
                       <li class="nav-item">
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-file-contract"></i>
@@ -33,24 +51,7 @@
                             </a>
                           </li>
                         </ul>
-                      </li>
-                      <li class="nav-item">
-                        <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-address-card"></i>
-                        <p>
-                          So Card
-                        <i class="right fas fa-angle-left"></i>
-                        </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="../socard/edition_structure.php" class="nav-link">
-                            <i class="fas fa-puzzle-piece nav-icon"></i>
-                            <p>Structure</p>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
+
                       <li class="nav-item">
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-calendar-plus"></i>

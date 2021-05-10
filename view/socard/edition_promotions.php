@@ -176,9 +176,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          $("#BLK_IMG_PROMO_1").hide();
          $("#BLK_IMG_PROMO_2").hide();
          $("#BLK_IMG_PROMO_3").hide();
-         
-         
-         
+                  
          // ----------------------------------------------------------------------------------------------------------------
          // ---- DETECTION CHANGEMEN DU NOMBRE DE PROMOTIONS
          // ----------------------------------------------------------------------------------------------------------------

@@ -67,6 +67,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0 BLOCK-BTN">
+            <button id='BTN_VERSION' type="button" class="btn btn-primary">Versionning</button>
             <button type="button" class="btn btn-primary"  onclick="socard_temporaire();" >Visualisation</button>
             <button id='BTN_GENERER' type="button" class="btn btn-primary">Générer</button>
             </div>
@@ -147,6 +148,40 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             <!-- /.modal-dialog -->
          </div>
 
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- GESTION DE LA VERSION.                                                                                   -->
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <div class="modal fade" id="version_modale">
+            <div class="modal-dialog modal-xl">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Gestion de la version SOCARD</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+               
+                     <div class="form-group">
+                        
+                        <div class="form-group"  >
+                        
+                           <div id='nro_structure' style='display:none'></div>
+
+                           <label">Structure HTML</label>
+                           <input id="BLK_VERSION" class="form-control"  ></input>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                     <button id="BTN_MODIF_VERSION type="button" class="btn btn-primary">Valider</button>
+                  </div>
+               </div>
+               <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>
+
          <!-- /.modal -->
          <?php
             include '../navigation/footer.php';
@@ -172,10 +207,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
       <script>
       
-
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : DATATABLE DONNEES STRUCTURES
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : DATATABLE DONNEES STRUCTURES
+          // ! -------------------------------------------------------------------------------------------------------
 
          var table = $('#liste_structure').DataTable({
          		dom: '<"top"Bf><"liste"l>rt<p>',
@@ -201,7 +235,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          			"data": function() {}
          		},
              columnDefs: [
-               { "width": "10%", "targets": 0 }, { "width": "5%", "targets": 2 },
+               { "width": "5%", "targets": 0 }, { "width": "2%", "targets": 2 },
                {
          			"targets": [1],
          			"visible": false,
@@ -215,7 +249,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          		{
          			targets: 0,
          			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-donnees'><i class='fas fa-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-structure'><i class='fas fa-puzzle-piece'></i></button><button type='button' class='btn btn-default edit-pos-haut'>+</button><button type='button' class='btn btn-default edit-pos-bas'>-</button></div>"
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-donnees'><i class='fas fa-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-structure'><i class='fas fa-puzzle-piece'></i></button></div>"
          		}
          		],
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -226,9 +260,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                  } 
          	});
          
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : DONNEES DUNE STRUCTURE
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT :  EDITION D UNE STRUCTURE
+          // ! -------------------------------------------------------------------------------------------------------
 
            $('#liste_structure tbody').on('click', '.edit-donnees', function() {
              var data = table.row($(this).parents('tr')).data();
@@ -238,9 +272,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
               location.href = $nom_module;
            });
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : SUPPRESSION D UNE STRUCTURE
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : SUPPRESSION D UNE STRUCTURE
+          // ! -------------------------------------------------------------------------------------------------------
 
           $('#liste_structure tbody').on('click', '.edit-supp', function() {
             var data = table.row($(this).parents('tr')).data();
@@ -271,9 +305,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
            });
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! TRAITEMENT : EDITION DE LA STRUCTURE HTML D UNE STRUCTURE
+          // ! -------------------------------------------------------------------------------------------------------
 
           $('#liste_structure tbody').on('click', '.edit-structure', function() {
             var data = table.row($(this).parents('tr')).data();
@@ -303,6 +337,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
             });
 
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! TRAITEMENT : MODIFICATION D UNE STRUCTURE
+          // ! -------------------------------------------------------------------------------------------------------
 
             $('#BTN_MODIF_STRUCTURE').click(function() {
 
@@ -333,8 +370,11 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             $('#structure_modale').modal('toggle');
            });
  
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! TRAITEMENT : GENERER UN NOUVELLE VERSION DE LA SOCARD
+          // ! -------------------------------------------------------------------------------------------------------
 
-           $('#BTN_GENERER').click(function() {
+          $('#BTN_GENERER').click(function() {
             $.ajax({
                   type: "POST",
                   url: "../../traitements/socard/structures/generer_socard.php",
@@ -359,9 +399,41 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                 });
             });
 
-          // -------------------------------------------------------------------------------------------------------
-          // ---- FONCTION REDIRECTION VERS NOUVELLE FENETRE : VISUALISATION
-          // -------------------------------------------------------------------------------------------------------
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! TRAITEMENT : GESTION DU NUMERO DE VERSIONS
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#BTN_VERSION').click(function() {
+            $('#version_modale').modal('toggle');
+
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/versionning/lecture_version.php",
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                     $('#BLK_VERSION').val(data.VERSION);
+                         break;
+                     case 'ANOMALIE':
+                        toastr.error(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        toastr.error(data.MESSAGE_RETOUR);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+                });
+
+         });
+
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // !  FONCTION : REDIRECTION VERS NOUVELLE FENETRE : VISUALISATION
+          // ! -------------------------------------------------------------------------------------------------------
 
           function socard_temporaire() {
 
@@ -390,16 +462,13 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             var myWindow = window.open("../../structures/socard-temporaire.html", "");
          }
 
-         // --------------------------------------------------------------------------------------------------
-         // FONCTION : DECONNEXION
-         // --------------------------------------------------------------------------------------------------
+         // ! -------------------------------------------------------------------------------------------------------
+         // ! FONCTION : DECONNEXION
+         // ! -------------------------------------------------------------------------------------------------------
                
          <?php
             include '../fonction/_deconnexion.php';
          ?>
-
-           
-
 
       </script>
    </body>

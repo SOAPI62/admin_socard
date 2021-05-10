@@ -183,7 +183,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
                         <div class="card-body">
-                        <label >Evolution du nombre d'inscriptions pendant </label>
+                        <label >Nombre d'inscriptions : </label>
                         <select id="periode_inscription_">
                            <option value='semaine' selected>Cette semaine</option>
                         </select>
@@ -214,7 +214,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
                         <div class="card-body">
-                        <label >Evolution du nombre d'inscrits par </label>
+                        <label >Nombre d'inscrits par </label>
                         <select id="periode_inscrit">
                             <option value='semaine' selected>semaine</option>
                             <option value='mois'>mois</option>
@@ -256,7 +256,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
                         <div class="card-body">
-                        <label >Evolution du nombre de connexions par </label>
+                        <label >Nombre de connexions par </label>
                         <select id="periode_connexion">
                            <option value='semaine' selected>semaine</option>
                            <option value='mois'>mois</option>
@@ -360,15 +360,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   $('#BLK_ZONE_SOCARD').html(data.HTML);
                 }
                });  
-
-         $('#periode_inscrit').val('semaine');
-         graphique_evolution_inscription($('#periode_inscrit').val());
-
-         $('#periode_connexion').val('semaine');
-         graphique_evolution_connexion($('#periode_connexion').val());
-         
-         $('#periode_inscription_').val('semaine');
-         graphique_evolution_inscription_($('#periode_inscription_').val());
          
          // ! --------------------------------------------------------------------------------------------------
          // ! AFFICHAGE DES DONNÉES STAT DE LA SOCARD
@@ -397,6 +388,19 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          });
          
          // ! --------------------------------------------------------------------------------------------------
+         // ! AFFICHAGE DES TABLEAUX GRAPHIQUES : INSCRIPTION ET CONNEXION
+         // ! --------------------------------------------------------------------------------------------------
+
+         $('#periode_inscrit').val('semaine');
+         graphique_evolution_inscription($('#periode_inscrit').val());
+
+         $('#periode_connexion').val('semaine');
+         graphique_evolution_connexion($('#periode_connexion').val());
+         
+         $('#periode_inscription_').val('semaine');
+         graphique_evolution_inscription_($('#periode_inscription_').val());
+
+         // ! --------------------------------------------------------------------------------------------------
          // ! DETECTION CHANGEMENT DU TYPE DE CONTACT
          // ! --------------------------------------------------------------------------------------------------
          
@@ -418,13 +422,11 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           }
          });
          
-         // --------------------------------------------------------------------------------------------------
-         // PROCEDURE : AJOUT D UN CONTACT
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! PROCEDURE : AJOUT D UN CONTACT
+         // ! --------------------------------------------------------------------------------------------------
          
          $('#AJOUT_CONTACT').click(function() {
-         
-        èè
          
             message_anomalie = "";
          
@@ -494,7 +496,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                 }
             });
          
-             // ENVOIE DE LA SOCARD SI CONTACT PAR TELEPHONE UNIQUEMENT !
+             // ! ENVOIE DE LA SOCARD SI CONTACT PAR TELEPHONE UNIQUEMENT !
          
             var remember = document.getElementById('ENVOI_SOCARD');
             $type_contact = $('#CONTACT_PAR').val();
@@ -523,9 +525,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           }
          });
          
-         // --------------------------------------------------------------------------------------------------
-         // INITIALISATION DES CHAMPS DE LA MODALE "CONTACT" SI CLICK SUR LE BOUTON RACCOURCI
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! INITIALISATION DES CHAMPS DE LA MODALE "CONTACT" SI CLICK SUR LE BOUTON RACCOURCI
+         // ! --------------------------------------------------------------------------------------------------
          
          $('#BTN_AJOUT_CONTACT').click(function() {
             $('#BLK_TEL').show();
@@ -542,9 +544,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             $('#ajout_contact_modale').modal('toggle');
          });
          
-         // --------------------------------------------------------------------------------------------------
-         // GESTION DES CLICK SUR LA MODALE "CONTACT" POUR OPTIMISER L AFFICHAGE
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! GESTION DES CLICK SUR LA MODALE "CONTACT" POUR OPTIMISER L AFFICHAGE
+         // ! --------------------------------------------------------------------------------------------------
          
          $('#BLK_TYPE_CONTACT').click(function() {
           $('#BLK_ZONE_TYPE_CONTACT').toggle();
@@ -572,7 +574,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
          $('#periode_inscrit').change(function() {
             $mode =  $('#periode_inscrit').val();
-
             graphique_evolution_inscription($mode);
          });
 
@@ -585,9 +586,18 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             graphique_evolution_inscription_($('#periode_inscription_').val());
          });
 
-         // --------------------------------------------------------------------------------------------------
-         // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! DETECTION DU CHANGEMENT DE LA PERIODE DE CONNEXION
+         // ! --------------------------------------------------------------------------------------------------
+
+         $('#periode_connexion').change(function() {
+            $mode_conn =  $('#periode_connexion').val();
+            graphique_evolution_connexion($mode_conn);
+         });
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : AFFICHAGE DES DONNÉES STAT DE LA SOCARD
+         // ! --------------------------------------------------------------------------------------------------
 
          function graphique_evolution_inscription($mode){
 
@@ -681,11 +691,12 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          });
          }
 
-         function graphique_evolution_inscription_($mode){
-            // --------------------------------------------------------------------------------------------------
-            // AFFICHAGE DES DONNÉES STAT DE LA SOCARD
-            // --------------------------------------------------------------------------------------------------
-         
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : AFFICHAGE DES DONNÉES STAT DE LA SOCARD
+         // ! --------------------------------------------------------------------------------------------------
+
+         function graphique_evolution_inscription_($mode)
+         {
          $.ajax({
          url: '../../traitements/dashboard/evolution_inscriptions_.php',
          data: 'mode=' + $mode,
@@ -694,7 +705,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          success: function(data) {
                      switch (data.REPONSE) {
                            case 'OK':
-                              //$periodicite = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
                               $periodicite = data.PERIODICITE;
                               var $max     = data.MAX_INSCRIPTIONS;
           
@@ -705,10 +715,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
                               var mode = 'index'
                               var intersect = true
-         
                               var $salesChart = $('#sales-chart')
-         
-                              
                               var $nb_inscrit = data.INSCRIPTIONS;
          
                               var $visitorsChart = $('#visitors-chart-3')
@@ -743,7 +750,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                  },
                                  scales: {
                                     yAxes: [{
-                                       // display: false,
                                        gridLines: {
                                        display: true,
                                        lineWidth: '4px',
@@ -775,18 +781,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          });
          }
 
-
-         // --------------------------------------------------------------------------------------------------
-         // GESTION DU RELOAD GRAPHIQUE SELON PERIODE
-         // --------------------------------------------------------------------------------------------------
-
-         $('#periode_connexion').change(function() {
-            $mode_conn =  $('#periode_connexion').val();
-            graphique_evolution_connexion($mode_conn);
-         });
-
-
-         function graphique_evolution_connexion($mode_conn){
+         function graphique_evolution_connexion($mode_conn)
+         {
          
             $.ajax({
             url: '../../traitements/dashboard/evolution_journal.php',
@@ -876,27 +872,21 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             }
             });
 
-         
          }
 
-
-
-         // --------------------------------------------------------------------------------------------------
-         // FONCTION : DECONNEXION
-         // --------------------------------------------------------------------------------------------------
-               
-         <?php
-            include '../fonction/_deconnexion.php';
-         ?>
-      
-         // ---------------`-----------------------------------------------------------------------------------
-         // FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
-         // --------------------------------------------------------------------------------------------------
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
+         // ! --------------------------------------------------------------------------------------------------
          
          function checkEmail(email) {
              var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
              return re.test(email);
          }
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : TEST DE LA VALIDITE D UNE ADRESSE MAIL
+         // ! --------------------------------------------------------------------------------------------------
+
          function validate(email) {         
              if (checkEmail(email)) {
                  return true
@@ -904,6 +894,16 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
               return false;
              }
          }
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : DECONNEXION
+         // ! --------------------------------------------------------------------------------------------------
+               
+         <?php
+            include '../fonction/_deconnexion.php';
+         ?>
+      
+
       </script>
    </body>
 </html>
