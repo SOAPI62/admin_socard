@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.css">
 </head>
@@ -75,7 +76,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button id="BTN_VALIDER" type="submit" class="btn btn-primary btn-block">Valider</button>
+            <button id="BTN_VALIDER" type="button" class="btn btn-primary btn-block">Valider</button>
           </div>
           <!-- /.col -->
         </div>
@@ -95,6 +96,7 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script>
 
@@ -111,7 +113,6 @@ $().ready(function() {
 
     obj_utilisateur = localStorage.getItem("UTILISATEUR");
     str_utilisateur = JSON.parse(obj_utilisateur);
-
  
     if (obj_utilisateur){
       $('#email').val(str_utilisateur.email);
@@ -165,25 +166,22 @@ $().ready(function() {
         return valid;
     }   
  
-    $("#form_connexion").submit(function(event) {
-        var res = check_form("pwd", /^[A-Za-z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]{3,}/,"Champ vide", "3 carac min, chiffres et lettres");
-        res = check_form("email", /^[a-z0-9\-_.]+@[a-z0-9\-_.]+\.[a-z]{2,3}$/i,"Champ vide", "Adresse mail non valide !") && res;
-        return res;
-    });
-    
-
-    
-
+ 
     // ----------------------------------------------------------------------------------------------------------------
     // ---- VERIFICATION FORMULAIRE DE CONNEXION
     // ----------------------------------------------------------------------------------------------------------------
 
     $('#BTN_VALIDER').click(function() {
+     
+      var res = check_form("pwd", /^[A-Za-z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]{3,}/,"Champ vide", "3 carac min, chiffres et lettres");
+      res = check_form("email", /^[a-z0-9\-_.]+@[a-z0-9\-_.]+\.[a-z]{2,3}$/i,"Champ vide", "Adresse mail non valide !") && res;
 
-      var formData = new FormData();
-      formData.append('email', $('#email').val());
-      formData.append('pwd', $('#pwd').val());
-      formData.append('se_souvenir', $('#se_souvenir').val());
+      if (res == true)
+      {
+        var formData = new FormData();
+        formData.append('email', $('#email').val());
+        formData.append('pwd', $('#pwd').val());
+        formData.append('se_souvenir', $('#se_souvenir').val());
        
         $.ajax({
                  type: "POST",
@@ -200,16 +198,22 @@ $().ready(function() {
                       window.location.href="view/dashboard/dashboard.php";
                      break;
                      case 'ANOMALIE':
-                       alert(data.MESSAGE_RETOUR);
+                      toastr.error(data.MESSAGE_RETOUR);
                      break;  
                      case 'ERREUR':
-                      alert(data.MESSAGE_SQL);
+                      toastr.error(data.MESSAGE_SQL);
                      break;                       
                      default:
                        break;
                    }
                 }
         });
+      }
+      else
+      {
+        toastr.error('Les données du formulaires sont incorrectes !');
+      }
+
     });
    });
 </script>

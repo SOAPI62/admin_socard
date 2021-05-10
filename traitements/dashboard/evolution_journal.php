@@ -15,6 +15,7 @@ $select["MESS_ERR"] = '';
 $select["CODE_SQL"] = '';
 
 switch ($mode_conn) {
+
     case 'semaine':
         $periodicite = [];
         $semaine = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];

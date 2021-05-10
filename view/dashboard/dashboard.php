@@ -258,7 +258,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         <div class="card-body">
                         <label >Nombre de connexions par </label>
                         <select id="periode_connexion">
-                           <option value='semaine' selected>semaine</option>
+                            <option value='semaine' selected>semaine</option>
                            <option value='mois'>mois</option>
                            <option value='trimestre'>trimestre</option>
                         </select>

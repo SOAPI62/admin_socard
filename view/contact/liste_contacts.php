@@ -376,17 +376,13 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             // `d` is the original data object for the row
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                '<tr>'+
-                     '<td>Full name:</td>'+
-                     '<td>hello</td>'+
+                     '<td>Nom : </td>'+
+                     '<td>'+d[5]+'</td>'+
                '</tr>'+
                '<tr>'+
-                     '<td>Extension number:</td>'+
-                     '<td>hello</td>'+
-               '</tr>'+
-               '<tr>'+
-                     '<td>Extra info:</td>'+
-                     '<td>And any further details here (images etc)...</td>'+
-               '</tr>'+
+                     '<td>Exclu Marketing</td>'+
+                     '<td>'+d[9]+'</td>'+
+               '</tr>' 
             '</table>';
          }
          var table = $('#liste_contacts').DataTable({
@@ -418,7 +414,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   "className":'details-control',
                   "orderable": false,
                   "data": null,
-                  "defaultContent": '',
+                  "defaultContent": "<div class='btn-group'> <button type='button' class='btn btn-default'> <i class='fas fa-plus-circle'></i></button></div>",
                   "targets": 0,
                },
          		{
@@ -428,33 +424,51 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          			"defaultContent": "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-desactive'><i class='fas fa-user-slash'></i></button></div>"
          		},
                {
+                  "width": '5%',
          			"targets": [2],
-         			"visible": false,
-         			"searchable": false
+         			"visible": false
          		},
-                 {
+               {
          			"targets": [3],
          			"visible": false,
-         			"searchable": false
+         			"visible": false
+               },
+               {
+                  "width": '3%',
+         			"targets": [5],
+         			"visible": false
          		},
-                 {
+   
+               {
+                  "width": '3%',
+         			"targets": [4]         		
+                  },
+               {
+                  "width": '3%',
+         			"targets": [6]         		
+                  },
+               {
          			"targets": [8],
          			"visible": false,
          			"searchable": false
          		},
-         		],
+               {
+         			"targets": [9],
+         			"visible": false,
+         			"searchable": false
+         		} 
+         		] ,
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                  if (aData[9] != "") {
+                     if (aData[8] == "INACTIF") {
+                         $('td', nRow).css('background-color', '#8B0000');
+                         $('td', nRow).css('color', 'White');
+                     }
+                     if (aData[9] == "SMS") {
                          $('td', nRow).css('background-color', '#FFA500');
                          $('td', nRow).css('color', 'White');
                      }
 
-                  if (aData[8] == "INACTIF") {
-                        $('td', nRow).css('background-color', '#8B0000');
-                        $('td', nRow).css('color', 'White');
-                  }
-
-                 } 
+                 }
          	});
             // Add event listener for opening and closing details
                $('#liste_contacts tbody').on('click', 'td.details-control', function () {
@@ -468,6 +482,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
                   else {
                         // Open this row
+                        console.log(row.data());
+
                         row.child( format(row.data()) ).show();
                         tr.addClass('shown');
                   }
@@ -479,7 +495,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
            $('#liste_messages tbody').on('click', '.edit-message', function() {
              var data = table.row($(this).parents('tr')).data();
-             var  $id_message= data[1];
+             var  $id_message= data[2];
          
              $.ajax({
                   type: "POST",
@@ -512,7 +528,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
           $('#liste_contacts tbody').on('click', '.edit-supp', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_contact = data[1];
+         	var $id_contact = data[2];
 
             $.ajax({
                   type: "POST",
@@ -544,7 +560,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
           $('#liste_contacts tbody').on('click', '.edit-desactive', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_contact = data[1];
+         	var $id_contact = data[2];
 
             $.ajax({
                   type: "POST",
@@ -636,7 +652,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
           $('#liste_contacts tbody').on('click', '.edit-contact', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_contact = data[1];
+         	var $id_contact = data[2];
 
             $.ajax({
                   type: "POST",
@@ -1020,9 +1036,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                $(".file_label").text(fileName);
          }
       });
-
-
-
       </script>
    </body>
 </html>
