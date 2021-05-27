@@ -50,38 +50,97 @@ $boutique       = $stmt->fetch();
 $bloc_boutique  = html_entity_decode($boutique[3]);
 
 // ! ----------------------------------------------------------------------
+// ! Lecture de la structure PROMOTIONS
+// ! ----------------------------------------------------------------------
+
+$query = "SELECT `ID_STRUCTURE`, `POS_STRUCTURE`, `NOM_STRUCTURE`, `HTML_STRUCTURE`, `ACTIF_STRUCTURE` FROM `SOCARD_STRUCTURE` WHERE `NOM_STRUCTURE`='PROMOTIONS' ";
+$stmt = $dbh->prepare($query);
+$stmt->execute();
+$promotion          = $stmt->fetch();
+$bloc_promotion     = html_entity_decode($promotion[3]);
+
+// ! ----------------------------------------------------------------------
 // ! Lecture des données : NOUVEAUTES
 // ! ----------------------------------------------------------------------
 
 $query = "SELECT `ID_NOUVEAUTE`, `TITRE_NOUVEAUTE`, `DESCRIPTION_NOUVEAUTE`, `IMG_NOUVEAUTE` FROM `SOCARD_NOUVEAUTE`";
-
 $stmt1 = $dbh->prepare($query);
 $stmt1->execute();
 $row1  = $stmt1->fetch();
 
 // ! ----------------------------------------------------------------------
+// ! Lecture des données : PROMOTIONS
+// ! ----------------------------------------------------------------------
+
+$query = "SELECT `ID_PROMOTION`, `TITRE_PROMOTION`, `LIEN_PROMOTION`, `IMG_PROMOTION_1`, `IMG_PROMOTION_2`, `IMG_PROMOTION_3` FROM `SOCARD_PROMOTIONS`";
+$stmt1 = $dbh->prepare($query);
+$stmt1->execute();
+$promotion  = $stmt1->fetch();
+
+// ! ----------------------------------------------------------------------
 // ! Génération du nouveau bloc : NOUVEAUTES à partir des données en BDD
 // ! ----------------------------------------------------------------------
 
-$block_nouveaute = html_entity_decode($row[3]); 
-$block_nouveaute = str_replace("{{TITRE_NOUVEAUTE}}", $row1[1], $block_nouveaute ); 
-$block_nouveaute = str_replace("{{DESCRIPTION_NOUVEAUTE}}", $row1[2], $block_nouveaute ); 
-$block_nouveaute = str_replace("{{IMG_NOUVEAUTE}}", $row1[3], $block_nouveaute);
+$bloc_nouveaute = html_entity_decode($row[3]); 
+$bloc_nouveaute = str_replace("{{TITRE_NOUVEAUTE}}", $row1[1], $bloc_nouveaute ); 
+$bloc_nouveaute = str_replace("{{DESCRIPTION_NOUVEAUTE}}", $row1[2], $bloc_nouveaute ); 
+$bloc_nouveaute = str_replace("{{IMG_NOUVEAUTE}}", $row1[3], $bloc_nouveaute);
+
+// ! ----------------------------------------------------------------------
+// ! Génération du nouveau bloc : PROMOTIONS à partir des données en BDD
+// ! ----------------------------------------------------------------------
+
+$bloc_promotion = html_entity_decode($bloc_promotion); 
+$bloc_promotion = str_replace("{{TITRE_PROMOTION}}", $promotion[1], $bloc_promotion ); 
+
+if ($promotion[3]!='#')
+{
+    $ligne = "<div class='slide w-slide'><img src='" . $promotion[3] . "' loading='lazy' alt='' class='image-9'></div>";
+}
+else
+{
+    $ligne = "";
+}
+$bloc_promotion = str_replace("{{PROMOTION_1}}", $ligne, $bloc_promotion);
+
+if ($promotion[4]!='#')
+{
+    $ligne = "<div class='slide w-slide'><img src='" . $promotion[4] . "' loading='lazy' alt='' class='image-9'></div>";
+}
+else
+{
+    $ligne = "";
+}
+$bloc_promotion = str_replace("{{PROMOTION_2}}", $ligne, $bloc_promotion);
+
+if ($promotion[5]!='#')
+{
+    $ligne = "<div class='slide w-slide'><img src='" . $promotion[5] . "' loading='lazy' alt='' class='image-9'></div>";
+}
+else
+{
+    $ligne = "";
+}
+$bloc_promotion = str_replace("{{PROMOTION_3}}", $ligne, $bloc_promotion);
+
+$bloc_promotion = str_replace("{{LIEN_URL}}", $promotion[2], $bloc_promotion ); 
 
 // ! ----------------------------------------------------------------------
 // ! Génération de la SOCARD temporaire
 // ! ----------------------------------------------------------------------
 
-$block_socard = $contents;
-$block_socard = str_replace("{{BLOC_NOUVEAUTE}}", $block_nouveaute, $block_socard);
-$block_socard = str_replace("{{BLOC_BOUTIQUE}}", $bloc_boutique , $block_socard);
-
+$bloc_socard = $contents;
+$bloc_socard = str_replace("{{BLOC_NOUVEAUTE}}", $bloc_nouveaute, $bloc_socard);
+$bloc_socard = str_replace("{{BLOC_PROMOTIONS}}", $bloc_promotion , $bloc_socard);
+$bloc_socard = str_replace("{{BLOC_BOUTIQUE}}", $bloc_boutique , $bloc_socard);
+ 
 // ! ----------------------------------------------------------------------
 // ! Création du fichier temoraire de la SOCARD temporaire
 // ! ----------------------------------------------------------------------
 
-$filename  = "../../../../socard-temporaire.html";
-$contents  = file_put_contents($filename, $block_socard);
+//$filename  = "../../../../socard-temporaire.html";
+$filename  = "./socard-temporaire.html";
+$contents  = file_put_contents($filename, $bloc_socard);
 
 fclose($handle);
 
@@ -94,6 +153,7 @@ if ($mode == 'production')
     $origine  = $filename;
     //$destination  = "../../../../socard-xxxx.html";
     $destination  = "../../../../index.html";
+    //$destination  = "socard-xxxx.html";
     if (!copy($origine, $destination)) {
         $select["CODE_RETOUR"]      = 'ANOMALIE';
         $select["MESSAGE_RETOUR"]   = "La copie $file du fichier a échoué...\n";
@@ -116,7 +176,7 @@ if ($mode == 'production')
     $stmt2->execute();
 }
 
-$select["SOCARD"]           =  $block_socard;
+$select["SOCARD"]           =  $bloc_socard;
 
 // ! ------------------------------------------------------------------------------------------------------------------------------
 // ! FIN DU TRAITEMENT
