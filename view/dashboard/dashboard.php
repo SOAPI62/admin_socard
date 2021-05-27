@@ -231,7 +231,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                            <span class="text-success">
                            <i id="pourcentage_inscriptions" class="fas fa-arrow-up"></i> 
                            </span>
-                           <span class="text-muted">Évolution M-1</span>
+                           <span class="text-muted" id="evo-inscription">Évolution S-1</span>
                         </p>
                      </div>
                      <!-- /.d-flex -->
@@ -272,7 +272,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                            <span class="text-success">
                            <i id="pourcentage_connexions" class="fas fa-arrow-up"></i> 
                            </span>
-                           <span class="text-muted">Évolution M-1</span>
+                           <span class="text-muted" id="evo-connexion">Évolution S-1</span>
                         </p>
                      </div>
                      <!-- /.d-flex -->
@@ -575,6 +575,17 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          $('#periode_inscrit').change(function() {
             $mode =  $('#periode_inscrit').val();
             graphique_evolution_inscription($mode);
+            switch ($('#periode_inscrit').val()) {
+              case 'semaine':
+              $('#evo-inscription').text("Évolution S-1");
+              break;
+              case 'mois':
+              $('#evo-inscription').text("Évolution M-1");
+              break;
+              case 'trimestre':
+              $('#evo-inscription').text("Évolution T-1");
+              break;
+            }
          });
 
          // ! --------------------------------------------------------------------------------------------------
@@ -593,6 +604,17 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          $('#periode_connexion').change(function() {
             $mode_conn =  $('#periode_connexion').val();
             graphique_evolution_connexion($mode_conn);
+            switch ($('#periode_connexion').val()) {
+              case 'semaine':
+              $('#evo-connexion').text("Évolution S-1");
+              break;
+              case 'mois':
+              $('#evo-connexion').text("Évolution M-1");
+              break;
+              case 'trimestre':
+              $('#evo-connexion').text("Évolution T-1");
+              break;
+            }
          });
 
          // ! --------------------------------------------------------------------------------------------------

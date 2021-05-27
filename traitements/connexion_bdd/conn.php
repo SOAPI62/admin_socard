@@ -2,9 +2,9 @@
 session_start();
 
 try {
-	$dbh = new PDO('mysql:host=localhost;dbname=SOCARD', 'root', 'root');
-	//$dbh = new PDO('mysql:host=localhost;dbname=SOCARD', 'root', '');
-	//$dbh = new PDO('mysql:host=db708531664.db.1and1.com;dbname=db708531664', 'dbo708531664', 'Stamand00');
+	//$dbh = new PDO('mysql:host=localhost;dbname=SOCARD; charset=utf8', 'root', 'root');
+	$dbh = new PDO('mysql:host=localhost;dbname=SOCARD; charset=utf8', 'root', '');
+	//$dbh = new PDO('mysql:host=db708531664.db.1and1.com;dbname=db708531664; charset=utf8', 'dbo708531664', 'Stamand00');
 
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	

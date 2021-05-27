@@ -44,12 +44,7 @@
                             <p>Liste</p>
                             </a>
                           </li>
-                          <li class="nav-item">
-                            <a href="../contact/liste_messages.php" class="nav-link">
-                            <i class="fas fa-comment-dots nav-icon"></i>
-                            <p>Messages SMS</p>
-                            </a>
-                          </li>
+                          
                         </ul>
 
                       <li class="nav-item">
@@ -65,6 +60,23 @@
                             <a href="../campagne/liste_campagnes.php" class="nav-link">
                             <i class="fas fa-list-ul nav-icon"></i>
                             <p>Liste</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                          Paramètres
+                        <i class="right fas fa-angle-left"></i>
+                        </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                            <a href="../contact/liste_messages.php" class="nav-link">
+                            <i class="fas fa-comment-dots nav-icon"></i>
+                            <p>Messages SMS</p>
                             </a>
                           </li>
                         </ul>

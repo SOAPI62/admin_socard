@@ -2,6 +2,7 @@
 session_start();
 if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']))
 {
+   header( 'content-type: text/html; charset=utf-8' );
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -509,7 +510,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
         // ! -------------------------------------------------------------------------------------------------------
         // ! ---- AFFICHAGE ALERTE NOMBRE DE CREDITS  
         // ! -------------------------------------------------------------------------------------------------------
-        
         $('#BTN_AJOUT_CAMPAGNE').click(function() {
 
          $.ajax({
@@ -534,6 +534,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
             });
 
+            
          $.ajax({
                   type: "POST",
                   url: "../../traitements/isendpro/nb_credits.php",
@@ -625,7 +626,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                {
                 var formData = new FormData();
 
-                formData.append('NOM_CAMPAGNE', $('#NOM_CAMPAGNE').val());
+                formData.append('NOM_CAMPAGNE', $('#NOM_CAMPAGNE').val().toUpperCase());
                 formData.append('DATE_EMISSION', $('#DATE_EMISSION').val());
                 formData.append('HEURE_EMISSION', $('#HEURE_EMISSION').val());
                 formData.append('BLK_ZONE_MESSAGE', $('#BLK_ZONE_MESSAGE').val());

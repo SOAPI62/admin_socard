@@ -19,6 +19,11 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
       <!-- Tempusdominus Bootstrap 4 -->
       <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+      <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+      <!-- DataTables -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
+      
       <!-- iCheck -->
       <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
       <!-- JQVMap -->
@@ -346,13 +351,16 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script src="../../plugins/jquery/jquery.min.js"></script>
       <!-- Bootstrap 4 -->
       <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+      <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
       <!-- AdminLTE App -->
       <script src="../../dist/js/adminlte.min.js"></script>
       <!-- AdminLTE for demo purposes -->
       <script src="../../dist/js/demo.js"></script>
-      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
       <script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+      
       <script>
 
          // ! --------------------------------------------------------------------------------------------------
@@ -386,6 +394,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             '</table>';
          }
          var table = $('#liste_contacts').DataTable({
+               "responsive": true,
          		dom: '<"top"Bf><"liste"l>rt<p>',
          		buttons: [
          		'excel', 'pdf', 'print'
