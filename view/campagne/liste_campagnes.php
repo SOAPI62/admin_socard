@@ -303,7 +303,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          		{
          			targets: 0,
          			data: "null",
-         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-campagne'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button></div>"
+         			defaultContent: "<div class='btn-group'><button type='button' class='btn btn-default edit-campagne'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-envoi'><i class='fas fa-sms'></i></button></div>"
          		},
                {
          			"targets": [1],
@@ -417,6 +417,44 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
             });
            });
+
+          // ! --------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : SUPPRESSION D UNE CAMPAGNE
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#liste_campagnes tbody').on('click', '.edit-envoi', function() {
+            var data = table.row($(this).parents('tr')).data();
+         	var $id_campagne = data[1];
+
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/isendpro/envoi_sms_lot.php",
+                  data: 'id_campagne=' + $id_campagne,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        toastr.success('La campagne a été envoyée !');
+                        table.ajax.reload();
+                     break;
+                     case 'KO':
+                        toastr.success(data.MESSAGE_RETOUR);
+                        table.ajax.reload();
+                     break;
+                     case 'ANOMALIE':
+                     toastr.error(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                     toastr.error(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+           });
+
   
           // ! -------------------------------------------------------------------------------------------------------
           // ! ---- APPEL DE LA FENETRE AJOUT CAMPAGNE

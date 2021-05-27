@@ -54,6 +54,7 @@ $bloc_boutique  = html_entity_decode($boutique[3]);
 // ! ----------------------------------------------------------------------
 
 $query = "SELECT `ID_NOUVEAUTE`, `TITRE_NOUVEAUTE`, `DESCRIPTION_NOUVEAUTE`, `IMG_NOUVEAUTE` FROM `SOCARD_NOUVEAUTE`";
+
 $stmt1 = $dbh->prepare($query);
 $stmt1->execute();
 $row1  = $stmt1->fetch();
@@ -91,7 +92,8 @@ fclose($handle);
 if ($mode == 'production')
 {
     $origine  = $filename;
-    $destination  = "../../../../socard-xxxx.html";
+    //$destination  = "../../../../socard-xxxx.html";
+    $destination  = "../../../../index.html";
     if (!copy($origine, $destination)) {
         $select["CODE_RETOUR"]      = 'ANOMALIE';
         $select["MESSAGE_RETOUR"]   = "La copie $file du fichier a échoué...\n";

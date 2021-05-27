@@ -130,8 +130,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                      <div class="form-group">
                         <div class="form-group"  >
                            <div id='nro_structure' style='display:none'></div>
+
                            <label">Structure HTML</label>
-                           <textarea id="BLK_STRUCTURE_HTML" class="form-control" rows="2" placeholder="..." style="text-transform: uppercase"></textarea>
+                           <textarea id="BLK_STRUCTURE_HTML" class="form-control" rows="2" placeholder="..." ></textarea>
                         </div>
                      </div>
                   </div>
@@ -480,7 +481,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
                 });
 
-            var myWindow = window.open("../../structures/socard-temporaire.html", "");
+            var myWindow = window.open("../../../../socard-temporaire.html", "");
          }
 
          // ! -------------------------------------------------------------------------------------------------------

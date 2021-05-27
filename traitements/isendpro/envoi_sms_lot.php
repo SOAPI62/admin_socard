@@ -16,13 +16,13 @@ $select["MESSAGE_RETOUR"]    = '';
 $select["MESSAGE_ERREUR"]    = '';
 $select["NB_EMISSION"]       = 0;
 $MESSAGE                     = '';
-$ID_CAMPAGNE                 = '';
+$id_campagne                 = $_POST['id_campagne'];
 
 // ! ----------------------------------------------------------------------
 // ! Recherche de la campagne du jour
 // ! ----------------------------------------------------------------------
 
-$query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `HEURE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS` WHERE  `NB_EMISSION` = 0 AND `DATE_CAMPAGNE`= '2021-05-05' AND `ACTIF_CAMPAGNE`=1";
+$query = "SELECT `ID_CAMPAGNE`, `NOM_CAMPAGNE`, `MESSAGE_CAMPAGNE`, `DATE_CAMPAGNE`, `HEURE_CAMPAGNE`, `NB_EMISSION`, `ACTIF_CAMPAGNE` FROM `SOCARD_CAMPAGNES_SMS` WHERE  `NB_EMISSION` = 0  AND `ACTIF_CAMPAGNE`=1 AND `ID_CAMPAGNE`='$id_campagne'";
 
 try {
     $stmt = $dbh->prepare($query);
@@ -42,8 +42,8 @@ try {
 
 if ($MESSAGE == '')
 {
-    $select["CODE_RETOUR"]       = 'OK';
-    $select["MESSAGE_RETOUR"]    = 'PAS DE CAMPAGNE';
+    $select["CODE_RETOUR"]       = 'KO';
+    $select["MESSAGE_RETOUR"]    = 'Pas de campagne !';
     echo json_encode($select);
     exit(0);
 }
@@ -54,14 +54,25 @@ $LISTE_CONTACTS = array();
 // ! Mémorisation de la liste des contacts actifs SOCARD
 // ! ----------------------------------------------------------------------
 
-$query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`, `SUPPORT_COM` FROM `CLIENTS` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1";
+$query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`, `SUPPORT_COM` FROM `CLIENTS` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND `POR_CLIENT`<>''";
 
 try {
     $stmt = $dbh->prepare($query);
     $stmt->execute();
     while ($row = $stmt->fetch())
     {
-        $LISTE_CONTACTS[] = $row[13];
+        $sous_chaine = substr($row[13],0,2);
+
+        switch ($sous_chaine) {
+            case '06':
+                $telephone = '336' . substr($row[13],2,999);
+                break;
+            case '07':
+                $telephone = '337' . substr($row[13],2,999);
+            break;          
+        }
+
+        $LISTE_CONTACTS[] = $telephone;
     }
 
 } catch (PDOException $e) {
@@ -70,7 +81,6 @@ try {
     echo json_encode($select);
     exit(0);
 }
- 
 
 // ! ----------------------------------------------------------------------
 // ! Envoi requete
