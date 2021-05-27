@@ -63,7 +63,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             <div class="container-fluid">
                <div class="row mb-2">
                   <div class="card-body">
-                     <h1 >Structure du bloc PROMOTION</h1>
+                     <h1 >Structure du bloc : PROMOTIONS</h1>
                   </div>
                </div>
             </div>
@@ -82,9 +82,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   </div>
                   <div class="col-sm-6">
                      <div class="form-group card-body">
-                        <label class="margin">Bouton :</label>
-                        <input type="checkbox" name="my-checkbox"  value="other" >
-                        <input type="text" id="bouton" name="bouton" value="otherValue" class="form-control" placeholder="URL du bouton">
+                        <label class="margin">Lien URL :</label>
+                        <input type="text" id="bouton" name="bouton" value="" class="form-control" placeholder="URL du bouton">
                      </div>
                   </div>
                </div>
@@ -101,46 +100,52 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                </div>
                <div class="form-group card-body form-upload col-sm-12">
                   <div class="file-upload col-sm-3" id="BLK_IMG_PROMO_1">
-                     <div class="image-upload-wrap">
-                        <input class="file-upload-input" id="file-1" name="files" type='file' onchange="readURL(this);" accept="image/*" />
+                     <div class="image-upload-wrap-1">
+                        <input class="file-upload-input-1" id="file-1" name="files" type='file' onchange="readURL_1(this);" accept="image/*" />
                         <div class="drag-text">
                            <h3>cliquez ou glissez un fichier</h3>
                         </div>
                      </div>
-                     <div class="file-upload-content">
-                        <img class="file-upload-image" src="#" alt="your image" />
-                        <div class="image-title-wrap">
-                           <button type="button" onclick="removeUpload()" class="remove-image">Supprimer <span class="image-title">Télécharger une image</span></button>
+                     <div class="file-upload-content-1">
+                        <img class="file-upload-image-1" src="#" alt="" />
+                        <div class="image-title-wrap-1">
+                           <button type="button" onclick="removeUpload_1()" class="remove-image">Supprimer <span class="image-title-1">Télécharger une image</span></button>
                         </div>
                      </div>
                   </div>
                   <div class="file-upload col-sm-3" id="BLK_IMG_PROMO_2">
-                     <div class="image-upload-wrap">
-                        <input class="file-upload-input" id="file-2" name="files" type='file' onchange="readURL(this);" accept="image/*" />
+                     <div class="image-upload-wrap-2">
+                        <input class="file-upload-input-2" id="file-2" name="files" type='file' onchange="readURL_2(this);" accept="image/*" />
                         <div class="drag-text">
                            <h3>cliquez ou glissez un fichier</h3>
                         </div>
                      </div>
-                     <div class="file-upload-content">
-                        <img class="file-upload-image" src="#" alt="your image" />
+                     <div class="file-upload-content-2">
+                        <img class="file-upload-image-2" src="#" alt="" />
                         <div class="image-title-wrap">
-                           <button type="button" onclick="removeUpload()" class="remove-image">Supprimer <span class="image-title">Télécharger une image</span></button>
+                           <button type="button" onclick="removeUpload_2()" class="remove-image">Supprimer <span class="image-title-2">Télécharger une image</span></button>
                         </div>
                      </div>
                   </div>
                   <div class="file-upload col-sm-3" id="BLK_IMG_PROMO_3">
-                     <div class="image-upload-wrap">
-                        <input class="file-upload-input" id="file-3" name="files" type='file' onchange="readURL(this);" accept="image/*" />
+                     <div class="image-upload-wrap-3">
+                        <input class="file-upload-input-3" id="file-3" name="files" type='file' onchange="readURL_3(this);" accept="image/*" />
                         <div class="drag-text">
                            <h3>cliquez ou glissez un fichier</h3>
                         </div>
                      </div>
-                     <div class="file-upload-content">
-                        <img class="file-upload-image" src="#" alt="your image" />
+                     <div class="file-upload-content-3">
+                        <img class="file-upload-image-3" src="#" alt="" />
                         <div class="image-title-wrap">
-                           <button type="button" onclick="removeUpload()" class="remove-image">Supprimer <span class="image-title">Télécharger une image</span></button>
+                           <button type="button" onclick="removeUpload_3()" class="remove-image">Supprimer <span class="image-title-3">Télécharger une image</span></button>
                         </div>
                      </div>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="form-group card-body">
+                     <button type="button" class="btn btn-primary" onclick="location.href='../socard/edition_structure.php'">Annuler</button>
+                     <button type="button"  id="btn_valider" class="btn btn-primary">Valider</button>
                   </div>
                </div>
             </form>
@@ -169,17 +174,91 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <!-- AdminLTE for demo purposes -->
       <script src="../../dist/js/demo.js"></script>
       <script>
-         // ----------------------------------------------------------------------------------------------------------------
-         // ---- VALEURS PAR DEFAUT AU CHARGEMENT DE LA PAGE
-         // ----------------------------------------------------------------------------------------------------------------
+
+         // !----------------------------------------------------------------------------------------------------------------
+         // !---- VALEURS PAR DEFAUT AU CHARGEMENT DE LA PAGE
+         // !----------------------------------------------------------------------------------------------------------------
          
          $("#BLK_IMG_PROMO_1").hide();
          $("#BLK_IMG_PROMO_2").hide();
          $("#BLK_IMG_PROMO_3").hide();
                   
-         // ----------------------------------------------------------------------------------------------------------------
-         // ---- DETECTION CHANGEMEN DU NOMBRE DE PROMOTIONS
-         // ----------------------------------------------------------------------------------------------------------------
+         // ! ----------------------------------------------------------------------------------------------------------------
+         // ! ---- CHARGEMENT DES DONNEES PROMOTIONS
+         // ! ----------------------------------------------------------------------------------------------------------------
+
+         $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/lecture_promotions.php",
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        $('#titre').val(data.TITRE_PROMOTION);
+
+                        if (data.LIEN_PROMOTION != '')
+                        {
+                           $('#bouton').val(data.LIEN_PROMOTION);
+
+                        }
+
+
+                        $('#nb_promotions').val(data.NB_PROMOTIONS);
+
+                        $('.file-upload-image-1').attr('src', data.IMG_PROMOTION_1);
+                        $('.file-upload-content-1').show();
+                        $('.image-upload-wrap-1').hide();
+
+                        $('.file-upload-image-2').attr('src', data.IMG_PROMOTION_2);
+                        $('.file-upload-content-2').show();
+                        $('.image-upload-wrap-2').hide();
+
+                        $('.file-upload-image-3').attr('src', data.IMG_PROMOTION_3);
+                        $('.file-upload-content-3').show();
+                        $('.image-upload-wrap-3').hide();
+
+                        switch(data.NB_PROMOTIONS) {
+                        case 0:
+                           $("#BLK_IMG_PROMO_1").hide();
+                           $("#BLK_IMG_PROMO_2").hide();
+                           $("#BLK_IMG_PROMO_3").hide();
+                           break;
+                        case 1:
+                           $("#BLK_IMG_PROMO_1").show();
+                           $("#BLK_IMG_PROMO_2").hide();
+                           $("#BLK_IMG_PROMO_3").hide();
+                           break;
+                        case 2:
+                           $("#BLK_IMG_PROMO_1").show();
+                           $("#BLK_IMG_PROMO_2").show();
+                           $("#BLK_IMG_PROMO_3").hide();
+                        break;
+                        case 3:
+                           $("#BLK_IMG_PROMO_1").show();
+                           $("#BLK_IMG_PROMO_2").show();
+                           $("#BLK_IMG_PROMO_3").show();
+                        break;
+                        default:
+                           // code block
+                        } 
+
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+               });
+
+         // !----------------------------------------------------------------------------------------------------------------
+         // ! ---- DETECTION CHANGEMENT DU NOMBRE DE PROMOTIONS
+         // !----------------------------------------------------------------------------------------------------------------
          
          $('#nb_promotions').change(function() {
            $nb_promotion =  $('#nb_promotions').val();
@@ -211,63 +290,167 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
          });
          
-         // ----------------------------------------------------------------------------------------------------------------
-         // ---- DETECTION SI AFFICHAGE URL DE LA PGE PROMOTION 
-         // ----------------------------------------------------------------------------------------------------------------
+         // ! ----------------------------------------------------------------------------------------------------------------
+         // ! ---- CHARGEMENT DES IMAGES PROMOTIONS 
+         // ! ----------------------------------------------------------------------------------------------------------------
          
-         var otherCheckbox           = document.querySelector('input[value="other"]');
-         var otherText               = document.querySelector('input[value="otherValue"]');
-         otherText.style.visibility  = 'hidden';
-         
-         otherCheckbox.onchange = function() {
-           if(otherCheckbox.checked) {
-             otherText.style.visibility = 'visible';
-             otherText.value = '';
-           } else {
-             otherText.style.visibility = 'hidden';
-           }
-         };
-         
-         // ----------------------------------------------------------------------------------------------------------------
-         // ---- CHARGEMENT DES IMAGES PROMOTIONS 
-         // ----------------------------------------------------------------------------------------------------------------
-         
-           function readURL(input) {
+           function readURL_1(input) {
            if (input.files && input.files[0]) {
          
              var reader = new FileReader();
          
              reader.onload = function(e) {
-               $('.image-upload-wrap').hide();
+               $('.image-upload-wrap-1').hide();
+               $('.file-upload-image-1').attr('src', e.target.result);
+               $('.file-upload-content-1').show();
          
-               $('.file-upload-image').attr('src', e.target.result);
-               $('.file-upload-content').show();
-         
-               $('.image-title').html(input.files[0].name);
+               $('.image-title-1').html(input.files[0].name);
              };
          
              reader.readAsDataURL(input.files[0]);
          
            } else {
-             removeUpload();
+             removeUpload_1();
            }
          }
+
+         function readURL_2(input) {
+           if (input.files && input.files[0]) {
          
-         function removeUpload() {
-           $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-           $('.file-upload-content').hide();
-           $('.image-upload-wrap').show();
+             var reader = new FileReader();
+         
+             reader.onload = function(e) {
+               $('.image-upload-wrap-2').hide();
+               $('.file-upload-image-2').attr('src', e.target.result);
+               $('.file-upload-content-2').show();
+         
+               $('.image-title-2').html(input.files[0].name);
+             };
+         
+             reader.readAsDataURL(input.files[0]);
+         
+           } else {
+             removeUpload_2();
+           }
          }
+
+         function readURL_3(input) {
+           if (input.files && input.files[0]) {
+         
+             var reader = new FileReader();
+         
+             reader.onload = function(e) {
+               $('.image-upload-wrap-3').hide();
+               $('.file-upload-image-3').attr('src', e.target.result);
+               $('.file-upload-content-3').show();
+         
+               $('.image-title-3').html(input.files[0].name);
+             };
+         
+             reader.readAsDataURL(input.files[0]);
+         
+           } else {
+             removeUpload_2();
+           }
+         }
+
+         function removeUpload_1() {
+           $('.file-upload-input-1').replaceWith($('.file-upload-input-1').clone());
+           $('.file-upload-content-1').hide();
+           $('.image-upload-wrap-1').show();
+         }
+
+         function removeUpload_2() {
+           $('.file-upload-input-2').replaceWith($('.file-upload-input-2').clone());
+           $('.file-upload-content-2').hide();
+           $('.image-upload-wrap-2').show();
+         }
+
+         function removeUpload_3() {
+           $('.file-upload-input-3').replaceWith($('.file-upload-input-3').clone());
+           $('.file-upload-content-3').hide();
+           $('.image-upload-wrap-3').show();
+         }
+
          $('.image-upload-wrap').bind('dragover', function () {
          		$('.image-upload-wrap').addClass('image-dropping');
          	});
-         	$('.image-upload-wrap').bind('dragleave', function () {
-         		$('.image-upload-wrap').removeClass('image-dropping');
+
+         $('.image-upload-wrap').bind('dragleave', function () {
+            $('.image-upload-wrap').removeClass('image-dropping');
          });
 
-         // --------------------------------------------------------------------------------------------------
-         // FONCTION : DECONNEXION
-         // --------------------------------------------------------------------------------------------------
+         // ! ----------------------------------------------------------------------------------------------------------------
+         // ! ---- VALIDATION DE LA MISE A JOUR DU FORMULAIRE : PROMOTION
+         // ! ----------------------------------------------------------------------------------------------------------------
+          
+          $("#btn_valider").click(function(){
+         
+            $nb_promotion =  $('#nb_promotions').val();
+
+            switch ($nb_promotion) {
+               case '0':
+                  $img_1 ='#';
+                  $img_2 ='#';
+                  $img_3 ='#';
+                  break;
+               case '1':
+                  $img_1 = $('.file-upload-image-1').attr('src');
+                  $img_2 ='#';
+                  $img_3 ='#';
+                  break;
+               case '2':
+                  $img_1 = $('.file-upload-image-1').attr('src');
+                  $img_2 = $('.file-upload-image-2').attr('src');
+                  $img_3 ='#';
+                  break;
+               case '3':
+                  $img_1 = $('.file-upload-image-1').attr('src');
+                  $img_2 = $('.file-upload-image-2').attr('src');
+                  $img_3 = $('.file-upload-image-3').attr('src');
+                  break;
+               default:
+                  break;
+            }
+            
+            var formData = new FormData();
+            
+            formData.append('titre', $('#titre').val());
+            formData.append('lien_url', $('#bouton').val());
+            formData.append('file_1', $img_1);
+            formData.append('file_2', $img_2);
+            formData.append('file_3', $img_3);
+      
+            $.ajax({
+                  type: "POST",
+                  url: "../../traitements/socard/structures/maj_promotions.php",
+                  data: formData,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        location.href='../socard/edition_structure.php';
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+               });
+        });
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : DECONNEXION
+         // ! --------------------------------------------------------------------------------------------------
                
          <?php
             include '../fonction/_deconnexion.php';
