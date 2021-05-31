@@ -21,7 +21,7 @@ $columns = array(
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
 
-$query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`,`SUPPORT_COM`  FROM `CLIENTS` WHERE `SUPPORT_COM`='SOCARD'";
+$query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`,`SUPPORT_COM`  FROM `CLIENTS` WHERE `SUPPORT_COM`='SOCARD' ORDER BY `DTHR_CREATION`";
 
 $stmt = $dbh->prepare($query);
 $stmt->execute();  
@@ -34,15 +34,11 @@ if( !empty($requestData['search']['value']) )
 {
     // if there is a search parameter
     $query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`,`SUPPORT_COM`  FROM `CLIENTS`";
-    $query.=" WHERE (`SUPPORT_COM`='SOCARD') AND (ORI_CLIENT LIKE '%".$requestData['search']['value']."%' OR TYP_CLIENT LIKE '%".$requestData['search']['value']."%' OR NOM1_CLIENT LIKE '%".$requestData['search']['value']."%' )";    // $requestData['search']['value'] contains search parameter
+    $query.=" WHERE (`SUPPORT_COM`='SOCARD') AND (ORI_CLIENT LIKE '%".$requestData['search']['value']."%' OR TYP_CLIENT LIKE '%".$requestData['search']['value']."%' OR POR_CLIENT LIKE '%".$requestData['search']['value']."%' )";    // $requestData['search']['value'] contains search parameter
 
     $stmt = $dbh->prepare($query);
     $stmt->execute();  
     $totalFiltered = $stmt->rowCount();
-
-    if ($columns[$requestData['order'][0]['column']] != 'Action') {
-        $query .= " ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   "; 
-    }
 
     $stmt = $dbh->prepare($query);
     $stmt->execute();  
