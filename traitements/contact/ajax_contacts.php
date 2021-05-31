@@ -47,7 +47,7 @@ else
 {   
     $query = "SELECT `CD_CLIENT`, `ORI_CLIENT`, `TYP_CLIENT`, `CIV1_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `CIV2_CLIENT`, `NOM2_CLIENT`, `PNOM2_CLIENT`, `ADR1_CLIENT`, `ADR2_CLIENT`, `VILLE_CLIENT`, `CPOSTAL_CLIENT`, `POR_CLIENT`, `TEL_CLIENT`, `EMAIL_CLIENT`, `CD_FIDELITE`, `IND_PROSP`, `ACTIF_Client`, `DTHR_CREATION`, `DTHR_MAJ`, `TYPE_CLIENT`, `EXCLU_MAILING`, `EXCLU_SMS`, `DT_TRF_CLT`, `CUSTOMER_ID_ECOM`, `ANNOTATION_CLIENT`,`SUPPORT_COM`  FROM `CLIENTS` WHERE `SUPPORT_COM`='SOCARD'";
 
-    if ($columns[$requestData['order'][1]['column']] != 'Action')
+    if ($columns[$requestData['order'][0]['column']] != 'Action')
     {
         $query.="   LIMIT ".$requestData['start']." ,".$requestData['length']."   "; 
     } 

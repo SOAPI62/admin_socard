@@ -30,7 +30,7 @@ switch ($mode_conn) {
 
         $sql = "SELECT `SEMAINE`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER` GROUP BY `SEMAINE`";
         $req = $dbh->prepare($sql);
-        $req->execute($tab);
+        $req->execute();
         
         while ($row = $req->fetch())
         {
@@ -82,7 +82,7 @@ switch ($mode_conn) {
         $periodicite =  ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
         $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER`  GROUP BY `MOIS_PER`";
         $req = $dbh->prepare($sql);
-        $req->execute($tab);
+        $req->execute();
 
         $mois = [0,0,0,0,0,0,0,0,0,0,0,0];
         $max  = 0;
@@ -117,14 +117,14 @@ switch ($mode_conn) {
 
         $select["CONNEXIONS"]           = $mois;
         $select["MAX_CONNEXIONS"]       = $max;
-        if ((float)$nb_connexion_m_1 == 0)
+        if ((float)$nb_connexions_m_1 == 0)
         {
             $select["EVOLUTION_CONNEXIONS"] = -100;
 
         }
         else {
 
-            $evo_mois = ((float)$nb_connexion_m - (float)$nb_connexion_m_1) / (float)$nb_connexion_m_1 * 100;
+            $evo_mois = ((float)$nb_connexions_m - (float)$nb_connexions_m_1) / (float)$nb_connexions_m_1 * 100;
             $select["EVOLUTION_CONNEXIONS"] =  number_format($evo_mois,2);
         }
 
@@ -137,7 +137,7 @@ switch ($mode_conn) {
         $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER` GROUP BY `TRIMESTRE`";
 
          $req = $dbh->prepare($sql);
-        $req->execute($tab);
+        $req->execute();
 
         $trimestre = [0,0,0,0];
         $max  = 0;

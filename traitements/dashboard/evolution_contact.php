@@ -27,7 +27,7 @@ switch ($mode) {
         $sql = "SELECT `JOUR_LIB_PER`, count(*) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` AND `SEMAINE`='$semaine_encours' AND `ANNEE`='$y' GROUP BY `JOUR_LIB_PER` ";
 
         $req = $dbh->prepare($sql);
-        $req->execute($tab);
+        $req->execute();
 
         $mois = [0,0,0,0,0,0,0];
         $max  = 0;
@@ -72,7 +72,7 @@ switch ($mode) {
             $sql = "SELECT `MOIS_PER`, count(*) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` GROUP BY `MOIS_PER` ";
 
             $req = $dbh->prepare($sql);
-            $req->execute($tab);
+            $req->execute();
     
             $mois = [0,0,0,0,0,0,0,0,0,0,0,0];
             $max  = 0;
@@ -135,7 +135,7 @@ switch ($mode) {
              $sql = "SELECT `SEMAINE`, count(*) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` GROUP BY `SEMAINE` ";
 
             $req = $dbh->prepare($sql);
-            $req->execute($tab);
+            $req->execute();
             
             while ($row = $req->fetch())
             {
@@ -189,7 +189,7 @@ switch ($mode) {
              $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` and `ANNEE`='$y' GROUP BY `TRIMESTRE` ";
 
             $req = $dbh->prepare($sql);
-            $req->execute($tab);
+            $req->execute();
     
             $trimestre = [0,0,0,0];
             $max  = 0;

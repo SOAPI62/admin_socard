@@ -31,7 +31,6 @@ if (!empty($_POST['id_contact'])) {
     // ! ----------------------------------------------------------------------
 
     $query = "SELECT  `EXCLU_SMS` FROM `CLIENTS` WHERE `CD_CLIENT`='$id_contact'";
-    echo $sql;
 
     $stmt = $dbh->prepare($query);
     $stmt->execute();
@@ -44,7 +43,6 @@ if (!empty($_POST['id_contact'])) {
     $etat = $result[0] ? '0' : '1';
 
     $query = "UPDATE `CLIENTS` SET  `EXCLU_SMS`= '$etat' WHERE `CD_CLIENT`='$id_contact'";
-    echo $sql;
     $stmt = $dbh->prepare($query);
     $stmt->execute();
 
