@@ -183,42 +183,12 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
                         <div class="card-body">
-                        <label >Nombre d'inscriptions : </label>
-                        <select id="periode_inscription_">
-                           <option value='semaine' selected>Cette semaine</option>
-                        </select>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="card-body">
-              
-                     <!-- /.d-flex -->
-                     <div class="position-relative mb-4" id="canvas-reload">
-                        <canvas id="visitors-chart-3" height="200"></canvas>
-                     </div>
-                     <!--
-                        <div class="d-flex flex-row justify-content-end">
-                          <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> This Week
-                          </span>
-                        
-                          <span>
-                            <i class="fas fa-square text-gray"></i> Last Week
-                          </span>
-                        </div>
-                        -->
-                  </div>
-               </div>
-               
-               <div class="card">
-                  <div class="card-header border-0">
-                     <div class="d-flex justify-content-between">
-                        <div class="card-body">
-                        <label >Nombre d'inscrits par </label>
-                        <select id="periode_inscrit">
-                            <option value='semaine' selected>semaine</option>
-                            <option value='mois'>mois</option>
-                            <option value='trimestre'>trimestre</option>
+                        <label >Nombre de contact </label>
+                        <select id="periode_contact">
+                        <option value='cette semaine' selected>cette semaine</option>
+                            <option value='par semaine' >par semaine</option>
+                            <option value='par mois'>par mois</option>
+                            <option value='par trimestre'>par trimestre</option>
                            
                         </select>
                         </div>
@@ -231,24 +201,45 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                            <span class="text-success">
                            <i id="pourcentage_inscriptions" class="fas fa-arrow-up"></i> 
                            </span>
-                           <span class="text-muted" id="evo-inscription">Évolution S-1</span>
+                           <span class="text-muted" id="evo-inscription">Évolution J-1</span>
+                        </p>
+                     </div>
+                     <!-- /.d-flex -->
+                     <div class="position-relative mb-4">
+                        <canvas id="contact-chart" height="200"></canvas>
+                     </div>
+                  </div>
+               </div>
+               
+               <div class="card">
+                  <div class="card-header border-0">
+                     <div class="d-flex justify-content-between">
+                        <div class="card-body">
+                        <label >Nombre d'inscrits </label>
+                        <select id="periode_inscrit">
+                        <option value='cette semaine' selected>cette semaine</option>
+                            <option value='par semaine' >par semaine</option>
+                            <option value='par mois'>par mois</option>
+                            <option value='par trimestre'>par trimestre</option>
+                           
+                        </select>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <div class="d-flex">
+                    
+                        <p class="ml-auto d-flex flex-column text-right">
+                           <span class="text-success">
+                           <i id="pourcentage_inscriptions" class="fas fa-arrow-up"></i> 
+                           </span>
+                           <span class="text-muted" id="evo-inscription">Évolution J-1</span>
                         </p>
                      </div>
                      <!-- /.d-flex -->
                      <div class="position-relative mb-4">
                         <canvas id="visitors-chart" height="200"></canvas>
                      </div>
-                        <!--
-                        <div class="d-flex flex-row justify-content-end">
-                          <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> This Week
-                          </span>
-                        
-                          <span>
-                            <i class="fas fa-square text-gray"></i> Last Week
-                          </span>
-                        </div>
-                        -->
                   </div>
                </div>
 
@@ -391,14 +382,14 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          // ! AFFICHAGE DES TABLEAUX GRAPHIQUES : INSCRIPTION ET CONNEXION
          // ! --------------------------------------------------------------------------------------------------
 
-         $('#periode_inscrit').val('semaine');
+         $('#periode_inscrit').val('cette semaine');
          graphique_evolution_inscription($('#periode_inscrit').val());
 
          $('#periode_connexion').val('semaine');
          graphique_evolution_connexion($('#periode_connexion').val());
-         
-         $('#periode_inscription_').val('semaine');
-         graphique_evolution_inscription_($('#periode_inscription_').val());
+      
+         $('#periode_contact').val('cette semaine');
+         graphique_evolution_contact($('#periode_contact').val());
 
          // ! --------------------------------------------------------------------------------------------------
          // ! DETECTION CHANGEMENT DU TYPE DE CONTACT
@@ -429,6 +420,24 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          $('#AJOUT_CONTACT').click(function() {
          
             message_anomalie = "";
+
+            var $ajout_ORI_CLIENT = $('#CONTACT_PAR').val();
+           var $ajout_TYP_CLIENT = $('#TYPE_CONTACT').val();
+           var $ajout_CIV1_CLIENT = '';
+           var $ajout_NOM1_CLIENT = $('#NOM_CONTACT').val();
+           var $ajout_PNOM1_CLIENT = $('#PRENOM_CONTACT').val();
+           var $ajout_CIV2_CLIENT = '';
+           var $ajout_NOM2_CLIENT = '';
+           var $ajout_PNOM2_CLIENT = '';
+           var $ajout_TEL_CLIENT = '';
+           var $ajout_POR_CLIENT = $('#NRO_TEL').val();
+           var $ajout_EMAIL_CLIENT = $('#EMAIL').val();
+           var $ajout_ADR1_CLIENT = '';
+           var $ajout_ADR2_CLIENT = '';
+           var $ajout_CPOSTAL_CLIENT = '';
+           var $ajout_VILLE_CLIENT = '';
+           var $ajout_COMMENTAIRE_CLIENT = $('#BLK_ZONE_REMARQUES').val();
+           
          
             switch ($('#CONTACT_PAR').val()) {
               case 'TEL':
@@ -568,6 +577,29 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
            $('#BLK_ZONE_CONTACT_PAR').toggle();
          })
          
+                  // ! --------------------------------------------------------------------------------------------------
+         // ! GESTION DU RELOAD GRAPHIQUE SELON PERIODE
+         // ! --------------------------------------------------------------------------------------------------
+
+         $('#periode_contact').change(function() {
+            $mode =  $('#periode_contact').val();
+            graphique_evolution_contact($mode);
+            switch ($('#periode_contact').val()) {
+              case 'cette semaine':
+              $('#evo-inscription').text("Évolution J-1");
+              break;
+              case 'par semaine':
+              $('#evo-inscription').text("Évolution S-1");
+              break;
+              case 'par mois':
+              $('#evo-inscription').text("Évolution M-1");
+              break;
+              case 'par trimestre':
+              $('#evo-inscription').text("Évolution T-1");
+              break;
+            }
+         });
+
          // ! --------------------------------------------------------------------------------------------------
          // ! GESTION DU RELOAD GRAPHIQUE SELON PERIODE
          // ! --------------------------------------------------------------------------------------------------
@@ -576,27 +608,22 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             $mode =  $('#periode_inscrit').val();
             graphique_evolution_inscription($mode);
             switch ($('#periode_inscrit').val()) {
-              case 'semaine':
+              case 'cette semaine':
+              $('#evo-inscription').text("Évolution J-1");
+              break;
+              case 'par semaine':
               $('#evo-inscription').text("Évolution S-1");
               break;
-              case 'mois':
+              case 'par mois':
               $('#evo-inscription').text("Évolution M-1");
               break;
-              case 'trimestre':
+              case 'par trimestre':
               $('#evo-inscription').text("Évolution T-1");
               break;
             }
          });
 
-         // ! --------------------------------------------------------------------------------------------------
-         // ! GENERATION DU GRAPHISME : NOMBRE D INSCRIPTION POUR CHAQUE JOUR DE LA SEMAINE ENCOURS
-         // ! --------------------------------------------------------------------------------------------------
-
-         $('#periode_inscription_').change(function() {
-            $mode =  $('#periode_inscription_').val();
-            graphique_evolution_inscription_($('#periode_inscription_').val());
-         });
-
+ 
          // ! --------------------------------------------------------------------------------------------------
          // ! DETECTION DU CHANGEMENT DE LA PERIODE DE CONNEXION
          // ! --------------------------------------------------------------------------------------------------
@@ -716,6 +743,93 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          // ! --------------------------------------------------------------------------------------------------
          // ! FONCTION : AFFICHAGE DES DONNÉES STAT DE LA SOCARD
          // ! --------------------------------------------------------------------------------------------------
+
+
+         function graphique_evolution_contact($mode)
+         {
+         $.ajax({
+         url: '../../traitements/dashboard/evolution_contact.php',
+         data: 'mode=' + $mode,
+         dataType: 'json',
+         async: false,
+         success: function(data) {
+                     switch (data.REPONSE) {
+                           case 'OK':
+                              $periodicite = data.PERIODICITE;
+                              var $max     = data.MAX_INSCRIPTIONS;
+          
+                              var ticksStyle = {
+                                 fontColor: '#495057',
+                                 fontStyle: 'bold'
+                              }
+         
+                              var mode = 'index'
+                              var intersect = true
+                              var $salesChart = $('#sales-chart')
+                              var $nb_inscrit = data.INSCRIPTIONS;
+         
+                              var $visitorsChart = $('#contact-chart')
+                              // eslint-disable-next-line no-unused-vars
+                              var visitorsChart = new Chart($visitorsChart, {
+                                 data: {
+                                 labels: $periodicite,
+                                 datasets: [{
+                                    type: 'line',
+                                    data: $nb_inscrit,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#007bff',
+                                    pointBorderColor: '#007bff',
+                                    pointBackgroundColor: '#007bff',
+                                    fill: false
+                                    // pointHoverBackgroundColor: '#007bff',
+                                    // pointHoverBorderColor    : '#007bff'
+                                 }]
+                                 },
+                                 options: {
+                                 maintainAspectRatio: false,
+                                 tooltips: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 hover: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 legend: {
+                                    display: false
+                                 },
+                                 scales: {
+                                    yAxes: [{
+                                       gridLines: {
+                                       display: true,
+                                       lineWidth: '4px',
+                                       color: 'rgba(0, 0, 0, .2)',
+                                       zeroLineColor: 'transparent'
+                                       },
+                                       ticks: $.extend({
+                                       beginAtZero: true,
+                                       suggestedMax: $max
+                                       }, ticksStyle)
+                                    }],
+                                    xAxes: [{
+                                       display: true,
+                                       gridLines: {
+                                       display: false
+                                       },
+                                       ticks: ticksStyle
+                                    }]
+                                 }
+                                 }
+                              })
+                           break;
+                case 'KO':
+                    break;
+                default:
+                  break;
+            }
+          }
+         });
+         }
 
          function graphique_evolution_inscription_($mode)
          {

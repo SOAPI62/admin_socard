@@ -17,7 +17,7 @@ $select["MESS_ERR"] = '';
 $select["CODE_SQL"] = '';
 
 switch ($mode) {
-    case 'mois':
+    case 'par mois':
         $periodicite =  ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
         $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `MOIS_PER`";
         $req = $dbh->prepare($sql);
@@ -69,7 +69,7 @@ switch ($mode) {
 
         break;
  
-    case 'semaine':
+    case 'par semaine':
         $periodicite = [];
         $semaine = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
@@ -130,7 +130,7 @@ switch ($mode) {
         $select["nb_inscrit_s_1"] = $nb_inscrit_s_1;
 
         break; 
-    case 'trimestre':
+    case 'par trimestre':
         $periodicite =  ['T1', 'T2', 'T3', 'T4'];
         $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `ANNEE`=2021 AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `TRIMESTRE`";
         $req = $dbh->prepare($sql);
@@ -181,6 +181,55 @@ switch ($mode) {
         }
 
         break; 
+        case 'cette semaine':
+            $d = date("d"); 
+            $m = date("m"); 
+            $y = date("Y"); 
+            $semaine_encours = ISOWeek($y , $m , $d);
+    
+            $periodicite =  ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+            $sql = "SELECT `JOUR_LIB_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `SEMAINE`='$semaine_encours' AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `JOUR_LIB_PER`";
+            $req = $dbh->prepare($sql);
+            $req->execute($tab);
+    
+            $mois = [0,0,0,0,0,0,0];
+            $max  = 0;
+    
+            while ($row = $req->fetch())
+            {
+                switch ($row[0]) {
+                        case 'Lundi':
+                        $indice = 1;
+                        break;
+                        case 'Mardi':
+                        $indice = 2;
+                        break;
+                        case 'Mercredi':
+                        $indice = 3;
+                        break;
+                        case 'Jeudi':
+                        $indice = 4;
+                        break;
+                        case 'Vendredi':
+                        $indice = 5;
+                        break;    
+                        case 'Samedi':
+                        $indice = 6;
+                        break;  
+                        case 'Dimanche':
+                        $indice = 6;
+                        break;             
+                }
+                $mois[$indice-1] = $row[1];
+    
+                if ($max < $row[1] ) {
+                    $max = $row[1];
+                }
+            }
+            $select["INSCRIPTIONS"]         = $mois;
+            $select["MAX_INSCRIPTIONS"]     = $max;
+            $select["PERIODICITE"]          = $periodicite;
+            break;    
     default:
         # code...
         break;

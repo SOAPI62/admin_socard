@@ -435,12 +435,14 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                {
                   "width": '5%',
          			"targets": [2],
-         			"visible": false
+         			"visible": false,
+                  "orderable": true
          		},
                {
          			"targets": [3],
          			"visible": false,
-         			"visible": false
+         			"visible": false,
+                  "orderable": true
                },
                {
                   "width": '3%',
@@ -450,11 +452,13 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
    
                {
                   "width": '3%',
-         			"targets": [4]         		
+         			"targets": [4],
+                  "orderable": true         		
                   },
                {
                   "width": '3%',
-         			"targets": [6]         		
+         			"targets": [6],
+                  "orderable": true         		
                   },
                {
          			"targets": [8],
