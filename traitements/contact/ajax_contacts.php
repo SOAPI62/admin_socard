@@ -7,17 +7,16 @@ include '../connexion_bdd/conn.php';
 $requestData= $_REQUEST;
 
 $columns = array( 
-    0 => 'Detail', 
-    1 => 'Action', 
-    2 => 'SUPPORT_COM',
-    3 => 'CD_CLIENT',
-    4 => 'SUPPORT_COM',
-    5 => 'ORI_CLIENT',
-    6 => 'NOM1_CLIENT',
-    7 => 'POR_CLIENT',
-    8 => 'EMAIL_CLIENT',
-    9 => 'ACTIF_Client ',
-    10 => 'EXCLU '
+    0 => 'Action', 
+    1 => 'SUPPORT_COM',
+    2 => 'CD_CLIENT',
+    3 => 'SUPPORT_COM',
+    4 => 'ORI_CLIENT',
+    5 => 'NOM1_CLIENT',
+    6 => 'POR_CLIENT',
+    7 => 'EMAIL_CLIENT',
+    8 => 'ACTIF_Client ',
+    9 => 'EXCLU '
 );
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
@@ -71,13 +70,14 @@ while( $row=$stmt->fetch() ) {  // preparing an array
     $nestedData=array(); 
 
     $nestedData[] = "";
-    $nestedData[] = "";
     $nestedData[] = $row["CD_CLIENT"];
     $nestedData[] = $row["SUPPORT_COM"];
-    $nestedData[] = $row["ORI_CLIENT"];
-    $nestedData[] = $row["NOM1_CLIENT"];
     $nestedData[] = $row["POR_CLIENT"];
     $nestedData[] = $row["EMAIL_CLIENT"];
+    $nestedData[] = $row["ORI_CLIENT"];
+    $nestedData[] = $row["NOM1_CLIENT"];
+    $nestedData[] = $row["PNOM1_CLIENT"];
+    
 
     if ($row["ACTIF_Client"] == 1)
     {

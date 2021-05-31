@@ -88,14 +88,14 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                <table id="liste_contacts" style="width:100%" class="cell-border order-column hover">
                   <thead>
                      <tr>
-                        <th>Detail</th>
                         <th>Action</th>
                         <th>CODE</th>
                         <th>SUPPORT</th>
-                        <th>ORIGINE</th>
-                        <th>NOM</th>
                         <th>TEL</th>
                         <th>EMAIL</th>
+                        <th>ORIGINE</th>
+                        <th>NOM</th>
+                        <th>PRENOM</th>
                         <th>ACTIF</th>
                         <th>EXCLU</th>
                      </tr>
@@ -363,36 +363,12 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       
       <script>
 
-         // ! --------------------------------------------------------------------------------------------------
-         // ! LISTE DES MESSAGES SMS
-         // ! --------------------------------------------------------------------------------------------------
-
-         $.ajax({
-               url: '../../traitements/contact/liste_select_messages.php',
-                dataType: 'json',
-                async: false,
-                success: function(data) {
-                  $('#BLK_ZONE_SOCARD').html(data.HTML);
-                }
-               }); 
+      
 
       // ! -------------------------------------------------------------------------------------------------------
-      // ! ---- TRAITEMENT : DATATABLE DONNEES MESSAGES
+      // ! ---- TRAITEMENT : DATATABLE DONNEES CONTACT
       // ! -------------------------------------------------------------------------------------------------------
             
-         function format ( d ) {
-            // `d` is the original data object for the row
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-               '<tr>'+
-                     '<td>Nom : </td>'+
-                     '<td>'+d[5]+'</td>'+
-               '</tr>'+
-               '<tr>'+
-                     '<td>Exclu Marketing</td>'+
-                     '<td>'+d[9]+'</td>'+
-               '</tr>' 
-            '</table>';
-         }
          var table = $('#liste_contacts').DataTable({
                "responsive": true,
          		dom: '<"top"Bf><"liste"l>rt<p>',
@@ -418,44 +394,41 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          			"data": function() {}
          		},
              columnDefs: [
-               {
-                  "width": '1%',
-                  "className":'details-control',
-                  "orderable": false,
-                  "data": null,
-                  "defaultContent": "<div class='btn-group'> <button type='button' class='btn btn-default'> <i class='fas fa-plus-circle'></i></button></div>",
-                  "targets": 0,
-               },
          		{
                   "width": "5%",
-         			"targets": [1],
+         			"targets": [0],
          			"data": null,
          			"defaultContent": "<div class='btn-group'><button type='button' class='btn btn-default edit-contact'><i class='fas fa-user-edit'></i></button> <button type='button' class='btn btn-default edit-supp'><i class='fas fa-trash'></i></button><button type='button' class='btn btn-default edit-desactive'><i class='fas fa-user-slash'></i></button></div>"
          		},
                {
                   "width": '5%',
-         			"targets": [2],
-         			"visible": false
+         			"targets": [1],
+         			"visible": false,
          		},
                {
-         			"targets": [3],
+                  "width": '5%',
+         			"targets": [2],
          			"visible": false,
-         			"visible": false
+               },
+               
+               {
+                  
+         			"targets": [4],
+         		},
+               {
+         			"targets": [5],
+                  "searchable": false       		
                },
                {
-                  "width": '3%',
-         			"targets": [5],
-         			"visible": false
+                  "width": '5%',
+         			"targets": [6],
+
          		},
-   
                {
-                  "width": '3%',
-         			"targets": [4]         		
-                  },
-               {
-                  "width": '3%',
-         			"targets": [6]         		
-                  },
+                  "width": '5%',
+         			"targets": [7],
+
+         		},
                {
          			"targets": [8],
          			"visible": false,
@@ -463,9 +436,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          		},
                {
          			"targets": [9],
-         			"visible": false,
-         			"searchable": false
-         		} 
+         			"searchable": false,
+                  "visible": false,
+         		}
          		] ,
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                      if (aData[8] == "INACTIF") {
@@ -537,7 +510,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
           $('#liste_contacts tbody').on('click', '.edit-supp', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_contact = data[2];
+         	var $id_contact = data[1];
 
             $.ajax({
                   type: "POST",
@@ -548,6 +521,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
+                        toastr.success('Le contact a été supprimé !');
                         table.ajax.reload();
                      break;
                      case 'ANOMALIE':
@@ -569,7 +543,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
           $('#liste_contacts tbody').on('click', '.edit-desactive', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_contact = data[2];
+         	var $id_contact = data[1];
 
             $.ajax({
                   type: "POST",
@@ -580,6 +554,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
+                        toastr.success('Le contact a été désactivé !');
                         table.ajax.reload();
                      break;
                      case 'ANOMALIE':
