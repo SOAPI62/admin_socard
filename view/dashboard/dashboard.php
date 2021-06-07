@@ -379,7 +379,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          });
          
          // ! --------------------------------------------------------------------------------------------------
-         // ! AFFICHAGE DES TABLEAUX GRAPHIQUES : INSCRIPTION / CONNEXION / CONTACT
+         // ! AFFICHAGE DES TABLEAUX GRAPHIQUES : INSCRIPTION ET CONNEXION
          // ! --------------------------------------------------------------------------------------------------
 
          $('#periode_inscrit').val('cette semaine');
@@ -494,7 +494,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                     switch (data.REPONSE) {
                         case 'OK':
                             toastr.success('Ajout du Contact !')
-                            $('#structure_modale').modal('toggle');
+                            $('#ajout_contact_modale').modal('toggle');
                             break;
                         case 'KO':
                             toastr.warning(data.MESS_ERR);
@@ -521,6 +521,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                     switch (data.REPONSE) {
                         case 'OK':
                           toastr.success('Sms envoyé au contact!')
+                          $('#ajout_contact_modale').modal('toggle');
                           break;
                         case 'ERREUR':
                           toastr.warning('Sms non envoyé ! ' + data.CODE_ERR);
@@ -831,7 +832,91 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          });
          }
 
+         function graphique_evolution_inscription_($mode)
+         {
+         $.ajax({
+         url: '../../traitements/dashboard/evolution_inscriptions_.php',
+         data: 'mode=' + $mode,
+         dataType: 'json',
+         async: false,
+         success: function(data) {
+                     switch (data.REPONSE) {
+                           case 'OK':
+                              $periodicite = data.PERIODICITE;
+                              var $max     = data.MAX_INSCRIPTIONS;
+          
+                              var ticksStyle = {
+                                 fontColor: '#495057',
+                                 fontStyle: 'bold'
+                              }
          
+                              var mode = 'index'
+                              var intersect = true
+                              var $salesChart = $('#sales-chart')
+                              var $nb_inscrit = data.INSCRIPTIONS;
+         
+                              var $visitorsChart = $('#visitors-chart-3')
+                              // eslint-disable-next-line no-unused-vars
+                              var visitorsChart = new Chart($visitorsChart, {
+                                 data: {
+                                 labels: $periodicite,
+                                 datasets: [{
+                                    type: 'line',
+                                    data: $nb_inscrit,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#007bff',
+                                    pointBorderColor: '#007bff',
+                                    pointBackgroundColor: '#007bff',
+                                    fill: false
+                                    // pointHoverBackgroundColor: '#007bff',
+                                    // pointHoverBorderColor    : '#007bff'
+                                 }]
+                                 },
+                                 options: {
+                                 maintainAspectRatio: false,
+                                 tooltips: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 hover: {
+                                    mode: mode,
+                                    intersect: intersect
+                                 },
+                                 legend: {
+                                    display: false
+                                 },
+                                 scales: {
+                                    yAxes: [{
+                                       gridLines: {
+                                       display: true,
+                                       lineWidth: '4px',
+                                       color: 'rgba(0, 0, 0, .2)',
+                                       zeroLineColor: 'transparent'
+                                       },
+                                       ticks: $.extend({
+                                       beginAtZero: true,
+                                       suggestedMax: $max
+                                       }, ticksStyle)
+                                    }],
+                                    xAxes: [{
+                                       display: true,
+                                       gridLines: {
+                                       display: false
+                                       },
+                                       ticks: ticksStyle
+                                    }]
+                                 }
+                                 }
+                              })
+                           break;
+                case 'KO':
+                    break;
+                default:
+                  break;
+            }
+          }
+         });
+         }
 
          function graphique_evolution_connexion($mode_conn)
          {
