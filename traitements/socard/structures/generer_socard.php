@@ -152,8 +152,8 @@ if ($mode == 'production')
 {
     $origine  = $filename;
     //$destination  = "../../../../socard-xxxx.html";
-    $destination  = "../../../../index.html";
-    //$destination  = "socard-xxxx.html";
+    //$destination  = "../../../../index.html";
+    $destination  = "socard-xxxx.html";
     if (!copy($origine, $destination)) {
         $select["CODE_RETOUR"]      = 'ANOMALIE';
         $select["MESSAGE_RETOUR"]   = "La copie $file du fichier a échoué...\n";
