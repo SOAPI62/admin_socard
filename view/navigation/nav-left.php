@@ -46,7 +46,24 @@
                           </li>
                           
                         </ul>
-
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>
+                          TODO
+                        <i class="right fas fa-angle-left"></i>
+                        </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                          <a href="../todo/todo_listes.php" class="nav-link">
+                          <i class="fas fa-list-ul nav-icon"></i>
+                            <p>Liste</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
                       <li class="nav-item">
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-calendar-plus"></i>
