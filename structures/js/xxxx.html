@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width" />
+<title>jQuery Qrcode Plugin Demo</title>
+ 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.qrcode.js"></script>
+</head>
+<body>
+<div id="jquery-script-menu">
+<div class="jquery-script-center">
+ 
+
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+<h1 style="margin-top:150px;">jQuery Qrcode Plugin Demo</h1>
+<div id="content">
+<div id="test"></div>
+<script type="text/javascript">
+				$(document).ready(function() {
+					$('#test').qrcode({
+						'url' : 'https://www.so-shooting.com',
+						'width' : 300,
+						'height' : 300,
+						'qrsize' : 100
+					});
+				});
+			</script> 
+</div>
+ 
+</body>
+</html>
