@@ -49,7 +49,7 @@ switch ($mode_conn) {
                 $nb_connexion_s = $row[1];
             }
 
-            if ( ($semaine_precedent + 1) == $row[0] )
+            if ( $semaine_precedent == $row[0] )
             {
                 $nb_connexion_s_1 = $row[1];
             }

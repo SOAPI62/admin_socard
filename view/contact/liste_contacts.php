@@ -76,7 +76,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             </div>
             <!-- /.container-fluid -->
             <div class="card-body p-0 BLOCK-BTN">
-            <button id="BTN_AJOUT_CONTACT" type="button" class="btn btn-primary">Ajouter</button>
             <button id="BTN_IMPORT_CONTACT" type="button" class="btn btn-primary">Importer</button>
             </div>
          </section>
