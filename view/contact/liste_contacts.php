@@ -627,7 +627,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
           $('#liste_contacts tbody').on('click', '.edit-contact', function() {
             var data = table.row($(this).parents('tr')).data();
-         	var $id_contact = data[2];
+         	var $id_contact = data[1];
 
             $.ajax({
                   type: "POST",
