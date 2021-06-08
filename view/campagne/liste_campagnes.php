@@ -278,7 +278,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       // ! -------------------------------------------------------------------------------------------------------
 
       var $nb_contact = 0;
+      var $nb_credit = 0;
       var $nb_caracteres_max = 160;
+      
 
       // ! -------------------------------------------------------------------------------------------------------
       // ! ---- LISTE CRUD : CAMPAGNE
@@ -528,7 +530,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                        $nb_contact =  data.NB_CONTACTS_ACTIF;
+                        $nb_contact = data.NB_CONTACTS_ACTIF;
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
@@ -551,9 +553,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                        if ( $nb_contact > data.NB_CREDITS) {
-                           $("#DIV_ALERT").css("display", "block");
-                        }
+                        $nb_credit = data.NB_CREDITS;
+                        
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
@@ -566,6 +567,10 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                      }
                   }
             });
+
+            if ( $nb_contact > $nb_credit) {
+               $("#DIV_ALERT").css("display", "block");
+            }
         });
 
         // ! -------------------------------------------------------------------------------------------------------

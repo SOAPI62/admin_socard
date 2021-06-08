@@ -195,8 +195,20 @@ switch ($mode) {
             $req = $dbh->prepare($sql);
             $req->execute();
     
-            $mois = [0,0,0,0,0,0,0];
+            $semaine = [0,0,0,0,0,0,0];
             $max  = 0;
+
+            $timestamp = mktime(0, 0, 0, $m, $d, $y);
+            $numjour = date('w', $timestamp);
+            $jours = Array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
+            $jour_encours = $jours[$numjour];
+            
+            $timestamp_1 = mktime(0, 0, 0, $m, $d, $y)-1;
+            $numjour_1 = date('w', $timestamp_1);
+            $jour_precedent = $jours[$numjour_1];
+
+            $nb_inscrit_j   = 0;
+            $nb_inscrit_j_1 = 0;
     
             while ($row = $req->fetch())
             {
@@ -223,15 +235,37 @@ switch ($mode) {
                         $indice = 6;
                         break;             
                 }
-                $mois[$indice-1] = $row[1];
+                $semaine[$indice-1] = $row[1];
     
                 if ($max < $row[1] ) {
                     $max = $row[1];
                 }
+                if ( $jour_encours == $row[0] )
+                {
+                    $nb_inscrit_j = $row[1];
+                }
+
+                if ( $jour_precedent  == $row[0] )
+                {
+                    $nb_inscrit_j_1 = $row[1];
+                }
             }
-            $select["INSCRIPTIONS"]         = $mois;
+            $select["INSCRIPTIONS"]         = $semaine;
             $select["MAX_INSCRIPTIONS"]     = $max;
             $select["PERIODICITE"]          = $periodicite;
+
+            if ((float)$nb_inscrit_j_1 == 0)
+            {
+                $select["EVOLUTION_INSCRIPTIONS"] = -100;
+    
+            }
+            else {
+                $evo_jour = ((float)$nb_inscrit_j - (float)$nb_inscrit_j_1) / (float)$nb_inscrit_j_1 * 100;
+                $select["EVOLUTION_INSCRIPTIONS"] =  number_format($evo_jour,2);
+            }
+    
+            $select["nb_inscrit_j"] = $nb_inscrit_j;
+            $select["nb_inscrit_j_1"] = $nb_inscrit_j_1;
             break;    
     default:
         # code...
