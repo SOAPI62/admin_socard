@@ -29,8 +29,15 @@ switch ($mode) {
         $req = $dbh->prepare($sql);
         $req->execute();
 
-        $mois = [0,0,0,0,0,0,0];
+        $jour = [0,0,0,0,0,0,0];
         $max  = 0;
+
+        $jour_encours  = date("d"); 
+    
+        $jour_precedent = $jour_encours - 1;
+
+        $nb_inscrit_j   = 0;
+        $nb_inscrit_j_1 = 0;
 
         while ($row = $req->fetch())
         {
@@ -62,10 +69,33 @@ switch ($mode) {
             if ($max < $row[1] ) {
                 $max = $row[1];
             }
+            if ( $jour_encours == $row[0] )
+            {
+                $nb_inscrit_j = $row[1];
+            }
+
+            if ( $jour_precedent  == $row[0] )
+            {
+                $nb_inscrit_j_1 = $row[1];
+            }
         }
-        $select["INSCRIPTIONS"]         = $mois;
+        $select["INSCRIPTIONS"]         = $jour;
         $select["MAX_INSCRIPTIONS"]     = $max;
         $select["PERIODICITE"]          = $periodicite;
+
+        if ((float)$nb_inscrit_j_1 == 0)
+            {
+                $select["EVOLUTION_INSCRIPTIONS"] = -100;
+    
+            }
+            else {
+                $evo_jour = ((float)$nb_inscrit_j - (float)$nb_inscrit_j_1) / (float)$nb_inscrit_j_1 * 100;  
+                $select["EVOLUTION_INSCRIPTIONS"] =  number_format($evo_jour,2);
+            }
+
+            $select["nb_inscrit_j"] = $nb_inscrit_j;
+            $select["nb_inscrit_j_1"] = $nb_inscrit_j_1;
+
         break;
         case 'par mois':
             $periodicite =  ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -77,7 +107,7 @@ switch ($mode) {
             $mois = [0,0,0,0,0,0,0,0,0,0,0,0];
             $max  = 0;
     
-            $mois_encours   = $today = date("m"); 
+            $mois_encours  = date("m"); 
     
             $mois_precedent = $mois_encours - 1;
     
@@ -98,7 +128,7 @@ switch ($mode) {
                     $nb_inscrit_m = $row[1];
                 }
     
-                if ( ($mois_precedent + 1) == $row[0] )
+                if ( $mois_precedent  == $row[0] )
                 {
                     $nb_inscrit_m_1 = $row[1];
                 }
@@ -154,7 +184,7 @@ switch ($mode) {
                     $nb_inscrit_s = $row[1];
                 }
     
-                if ( ($semaine_precedent + 1) == $row[0] )
+                if ( $semaine_precedent == $row[0] )
                 {
                     $nb_inscrit_s_1 = $row[1];
                 }
@@ -216,7 +246,7 @@ switch ($mode) {
                     $nb_inscrit_t = $row[1];
                 }
     
-                if ( ($trimestre_precedent + 1) == $row[0] )
+                if ( $trimestre_precedent  == $row[0] )
                 {
                     $nb_inscrit_t_1 = $row[1];
                 }

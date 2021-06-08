@@ -47,7 +47,7 @@ switch ($mode) {
                 $nb_inscrit_m = $row[1];
             }
 
-            if ( ($mois_precedent + 1) == $row[0] )
+            if ( ($mois_precedent ) == $row[0] )
             {
                 $nb_inscrit_m_1 = $row[1];
             }
@@ -66,6 +66,9 @@ switch ($mode) {
             $evo_mois = ((float)$nb_inscrit_m - (float)$nb_inscrit_m_1) / (float)$nb_inscrit_m_1 * 100;  
             $select["EVOLUTION_INSCRIPTIONS"] =  number_format($evo_mois,2);
         }
+
+        $select["nb_inscrit_m"] = $nb_inscrit_m;
+        $select["nb_inscrit_m_1"] = $nb_inscrit_m_1;
 
         break;
  
@@ -102,7 +105,7 @@ switch ($mode) {
                 $nb_inscrit_s = $row[1];
             }
 
-            if ( ($semaine_precedent + 1) == $row[0] )
+            if ( ($semaine_precedent) == $row[0] )
             {
                 $nb_inscrit_s_1 = $row[1];
             }
@@ -161,7 +164,7 @@ switch ($mode) {
                 $nb_inscrit_t = $row[1];
             }
 
-            if ( ($trimestre_precedent + 1) == $row[0] )
+            if ( ($trimestre_precedent) == $row[0] )
             {
                 $nb_inscrit_t_1 = $row[1];
             }
