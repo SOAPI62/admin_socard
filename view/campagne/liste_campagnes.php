@@ -530,7 +530,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                        $nb_contact = data.NB_CONTACTS_ACTIF;
+                        $nb_contact =+ data.NB_CONTACTS_ACTIF;
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);
@@ -553,7 +553,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
-                        $nb_credit = data.NB_CREDITS;
+                        $nb_credit =+ data.NB_CREDITS;
                         
                      break;
                      case 'ANOMALIE':
