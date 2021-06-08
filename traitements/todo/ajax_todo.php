@@ -8,20 +8,21 @@ $requestData= $_REQUEST;
 
 $columns = array( 
     0 => 'Action', 
-    1 => 'CD_CLIENT',
-    2 => 'NOM1_CLIENT',
-    3 => 'PNOM1_CLIENT',
-    4 => 'POR_CLIENT',
-    5 => 'EMAIL_CLIENT',
-    6 => 'TACHE_TODO',
-    7 => 'COM_TODO',
-    8 => 'TACHEFF_TODO',
-    9 => 'PRIO_TODO'
+    1 => 'ID_TODO',
+    2 => 'CD_CLIENT',
+    3 => 'NOM1_CLIENT',
+    4 => 'PNOM1_CLIENT',
+    5 => 'POR_CLIENT',
+    6 => 'EMAIL_CLIENT',
+    7 => 'TACHE_TODO',
+    8 => 'COM_TODO',
+    9 => 'TACHEFF_TODO',
+    10 => 'PRIO_TODO'
 );
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
 
-$query = "SELECT `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' ORDER BY `TODO`.`DTHR_CREATION`";
+$query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' ORDER BY `TODO`.`DTHR_CREATION`";
  
 $stmt = $dbh->prepare($query);
 $stmt->execute();  
@@ -33,7 +34,7 @@ $totalFiltered = $totalData;
 if( !empty($requestData['search']['value']) ) 
 {
     // if there is a search parameter
-    $query = "SELECT `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS` ";
+    $query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS` ";
     $query.=" WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' AND (POR_CLIENT LIKE '%".$requestData['search']['value']."%' OR NOM1_CLIENT LIKE '%".$requestData['search']['value']."%' OR TACHE_TODO LIKE '%".$requestData['search']['value']."%' )";    // $requestData['search']['value'] contains search parameter
 
     $stmt = $dbh->prepare($query);
@@ -45,7 +46,7 @@ if( !empty($requestData['search']['value']) )
 }
 else 
 {   
-    $query = "SELECT `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' ORDER BY `TODO`.`DTHR_CREATION`";
+    $query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' ORDER BY `TODO`.`DTHR_CREATION`";
 
     if ($columns[$requestData['order'][0]['column']] != 'Action')
     {
@@ -66,6 +67,7 @@ while( $row=$stmt->fetch() ) {  // preparing an array
     $nestedData=array(); 
 
     $nestedData[] = "";
+    $nestedData[] = $row["ID_TODO"];
     $nestedData[] = $row["CD_CLIENT"];
     $nestedData[] = $row["NOM1_CLIENT"];
     $nestedData[] = $row["PNOM1_CLIENT"];
