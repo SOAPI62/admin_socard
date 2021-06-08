@@ -61,7 +61,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <div class="wrapper">
          <!-- Navbar top-->
          <?php
-            include '../navigation/nav-top-dashboard.php';
+            include '../navigation/nav-top.php';
             ?>
          <!-- /.navbar top-->
          <!-- Navbar utilisateur-->
