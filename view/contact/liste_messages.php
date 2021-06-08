@@ -181,6 +181,14 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
       <script>
 
+         // ! --------------------------------------------------------------------------------------------------
+         // ! Fonction AJOUT CONTACT
+         // ! --------------------------------------------------------------------------------------------------
+         
+         <?php
+            include '../fonction/_ajout-contact.php';
+         ?>
+         
           // -------------------------------------------------------------------------------------------------------
           // ---- TRAITEMENT : DATATABLE DONNEES STRUCTURES
           // -------------------------------------------------------------------------------------------------------

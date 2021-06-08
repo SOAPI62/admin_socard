@@ -203,6 +203,14 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
       <script>
       
+         // ! --------------------------------------------------------------------------------------------------
+         // ! Fonction AJOUT CONTACT
+         // ! --------------------------------------------------------------------------------------------------
+         
+         <?php
+            include '../fonction/_ajout-contact.php';
+         ?>
+         
           // ! -------------------------------------------------------------------------------------------------------
           // ! ---- TRAITEMENT : DATATABLE DONNEES STRUCTURES
           // ! -------------------------------------------------------------------------------------------------------
