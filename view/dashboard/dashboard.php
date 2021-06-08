@@ -421,7 +421,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
             message_anomalie = "";
 
-            var $ajout_ORI_CLIENT = $('#CONTACT_PAR').val();
+           var $ajout_ORI_CLIENT = $('#CONTACT_PAR').val();
            var $ajout_TYP_CLIENT = $('#TYPE_CONTACT').val();
            var $ajout_CIV1_CLIENT = '';
            var $ajout_NOM1_CLIENT = $('#NOM_CONTACT').val();
@@ -469,41 +469,66 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           }
           else
           {
-            $.ajax({
-                url: '../../../../_creagcom/base/AJAX/clients/prospect_ajout.php',
-                data: 'ajout_ORI_CLIENT=' + $ajout_ORI_CLIENT +
-                    '&ajout_TYP_CLIENT=' + $ajout_TYP_CLIENT +
-                    '&ajout_CIV1_CLIENT=' + $ajout_CIV1_CLIENT +
-                    '&ajout_NOM1_CLIENT=' + $ajout_NOM1_CLIENT +
-                    '&ajout_PNOM1_CLIENT=' + $ajout_PNOM1_CLIENT +
-                    '&ajout_CIV2_CLIENT=' + $ajout_CIV2_CLIENT +
-                    '&ajout_NOM2_CLIENT=' + $ajout_NOM2_CLIENT +
-                    '&ajout_PNOM2_CLIENT=' + $ajout_PNOM2_CLIENT +
-                    '&ajout_TEL_CLIENT=' + $ajout_TEL_CLIENT +
-                    '&ajout_POR_CLIENT=' + $ajout_POR_CLIENT +
-                    '&ajout_ADR1_CLIENT=' + $ajout_ADR1_CLIENT +
-                    '&ajout_ADR2_CLIENT=' + $ajout_ADR2_CLIENT +
-                    '&ajout_CPOSTAL_CLIENT=' + $ajout_CPOSTAL_CLIENT +
-                    '&ajout_VILLE_CLIENT=' + $ajout_VILLE_CLIENT +
-                    '&ajout_EMAIL_CLIENT=' + $ajout_EMAIL_CLIENT + 
-                    '&ajout_COMMENTAIRE_CLIENT=' + $ajout_COMMENTAIRE_CLIENT + 
-                    '&ajout_SUPPORT_COM=SOCARD' ,
-                dataType: 'json',
-                async: false,
-                success: function(data) {
-                    switch (data.REPONSE) {
-                        case 'OK':
-                            toastr.success('Ajout du Contact !')
-                            $('#ajout_contact_modale').modal('toggle');
-                            break;
-                        case 'KO':
-                            toastr.warning(data.MESS_ERR);
-                            break;
-                        default:
-                          break;
-                    }
-                }
+
+            $.ajax({ 
+               url: '../../../../_creagcom/base/AJAX/clients/prospect_ajout.php', 
+               data: 'ajout_ORI_CLIENT=' + $ajout_ORI_CLIENT + '&ajout_TYP_CLIENT=' + $ajout_TYP_CLIENT + '&ajout_CIV1_CLIENT=' + $ajout_CIV1_CLIENT + '&ajout_NOM1_CLIENT=' + $ajout_NOM1_CLIENT + '&ajout_PNOM1_CLIENT=' + $ajout_PNOM1_CLIENT + '&ajout_CIV2_CLIENT=' + $ajout_CIV2_CLIENT + '&ajout_NOM2_CLIENT=' + $ajout_NOM2_CLIENT + '&ajout_PNOM2_CLIENT=' + $ajout_PNOM2_CLIENT + '&ajout_TEL_CLIENT=' + $ajout_TEL_CLIENT + '&ajout_POR_CLIENT=' + $ajout_POR_CLIENT + '&ajout_ADR1_CLIENT=' + $ajout_ADR1_CLIENT + '&ajout_ADR2_CLIENT=' + $ajout_ADR2_CLIENT + '&ajout_CPOSTAL_CLIENT=' + $ajout_CPOSTAL_CLIENT + '&ajout_VILLE_CLIENT=' + $ajout_VILLE_CLIENT + '&ajout_EMAIL_CLIENT=' + $ajout_EMAIL_CLIENT + '&ajout_COMMENTAIRE_CLIENT=' + $ajout_COMMENTAIRE_CLIENT + '&ajout_SUPPORT_COM=SOCARD' , 
+               dataType: 'json', 
+               async: false, 
+               success: function(data) 
+               { 
+                  switch (data.REPONSE) 
+                  { 
+                     case 'OK': 
+                        toastr.success('Ajout du Contact !');
+                        $('#ajout_contact_modale').modal('toggle'); 
+                        break; 
+                     case 'KO': 
+                        toastr.warning(data.MESS_ERR); 
+                        break; 
+                     default: 
+                        break; 
+                  } 
+               } 
             });
+
+                  var ladate     = new Date()
+                  var date_jour  = ladate.getFullYear() + "/" + (ladate.getMonth()+1) + "/" + ladate.getDate();
+
+                 var item = {
+                 	"ajout_CHEMIN_PROJET":  '',
+                 	"ajout_PROJET3": 0,
+                 	"ajout_TITRE": $ajout_COMMENTAIRE_CLIENT,
+                 	"ajout_COMMENTAIRE": '',
+                 	"ajout_DATE_PLANNIF": date_jour,
+                 	"ajout_PRIORITE": 1,
+                 	"ajout_REPETITION": 0,
+                 	"ajout_RESSOURCE": 1,
+                 	"ajout_CLIENT": $('#ajout_CLIENT').val(),
+                 	"ajout_CONTRAT": 0
+                 };
+       
+                 myJSON = JSON.stringify(item);
+      
+                 $.ajax({
+                 	url: '../../traitements/todo/ajout_todo.php',
+                     data: 'data=' + myJSON, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                     dataType:'json',
+                     async: false,
+                     success: function(data) {
+                     	switch (data.REPONSE) {
+                     		case 'OK':
+                           toastr.success('Ajout du Todo!');
+                     		break;
+                     		case 'ERREUR':
+                     		alert(data.MESS_ERR);
+                     		break;
+                     		case 'ANOMALIE':
+                     		alert(data.REPONSE);
+                     		break;
+                     	}
+                     }
+                 });
          
              // ! ENVOIE DE LA SOCARD SI CONTACT PAR TELEPHONE UNIQUEMENT !
          
@@ -744,7 +769,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          // ! --------------------------------------------------------------------------------------------------
          // ! FONCTION : AFFICHAGE DES DONNÉES STAT DE LA SOCARD
          // ! --------------------------------------------------------------------------------------------------
-
 
          function graphique_evolution_contact($mode)
          {
@@ -1008,7 +1032,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                }
             }
             });
-
          }
 
          // ! --------------------------------------------------------------------------------------------------
@@ -1040,7 +1063,6 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             include '../fonction/_deconnexion.php';
          ?>
       
-
       </script>
    </body>
 </html>

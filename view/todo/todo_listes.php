@@ -8,7 +8,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Admin So Card| Structure</title>
+      <title>Admin So Card  | Todo </title>
       <meta content="width=device-width, initial-scale=1" name="viewport">
       <meta content="Webflow" name="generator">
       <!-- Google Font: Source Sans Pro -->
@@ -84,19 +84,19 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             <div class="page-content">
                <!-- Panel Table Add Row -->
                <!-- Default box -->
-               <table id="liste_contacts" style="width:100%" class="cell-border order-column hover">
+               <table id="liste_todo" style="width:100%" class="cell-border order-column hover">
                   <thead>
                      <tr>
                         <th>Action</th>
-                        <th>CODE</th>
-                        <th>SUPPORT</th>
-                        <th>TEL</th>
-                        <th>EMAIL</th>
-                        <th>ORIGINE</th>
+                        <th>CLIENT</th>
                         <th>NOM</th>
-                        <th>PRENOM</th>
-                        <th>ACTIF</th>
-                        <th>EXCLU</th>
+                        <th>PNOM</th>
+                        <th>PORTABLE</th>
+                        <th>EMAIL</th>
+                        <th>TACHE</th>
+                        <th>COMM</th>
+                        <th>PRIO</th>
+                        <th>EFFECT</th>
                      </tr>
                   </thead>
                </table>
@@ -232,7 +232,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       // ! ---- TRAITEMENT : DATATABLE DONNEES CONTACT
       // ! -------------------------------------------------------------------------------------------------------
             
-         var table = $('#liste_contacts').DataTable({
+         var table = $('#liste_todo').DataTable({
                "responsive": true,
          		dom: '<"top"Bf><"liste"l>rt<p>',
          		buttons: [
@@ -253,7 +253,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          		"processing": true,
          		"serverSide": true,
          		"ajax": {
-         			"url": "../../traitements/contact/ajax_contacts.php",
+         			"url": "../../traitements/todo/ajax_todo.php",
          			"data": function() {}
          		},
              columnDefs: [
@@ -265,56 +265,18 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          		},
                {
                   "width": '5%',
-         			"targets": [1],
-         			"visible": false,
-         		},
-               {
-                  "width": '5%',
-         			"targets": [2],
-         			"visible": false,
-               },
-               
-               {
-                  
-         			"targets": [4],
-         		},
-               {
-         			"targets": [5],
-                  "searchable": false       		
-               },
-               {
-                  "width": '5%',
-         			"targets": [6],
-
-         		},
-               {
-                  "width": '5%',
-         			"targets": [7],
-
-         		},
-               {
-         			"targets": [8],
-         			"visible": false,
-         			"searchable": false
-         		},
-               {
          			"targets": [9],
-         			"searchable": false,
-                  "visible": false,
-         		}
-         		] ,
+         			"visible": false,
+               }
+         		]  ,
                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                     if (aData[8] == "INACTIF") {
+                     if (aData[9] == "1") {
                          $('td', nRow).css('background-color', '#8B0000');
                          $('td', nRow).css('color', 'White');
                      }
-                     if (aData[9] == "SMS") {
-                         $('td', nRow).css('background-color', '#FFA500');
-                         $('td', nRow).css('color', 'White');
-                     }
-
                  }
          	});
+            
             // Add event listener for opening and closing details
                $('#liste_contacts tbody').on('click', 'td.details-control', function () {
                   var tr = $(this).closest('tr');
