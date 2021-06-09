@@ -16,13 +16,13 @@ $columns = array(
     6 => 'EMAIL_CLIENT',
     7 => 'TACHE_TODO',
     8 => 'COM_TODO',
-    9 => 'TACHEFF_TODO',
-    10 => 'PRIO_TODO'
+    9 => 'PRIO_TODO',
+    10 => 'TACHEFF_TODO'
 );
 
 // ON COMPTE LE NOMBRE D ENREGISTREMENT
 
-$query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' ORDER BY `TODO`.`DTHR_CREATION`";
+$query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' AND `DTECH_TODO`<=NOW() AND `ACTIF_TODO`=1";
  
 $stmt = $dbh->prepare($query);
 $stmt->execute();  
@@ -35,7 +35,8 @@ if( !empty($requestData['search']['value']) )
 {
     // if there is a search parameter
     $query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS` ";
-    $query.=" WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' AND (POR_CLIENT LIKE '%".$requestData['search']['value']."%' OR NOM1_CLIENT LIKE '%".$requestData['search']['value']."%' OR TACHE_TODO LIKE '%".$requestData['search']['value']."%' )";    // $requestData['search']['value'] contains search parameter
+    $query.=" WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' AND `DTECH_TODO`<=NOW() AND `ACTIF_TODO`=1 AND (POR_CLIENT LIKE '%".$requestData['search']['value']."%' OR NOM1_CLIENT LIKE '%".$requestData['search']['value']."%' OR TACHE_TODO LIKE '%".$requestData['search']['value']."%' )";    // $requestData['search']['value'] contains search parameter
+    $query.=" ORDER BY `ID_TODO` desc";
 
     $stmt = $dbh->prepare($query);
     $stmt->execute();  
@@ -46,7 +47,7 @@ if( !empty($requestData['search']['value']) )
 }
 else 
 {   
-    $query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' ORDER BY `TODO`.`DTHR_CREATION`";
+    $query = "SELECT `ID_TODO`, `CD_CLIENT`, `NOM1_CLIENT`, `PNOM1_CLIENT`, `POR_CLIENT`, `EMAIL_CLIENT`, `TACHE_TODO`, `COM_TODO`, `TACHEFF_TODO`, `PRIO_TODO` FROM `TODO`,`CLIENTS`  WHERE `NRO_CLIENT` = `CD_CLIENT` AND `SUPPORT_COM`='SOCARD' AND `DTECH_TODO`<=NOW() AND `ACTIF_TODO`=1 ORDER BY `ID_TODO` desc";
 
     if ($columns[$requestData['order'][0]['column']] != 'Action')
     {

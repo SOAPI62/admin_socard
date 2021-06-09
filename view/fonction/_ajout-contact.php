@@ -76,10 +76,11 @@ toastr.warning(message_anomalie);
 }
 else
 {
+$nro_client = 0;
 
 $.ajax({ 
     url: '../../../../_creagcom/base/AJAX/clients/prospect_ajout.php', 
-    data: 'ajout_ORI_CLIENT=' + $ajout_ORI_CLIENT + '&ajout_TYP_CLIENT=' + $ajout_TYP_CLIENT + '&ajout_CIV1_CLIENT=' + $ajout_CIV1_CLIENT + '&ajout_NOM1_CLIENT=' + $ajout_NOM1_CLIENT + '&ajout_PNOM1_CLIENT=' + $ajout_PNOM1_CLIENT + '&ajout_CIV2_CLIENT=' + $ajout_CIV2_CLIENT + '&ajout_NOM2_CLIENT=' + $ajout_NOM2_CLIENT + '&ajout_PNOM2_CLIENT=' + $ajout_PNOM2_CLIENT + '&ajout_TEL_CLIENT=' + $ajout_TEL_CLIENT + '&ajout_POR_CLIENT=' + $ajout_POR_CLIENT + '&ajout_ADR1_CLIENT=' + $ajout_ADR1_CLIENT + '&ajout_ADR2_CLIENT=' + $ajout_ADR2_CLIENT + '&ajout_CPOSTAL_CLIENT=' + $ajout_CPOSTAL_CLIENT + '&ajout_VILLE_CLIENT=' + $ajout_VILLE_CLIENT + '&ajout_EMAIL_CLIENT=' + $ajout_EMAIL_CLIENT + '&ajout_COMMENTAIRE_CLIENT=' + $ajout_COMMENTAIRE_CLIENT + '&ajout_SUPPORT_COM=SOCARD' , 
+    data: 'ajout_ORI_CLIENT=' + $ajout_ORI_CLIENT + '&ajout_TYP_CLIENT=' + $ajout_TYP_CLIENT + '&ajout_CIV1_CLIENT=' + $ajout_CIV1_CLIENT + '&ajout_NOM1_CLIENT=' + $ajout_NOM1_CLIENT + '&ajout_PNOM1_CLIENT=' + $ajout_PNOM1_CLIENT + '&ajout_CIV2_CLIENT=' + $ajout_CIV2_CLIENT + '&ajout_NOM2_CLIENT=' + $ajout_NOM2_CLIENT + '&ajout_PNOM2_CLIENT=' + $ajout_PNOM2_CLIENT + '&ajout_TEL_CLIENT=' + $ajout_TEL_CLIENT + '&ajout_POR_CLIENT=' + $ajout_POR_CLIENT + '&ajout_ADR1_CLIENT=' + $ajout_ADR1_CLIENT + '&ajout_ADR2_CLIENT=' + $ajout_ADR2_CLIENT + '&ajout_CPOSTAL_CLIENT=' + $ajout_CPOSTAL_CLIENT + '&ajout_VILLE_CLIENT=' + $ajout_VILLE_CLIENT + '&ajout_EMAIL_CLIENT=' + $ajout_EMAIL_CLIENT  + '&ajout_SUPPORT_COM=SOCARD' , 
     dataType: 'json', 
     async: false, 
     success: function(data) 
@@ -89,9 +90,12 @@ $.ajax({
             case 'OK': 
             toastr.success('Ajout du Contact !');
             $('#ajout_contact_modale').modal('toggle'); 
+            $nro_client = data.VALEUR;
             break; 
             case 'KO': 
             toastr.warning(data.MESS_ERR); 
+            $nro_client = data.VALEUR;
+            $('#ajout_contact_modale').modal('toggle'); 
             break; 
             default: 
             break; 
@@ -99,6 +103,8 @@ $.ajax({
     } 
 });
 
+if ($ajout_COMMENTAIRE_CLIENT.trim() != '')
+{
         var ladate     = new Date()
         var date_jour  = ladate.getFullYear() + "/" + (ladate.getMonth()+1) + "/" + ladate.getDate();
 
@@ -111,7 +117,7 @@ $.ajax({
         "ajout_PRIORITE": 1,
         "ajout_REPETITION": 0,
         "ajout_RESSOURCE": 1,
-        "ajout_CLIENT": $('#ajout_CLIENT').val(),
+        "ajout_CLIENT": $nro_client,
         "ajout_CONTRAT": 0
         };
 
@@ -136,6 +142,8 @@ $.ajax({
             }
             }
         });
+}
+        
 
     // ! ENVOIE DE LA SOCARD SI CONTACT PAR TELEPHONE UNIQUEMENT !
 
