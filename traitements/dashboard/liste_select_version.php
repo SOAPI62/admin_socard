@@ -19,7 +19,7 @@ $select["MESSAGE_SQL"]      = '';
 // Préparation de la requêtes SQL
 // ----------------------------------------------------------------------
 
-$query = "SELECT DISTINCT `version` FROM SOCARD_INSTAL ORDER BY `version` DESC";
+$query = "SELECT DISTINCT `version` FROM SOCARD_INSTAL where `version`<>'' ORDER BY `version` DESC";
 
 try {
     $stmt = $dbh->prepare($query);
@@ -27,6 +27,7 @@ try {
 
     $code = "<label >avec la version </label>";
     $code .= "<select id='nro_version'>";
+    $code .= "<option value='-1' >Toutes</option>";
     while ($row = $stmt->fetch())
     {
         $code .= "<option value='"  . $row[0] . "' >" . $row[0] . "</option>";

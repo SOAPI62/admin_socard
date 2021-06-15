@@ -444,7 +444,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
 
          $('#periode_inscrit').change(function() {
             $mode =  $('#periode_inscrit').val();
-            graphique_evolution_inscription($mode);
+            $version =  $('#nro_version').val();
+            graphique_evolution_inscription($mode, $version);
             switch ($('#periode_inscrit').val()) {
               case 'cette semaine':
               $('#evo-inscription').text("Évolution J-1");
@@ -486,11 +487,11 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          // ! FONCTION : AFFICHAGE DES DONNÉES STAT DE LA SOCARD
          // ! --------------------------------------------------------------------------------------------------
 
-         function graphique_evolution_inscription($mode){
+         function graphique_evolution_inscription($mode, $version){
 
          $.ajax({
          url: '../../traitements/dashboard/evolution_inscriptions.php',
-         data: 'mode=' + $mode,
+         data: 'mode=' + $mode + '&version=' + $version,
          dataType: 'json',
          async: false,
          success: function(data) {

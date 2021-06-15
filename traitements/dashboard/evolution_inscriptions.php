@@ -6,6 +6,7 @@ include '../connexion_bdd/conn.php';
 // Lecture des parametres
 
 $mode           = $_GET['mode'];
+$version        = $_GET['version'];
 $periodicite    = [];
 
 // Initialisation des variables de sortie de la procédure
@@ -19,7 +20,14 @@ $select["CODE_SQL"] = '';
 switch ($mode) {
     case 'par mois':
         $periodicite =  ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
-        $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `MOIS_PER`";
+        if ($version==-1)
+        {
+            $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `MOIS_PER`";
+        }
+        else
+        {
+            $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `version`='$version' AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `MOIS_PER`";
+        }
         $req = $dbh->prepare($sql);
         $req->execute();
 
@@ -84,7 +92,14 @@ switch ($mode) {
         $nb_inscrit_s   = 0;
         $nb_inscrit_s_1 = 0;
 
-        $sql = "SELECT `SEMAINE`, count(*)  FROM `SOCARD_INSTAL`, `PERIODES` WHERE `ANNEE`=2021 AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `SEMAINE`";
+        if ($version==-1)
+        {
+            $sql = "SELECT `SEMAINE`, count(*)  FROM `SOCARD_INSTAL`, `PERIODES` WHERE `ANNEE`=2021 AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `SEMAINE`";
+        }
+        else
+        {
+            $sql = "SELECT `SEMAINE`, count(*)  FROM `SOCARD_INSTAL`, `PERIODES` WHERE `version`='$version' AND `ANNEE`=2021 AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `SEMAINE`";
+        }
         $req = $dbh->prepare($sql);
         $req->execute();
         
@@ -135,7 +150,16 @@ switch ($mode) {
         break; 
     case 'par trimestre':
         $periodicite =  ['T1', 'T2', 'T3', 'T4'];
-        $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `ANNEE`=2021 AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `TRIMESTRE`";
+
+        if ($version==-1)
+        {
+            $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `ANNEE`=2021 AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `TRIMESTRE`";
+        }
+        else
+        {
+            $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `version`='$version' AND `ANNEE`=2021 AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `TRIMESTRE`";
+ 
+        }
         $req = $dbh->prepare($sql);
         $req->execute();
 
@@ -191,7 +215,16 @@ switch ($mode) {
             $semaine_encours = ISOWeek($y , $m , $d);
     
             $periodicite =  ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-            $sql = "SELECT `JOUR_LIB_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `SEMAINE`='$semaine_encours' AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `JOUR_LIB_PER`";
+
+            if ($version==-1)
+            {
+                $sql = "SELECT `JOUR_LIB_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `SEMAINE`='$semaine_encours' AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `JOUR_LIB_PER`";
+            }
+            else
+            {
+                $sql = "SELECT `JOUR_LIB_PER`, count(*) FROM `SOCARD_INSTAL`, `PERIODES` WHERE `version`='$version' AND `SEMAINE`='$semaine_encours' AND `date_creation` <>'0000-00-00' AND `date_creation`= `DATE_PER`  AND ( (`agent`='ios' and `app_install`=0) OR (`agent`='android')) GROUP BY `JOUR_LIB_PER`";
+
+            }
             $req = $dbh->prepare($sql);
             $req->execute();
     
