@@ -9,6 +9,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Admin SOCARD</title>
+      <meta http-equiv="refresh" content="900"/>
       <meta content="width=device-width, initial-scale=1" name="viewport">
       <meta content="Webflow" name="generator">
       <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
@@ -189,7 +190,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                             <option value='par semaine' >par semaine</option>
                             <option value='par mois'>par mois</option>
                             <option value='par trimestre'>par trimestre</option>
-                           
+                         
                         </select>
                         </div>
                      </div>
@@ -214,15 +215,17 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                <div class="card">
                   <div class="card-header border-0">
                      <div class="d-flex justify-content-between">
-                        <div class="card-body">
+                        <div style="padding-top: 20px;">
                         <label >Nombre d'inscrits </label>
                         <select id="periode_inscrit">
-                        <option value='cette semaine' selected>cette semaine</option>
+                           <option value='cette semaine' selected>cette semaine</option>
                             <option value='par semaine' >par semaine</option>
                             <option value='par mois'>par mois</option>
                             <option value='par trimestre'>par trimestre</option>
-                           
                         </select>
+                        </div>
+                        <div class="card-body" id="liste_version">
+
                         </div>
                      </div>
                   </div>
@@ -351,6 +354,19 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   $('#BLK_ZONE_SOCARD').html(data.HTML);
                 }
                });  
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! INITIALISATION DE LA LISTE DES VERSIONS
+         // ! --------------------------------------------------------------------------------------------------
+
+         $.ajax({
+               url: '../../traitements/dashboard/liste_select_version.php',
+                dataType: 'json',
+                async: false,
+                success: function(data) {
+                  $('#liste_version').html(data.HTML);
+                }
+               }); 
          
          // ! --------------------------------------------------------------------------------------------------
          // ! AFFICHAGE DES DONNÉES STAT DE LA SOCARD
