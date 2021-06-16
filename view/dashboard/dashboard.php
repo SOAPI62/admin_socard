@@ -285,6 +285,50 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         </div>
                         -->
                   </div>
+                  <!-- PIE CHART -->
+                  <div style="display:flex;">
+                  <div class="card card-danger col-md-6">
+                  <div class="card-header">
+                     <h3 class="card-title">Pie Chart</h3>
+
+                     <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                        </button>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  </div>
+                  <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                  <!-- BAR CHART -->
+                  <div class="card card-success col-md-6">
+                  <div class="card-header">
+                     <h3 class="card-title">Bar Chart</h3>
+
+                     <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                        </button>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <div class="chart">
+                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                     </div>
+                  </div>
+                  <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                  </div>
                </div>
 
                </form>
@@ -399,7 +443,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          // ! --------------------------------------------------------------------------------------------------
 
          $('#periode_inscrit').val('cette semaine');
-         graphique_evolution_inscription($('#periode_inscrit').val());
+         graphique_evolution_inscription($('#periode_inscrit').val(),-1);
 
          $('#periode_connexion').val('semaine');
          graphique_evolution_connexion($('#periode_connexion').val());
@@ -443,6 +487,26 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          // ! --------------------------------------------------------------------------------------------------
 
          $('#periode_inscrit').change(function() {
+            $mode =  $('#periode_inscrit').val();
+            $version =  $('#nro_version').val();
+            graphique_evolution_inscription($mode, $version);
+            switch ($('#periode_inscrit').val()) {
+              case 'cette semaine':
+              $('#evo-inscription').text("Évolution J-1");
+              break;
+              case 'par semaine':
+              $('#evo-inscription').text("Évolution S-1");
+              break;
+              case 'par mois':
+              $('#evo-inscription').text("Évolution M-1");
+              break;
+              case 'par trimestre':
+              $('#evo-inscription').text("Évolution T-1");
+              break;
+            }
+         });
+
+         $('#nro_version').change(function() {
             $mode =  $('#periode_inscrit').val();
             $version =  $('#nro_version').val();
             graphique_evolution_inscription($mode, $version);
@@ -514,7 +578,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
                               
                               var $nb_inscrit = data.INSCRIPTIONS;
-         
+                              
                               var $visitorsChart = $('#visitors-chart')
                               // eslint-disable-next-line no-unused-vars
                               var visitorsChart = new Chart($visitorsChart, {
@@ -534,6 +598,25 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                  },
                                  options: {
                                  maintainAspectRatio: false,
+                                 "animation": {
+                                       "duration": 1,
+                                       "onComplete": function () {
+                                          var chartInstance = this.chart,
+                                          ctx = chartInstance.ctx;
+
+                                          ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                          ctx.textAlign = 'center';
+                                          ctx.textBaseline = 'bottom';
+
+                                          this.data.datasets.forEach(function (dataset, i) {
+                                             var meta = chartInstance.controller.getDatasetMeta(i);
+                                             meta.data.forEach(function (bar, index) {
+                                                   var data = dataset.data[index];                            
+                                                   ctx.fillText(data, bar._model.x, bar._model.y -5);
+                                             });
+                                          });
+                                       }
+                                 },
                                  tooltips: {
                                     mode: mode,
                                     intersect: intersect
@@ -556,7 +639,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                        },
                                        ticks: $.extend({
                                        beginAtZero: true,
-                                       suggestedMax: $max
+                                       suggestedMax: $max*1.1
                                        }, ticksStyle)
                                     }],
                                     xAxes: [{
@@ -594,7 +677,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                      switch (data.REPONSE) {
                            case 'OK':
                               $periodicite = data.PERIODICITE;
-                              var $max     = data.MAX_INSCRIPTIONS;
+                              var $max     = data.MAX_INSCRIPTIONS ;
                               $('#pourcentage_contact').html(data.EVOLUTION_INSCRIPTIONS+'%');
           
                               var ticksStyle = {
@@ -626,6 +709,25 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                  },
                                  options: {
                                  maintainAspectRatio: false,
+                                 "animation": {
+                                       "duration": 1,
+                                       "onComplete": function () {
+                                          var chartInstance = this.chart,
+                                          ctx = chartInstance.ctx;
+
+                                          ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                          ctx.textAlign = 'center';
+                                          ctx.textBaseline = 'bottom';
+
+                                          this.data.datasets.forEach(function (dataset, i) {
+                                             var meta = chartInstance.controller.getDatasetMeta(i);
+                                             meta.data.forEach(function (bar, index) {
+                                                   var data = dataset.data[index];                            
+                                                   ctx.fillText(data, bar._model.x, bar._model.y -5);
+                                             });
+                                          });
+                                       }
+                                 },
                                  tooltips: {
                                     mode: mode,
                                     intersect: intersect
@@ -647,7 +749,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                        },
                                        ticks: $.extend({
                                        beginAtZero: true,
-                                       suggestedMax: $max
+                                       suggestedMax: $max*1.1
                                        }, ticksStyle)
                                     }],
                                     xAxes: [{
@@ -719,6 +821,25 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                     },
                                     options: {
                                     maintainAspectRatio: false,
+                                    "animation": {
+                                          "duration": 1,
+                                          "onComplete": function () {
+                                             var chartInstance = this.chart,
+                                             ctx = chartInstance.ctx;
+
+                                             ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                             ctx.textAlign = 'center';
+                                             ctx.textBaseline = 'bottom';
+
+                                             this.data.datasets.forEach(function (dataset, i) {
+                                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                                meta.data.forEach(function (bar, index) {
+                                                      var data = dataset.data[index];                            
+                                                      ctx.fillText(data, bar._model.x, bar._model.y -5);
+                                                });
+                                             });
+                                          }
+                                    },
                                     tooltips: {
                                        mode: mode,
                                        intersect: intersect
@@ -741,7 +862,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                           },
                                           ticks: $.extend({
                                           beginAtZero: true,
-                                          suggestedMax: $max
+                                          suggestedMax: $max*1.1
                                           }, ticksStyle)
                                        }],
                                        xAxes: [{
@@ -792,6 +913,121 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          <?php
             include '../fonction/_deconnexion.php';
          ?>
+
+         
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! PIE CHART
+         // ! --------------------------------------------------------------------------------------------------
+
+   
+         $.ajax({
+            url: '../../traitements/dashboard/evolution_version.php',
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                        switch (data.REPONSE) {
+                              case 'OK':
+
+                                 var version         = data.VERSION;
+                              
+                                 var nb_version      = data.NOMBRE;
+                                 var pieOptions       = {
+                                    maintainAspectRatio : false,
+                                    responsive : true,
+                                 }
+            
+                                 var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                                 
+                                 new Chart(pieChartCanvas, {
+                                    type: 'pie',
+                                    data: {
+                                    labels: version,
+                                    datasets: [{
+                                       data: nb_version,
+                                       backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc','#6C3483'],
+                                    }]
+                                    },
+                                    options: pieOptions
+                                 })
+                              break;
+                  case 'KO':
+                     break;
+                  default:
+                     break;
+               }
+            }
+            });
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! BAR CHART
+         // ! --------------------------------------------------------------------------------------------------
+         
+
+         
+
+         $.ajax({
+            url: '../../traitements/dashboard/evolution_parrainage.php',
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                        switch (data.REPONSE) {
+                              case 'OK':
+                                 var areaChartData = {
+                                    labels  : data.PERIODICITE,
+                                    datasets: [
+                                    {
+                                       label               : 'Téléchargements',
+                                       backgroundColor     : 'rgba(60,141,188,0.9)',
+                                       borderColor         : 'rgba(60,141,188,0.8)',
+                                       pointRadius          : false,
+                                       pointColor          : '#3b8bba',
+                                       pointStrokeColor    : 'rgba(60,141,188,1)',
+                                       pointHighlightFill  : '#fff',
+                                       pointHighlightStroke: 'rgba(60,141,188,1)',
+                                       data                : data.TELECHARGEMENT
+                                    },
+                                    {
+                                       label               : 'Parrainages',
+                                       backgroundColor     : 'rgba(210, 214, 222, 1)',
+                                       borderColor         : 'rgba(210, 214, 222, 1)',
+                                       pointRadius         : false,
+                                       pointColor          : 'rgba(210, 214, 222, 1)',
+                                       pointStrokeColor    : '#c1c7d1',
+                                       pointHighlightFill  : '#fff',
+                                       pointHighlightStroke: 'rgba(220,220,220,1)',
+                                       data                : data.PARRAINAGE
+                                    },
+                                    ]
+                                 }
+
+                                 var barChartCanvas = $('#barChart').get(0).getContext('2d')
+                                 var barChartData = $.extend(true, {}, areaChartData)
+                                 var temp0 = areaChartData.datasets[0]
+                                 var temp1 = areaChartData.datasets[1]
+                                 barChartData.datasets[0] = temp1
+                                 barChartData.datasets[1] = temp0
+
+                                 var barChartOptions = {
+                                    responsive              : true,
+                                    maintainAspectRatio     : false,
+                                    datasetFill             : false
+                                 }
+
+                                 new Chart(barChartCanvas, {
+                                    type: 'bar',
+                                    data: barChartData,
+                                    options: barChartOptions
+                                 })
+                                 
+                              break;
+                  case 'KO':
+                     break;
+                  default:
+                     break;
+               }
+            }
+            });
       
       </script>
    </body>

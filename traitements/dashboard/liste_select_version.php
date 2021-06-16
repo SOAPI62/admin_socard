@@ -26,7 +26,7 @@ try {
     $stmt->execute();
 
     $code = "<label >avec la version </label>";
-    $code .= "<select id='nro_version'>";
+    $code .= "<select id='nro_version' style='margin-left: 5px;'>";
     $code .= "<option value='-1' >Toutes</option>";
     while ($row = $stmt->fetch())
     {
