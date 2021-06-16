@@ -15,6 +15,11 @@
             <i class="fas fa-calendar-alt"></i>
             </a>
         </li>
+        <li class="nav-item csv_onesignal">
+            <a id="BTN_CSV_ONESIGNAL" class="nav-link"  data-toggle="modal">
+            <i class="fas fa-satellite-dish"></i>
+            </a>
+        </li>
         <li class="nav-item deconnexion">
             <a id="BTN_DECONNEXION" class="nav-link"  data-toggle="modal">
             <i class="fas fa-sign-out-alt"></i>
@@ -119,3 +124,49 @@
    <!-- /.modal-dialog -->
 </div>
 <!-- -------------------------------------------------------------------------------------------------------- -->
+
+
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- IMPORT CONTACT                                                                                           -->                                                           
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+
+         <div class="modal fade dropdown" tabindex="-1" role="dialog" aria-hidden="true" id="import_onesignal_modale">
+            <div class="modal-dialog modal-xl ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Import de Onesignal</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <select  id="IMPORT_SUPPORT" class="form-control import-support" style="width: 40%;" style="display: none;">
+                              <option value="TIDIO" selected="selected">Onesignal</option>
+                           </select>
+                        </div>
+                        <form id="form_import" method="post" action="">
+                        <div class="input_file">
+                           <label for="file" class="file_label">
+                           <i class="fa fa-upload" aria-hidden="true"></i>
+                           Importez votre fichier csv
+                           </label>
+                           <input id="file" classe="file_csv" type="file" name="file-csv" accept=".csv" />
+                        </div>
+                        
+                     </div>
+                    <div class="modal-footer">
+                        <button id="ANNULATION_IMPORT" type="button" class="btn btn-primary btn-info">Annuler</button>
+                        <button id="VALIDATION_IMPORT" type="submit" class="btn btn-success">Valider</button>
+                    </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>  
+
+         
+
+
+

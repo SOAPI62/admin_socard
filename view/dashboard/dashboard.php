@@ -42,7 +42,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <!-- JQVMap -->
       <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
       <!-- Theme style -->
-      <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+      <link rel="stylesheet" href="../../dist/css/adminlte.css">
       <!-- overlayScrollbars -->
       <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
       <!-- Daterange picker -->
@@ -78,6 +78,8 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       </div>
       <!-- /.sidebar -->
       </aside>
+
+      
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
          <!-- Content Header (Page header) -->
@@ -289,7 +291,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   <div style="display:flex;">
                   <div class="card card-danger col-md-6">
                   <div class="card-header">
-                     <h3 class="card-title">Pie Chart</h3>
+                     <h3 class="card-title">Version de la So'Card</h3>
 
                      <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -309,7 +311,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   <!-- BAR CHART -->
                   <div class="card card-success col-md-6">
                   <div class="card-header">
-                     <h3 class="card-title">Bar Chart</h3>
+                     <h3 class="card-title">Parrainages / Installations</h3>
 
                      <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -884,38 +886,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             }
             });
          }
-
-         // ! --------------------------------------------------------------------------------------------------
-         // ! FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
-         // ! --------------------------------------------------------------------------------------------------
          
-         function checkEmail(email) {
-             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-             return re.test(email);
-         }
-
-         // ! --------------------------------------------------------------------------------------------------
-         // ! FONCTION : TEST DE LA VALIDITE D UNE ADRESSE MAIL
-         // ! --------------------------------------------------------------------------------------------------
-
-         function validate(email) {         
-             if (checkEmail(email)) {
-                 return true
-             } else {
-              return false;
-             }
-         }
-
-         // ! --------------------------------------------------------------------------------------------------
-         // ! FONCTION : DECONNEXION
-         // ! --------------------------------------------------------------------------------------------------
-               
-         <?php
-            include '../fonction/_deconnexion.php';
-         ?>
-
-         
-
          // ! --------------------------------------------------------------------------------------------------
          // ! PIE CHART
          // ! --------------------------------------------------------------------------------------------------
@@ -977,7 +948,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                     labels  : data.PERIODICITE,
                                     datasets: [
                                     {
-                                       label               : 'Téléchargements',
+                                       label               : 'Installations',
                                        backgroundColor     : 'rgba(60,141,188,0.9)',
                                        borderColor         : 'rgba(60,141,188,0.8)',
                                        pointRadius          : false,
@@ -1005,19 +976,39 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                                  var barChartData = $.extend(true, {}, areaChartData)
                                  var temp0 = areaChartData.datasets[0]
                                  var temp1 = areaChartData.datasets[1]
-                                 barChartData.datasets[0] = temp1
-                                 barChartData.datasets[1] = temp0
+                                 barChartData.datasets[0] = temp0
+                                 barChartData.datasets[1] = temp1
 
                                  var barChartOptions = {
                                     responsive              : true,
                                     maintainAspectRatio     : false,
-                                    datasetFill             : false
+                                    datasetFill             : false,
+                                    "animation": {
+                                          "duration": 1,
+                                          "onComplete": function () {
+                                             var chartInstance = this.chart,
+                                             ctx = chartInstance.ctx;
+
+                                             ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                             ctx.textAlign = 'center';
+                                             ctx.textBaseline = 'bottom';
+
+                                             this.data.datasets.forEach(function (dataset, i) {
+                                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                                meta.data.forEach(function (bar, index) {
+                                                      var data = dataset.data[index];                            
+                                                      ctx.fillText(data, bar._model.x, bar._model.y + 15);
+                                                });
+                                             });
+                                          }
+                                    },
+                                    
                                  }
 
                                  new Chart(barChartCanvas, {
                                     type: 'bar',
                                     data: barChartData,
-                                    options: barChartOptions
+                                    options: barChartOptions,
                                  })
                                  
                               break;
@@ -1028,7 +1019,89 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                }
             }
             });
-      
+
+
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- APPEL DE LA FENETRE IMPORT ONESIGNAL
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#BTN_CSV_ONESIGNAL').click(function() {
+               $('#import_onesignal_modale').modal('toggle');
+           });
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- FERMETURE DE LA MODALE IMPORT ONESIGNAL
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#ANNULATION_IMPORT').click(function() {
+               $('#import_onesignal_modale').modal('toggle');
+           });
+
+          // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- VALIDATION DE L IMPORT DU FICHIER CSV
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#form_import').on('submit', function(e){
+             e.preventDefault();
+
+            $.ajax({
+                  type: "POST",             
+                  data: new FormData(this), 
+                  contentType: false,       
+                  cache: false,             
+                  processData:false,        
+                  dataType: 'json',
+                  url: "../../traitements/dashboard/",
+                  success: function (data) 
+                  {                     
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                        toastr.success(data.MESSAGE_RETOUR);
+                        $('#import_onesignal_modale').modal('toggle');
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+          });
+          
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
+         // ! --------------------------------------------------------------------------------------------------
+         
+         function checkEmail(email) {
+             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+             return re.test(email);
+         }
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : TEST DE LA VALIDITE D UNE ADRESSE MAIL
+         // ! --------------------------------------------------------------------------------------------------
+
+         function validate(email) {         
+             if (checkEmail(email)) {
+                 return true
+             } else {
+              return false;
+             }
+         }
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : DECONNEXION
+         // ! --------------------------------------------------------------------------------------------------
+               
+         <?php
+            include '../fonction/_deconnexion.php';
+         ?>
+
       </script>
    </body>
 </html>
