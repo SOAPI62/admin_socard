@@ -22,9 +22,11 @@ $select["NB_INSERT"]        = 0;
 // ! subscribed , last_active , first_session , channel , device , sessions , player_id , tags , country , language_code 
 // ! XXXX
 
-$csv = new SplFileObject('contacts.csv', 'r');
+$csv = new SplFileObject('users_export_onesignal_users_2021-06-16T08:51:36+00:00.csv', 'r');
 $csv->setFlags(SplFileObject::READ_CSV);
 $csv->setCsvControl(',', '"', '"');
+
+$nb_ligne = 0;
 
 
 foreach($csv as $ligne)
@@ -66,13 +68,18 @@ foreach($csv as $ligne)
             }
         }
     }
+
 }
+            
+        
+    
+
  
 // ! ------------------------------------------------------------------------------------------------------------------------------
 // ! FIN DU TRAITEMENT
 // ! ------------------------------------------------------------------------------------------------------------------------------
 
-$select["MESSAGE_RETOUR"] = (string)$select["NB_INSERT"] . ' contact(s ajouté(s) !';
+
 
 echo json_encode($select);
 exit(0);

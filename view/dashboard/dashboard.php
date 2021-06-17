@@ -3,6 +3,8 @@ session_start();
 if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']))
 {
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -1041,6 +1043,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
           // ! -------------------------------------------------------------------------------------------------------
           // ! ---- VALIDATION DE L IMPORT DU FICHIER CSV
           // ! -------------------------------------------------------------------------------------------------------
+           
 
           $('#form_import').on('submit', function(e){
              e.preventDefault();
@@ -1052,12 +1055,12 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   cache: false,             
                   processData:false,        
                   dataType: 'json',
-                  url: "../../traitements/dashboard/",
+                  url: "../../traitements/dashboard/import_onesignal.php",
                   success: function (data) 
                   {                     
-                     switch (data.CODE_RETOUR) {
+                     switch (data.CODE_RETOUR) {   
                      case 'OK':
-                        toastr.success(data.MESSAGE_RETOUR);
+                        toastr.success('Fichier uplaod');
                         $('#import_onesignal_modale').modal('toggle');
                      break;
                      case 'ANOMALIE':
@@ -1072,6 +1075,20 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
             });
           });
+
+          // ! --------------------------------------------------------------------------------------------------
+         // ! UPLOAD FICHIER
+         // ! --------------------------------------------------------------------------------------------------
+
+         $("#file").on("change", function (e) {
+            var files = $(this)[0].files;
+            if (files.length >= 2) {
+                  $(".file_label").text(files.length + " Files Ready To Upload");
+            } else {
+                  var fileName = e.target.value.split("\\").pop();
+                  $(".file_label").text(fileName);
+            }
+         });
           
          // ! --------------------------------------------------------------------------------------------------
          // ! FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
