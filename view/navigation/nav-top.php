@@ -127,7 +127,7 @@
 
 
          <!-- -------------------------------------------------------------------------------------------------------- -->
-         <!-- IMPORT CONTACT                                                                                           -->                                                           
+         <!-- IMPORT ONESIGNAL                                                                                           -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
          <div class="modal fade dropdown" tabindex="-1" role="dialog" aria-hidden="true" id="import_onesignal_modale">
@@ -145,7 +145,7 @@
                               <option value="TIDIO" selected="selected">Onesignal</option>
                            </select>
                         </div>
-                        <form id="form_import" method="post" action="">
+                        <form id="form_import" method="post" action="" enctype="multipart/form-data">
                         <div class="input_file">
                            <label for="file" class="file_label">
                            <i class="fa fa-upload" aria-hidden="true"></i>
