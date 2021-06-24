@@ -289,9 +289,10 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         </div>
                         -->
                   </div>
+                  </div>
                   <!-- PIE CHART -->
-                  <div style="display:flex;">
-                  <div class="card card-danger col-md-6">
+                  <div class="row">
+                  <div class="card card-danger col-md-4">
                   <div class="card-header">
                      <h3 class="card-title">Version de la So'Card</h3>
 
@@ -311,7 +312,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   </div>
                   <!-- /.card -->
                   <!-- BAR CHART -->
-                  <div class="card card-success col-md-6">
+                  <div class="card card-success col-md-4">
                   <div class="card-header">
                      <h3 class="card-title">Parrainages / Installations</h3>
 
@@ -332,8 +333,31 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   <!-- /.card-body -->
                   </div>
                   <!-- /.card -->
+                  <div class="card card-info col-md-4">
+                  <div class="card-header">
+                     <h3 class="card-title">Onesignal</h3>
+
+                     <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                        </button>
+                     </div>
                   </div>
-               </div>
+                  <div class="card-body">
+                     <div class="chart">
+                        <canvas id="barChartOnesignal" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                     </div>
+                  </div>
+                  <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                  </div>
+                  </div>
+                  
+               
 
                </form>
 
@@ -390,18 +414,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script src="../../dist/js/pages/dashboard.js"></script>
       <script>
        
-         // ! --------------------------------------------------------------------------------------------------
-         // ! INITIALISATION DE LA LISTE DES MESSAGES SMS DANS LE CAS D UN AJOUT D UN CONTACT
-         // ! --------------------------------------------------------------------------------------------------
-
-         $.ajax({
-               url: '../../traitements/contact/liste_select_messages.php',
-                dataType: 'json',
-                async: false,
-                success: function(data) {
-                  $('#BLK_ZONE_SOCARD').html(data.HTML);
-                }
-               });  
+          
 
          // ! --------------------------------------------------------------------------------------------------
          // ! INITIALISATION DE LA LISTE DES VERSIONS
@@ -933,7 +946,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             });
 
          // ! --------------------------------------------------------------------------------------------------
-         // ! BAR CHART
+         // ! BAR CHART TELECHARGEMENT/PARRAINAGES
          // ! --------------------------------------------------------------------------------------------------
          
 
@@ -1023,72 +1036,103 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             });
 
 
-
-          // ! -------------------------------------------------------------------------------------------------------
-          // ! ---- APPEL DE LA FENETRE IMPORT ONESIGNAL
-          // ! -------------------------------------------------------------------------------------------------------
-
-          $('#BTN_CSV_ONESIGNAL').click(function() {
-               $('#import_onesignal_modale').modal('toggle');
-           });
-
-          // ! -------------------------------------------------------------------------------------------------------
-          // ! ---- FERMETURE DE LA MODALE IMPORT ONESIGNAL
-          // ! -------------------------------------------------------------------------------------------------------
-
-          $('#ANNULATION_IMPORT').click(function() {
-               $('#import_onesignal_modale').modal('toggle');
-           });
-
-          // ! -------------------------------------------------------------------------------------------------------
-          // ! ---- VALIDATION DE L IMPORT DU FICHIER CSV
-          // ! -------------------------------------------------------------------------------------------------------
-           
-
-          $('#form_import').on('submit', function(e){
-             e.preventDefault();
-
-            $.ajax({
-                  type: "POST",             
-                  data: new FormData(this), 
-                  contentType: false,       
-                  cache: false,             
-                  processData:false,        
-                  dataType: 'json',
-                  url: "../../traitements/dashboard/import_onesignal.php",
-                  success: function (data) 
-                  {                     
-                     switch (data.CODE_RETOUR) {   
-                     case 'OK':
-                        toastr.success('Fichier uplaod');
-                        $('#import_onesignal_modale').modal('toggle');
-                     break;
-                     case 'ANOMALIE':
-                        alert(data.MESSAGE_RETOUR);
-                     break;  
-                     case 'ERREUR':
-                        alert(data.MESSAGE_SQL);
-                     break;                       
-                     default:
-                        break;
-                     }
-                  }
-            });
-          });
-
-          // ! --------------------------------------------------------------------------------------------------
-         // ! UPLOAD FICHIER
+            // ! --------------------------------------------------------------------------------------------------
+         // ! BAR CHART ONESIGNAL
          // ! --------------------------------------------------------------------------------------------------
+         
 
-         $("#file").on("change", function (e) {
-            var files = $(this)[0].files;
-            if (files.length >= 2) {
-                  $(".file_label").text(files.length + " Files Ready To Upload");
-            } else {
-                  var fileName = e.target.value.split("\\").pop();
-                  $(".file_label").text(fileName);
+         
+
+         $.ajax({
+            url: '../../traitements/dashboard/evolution_onesignal.php',
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                        switch (data.REPONSE) {
+                              case 'OK':
+                                 var areaChartData = {
+                                    labels  : data.PERIODICITE,
+                                    datasets: [
+                                    {
+                                       label               : 'Nombre de clients',
+                                       backgroundColor     : 'rgba(60,141,188,0.9)',
+                                       borderColor         : 'rgba(60,141,188,0.8)',
+                                       pointRadius          : false,
+                                       pointColor          : '#3b8bba',
+                                       pointStrokeColor    : 'rgba(60,141,188,1)',
+                                       pointHighlightFill  : '#fff',
+                                       pointHighlightStroke: 'rgba(60,141,188,1)',
+                                       data                : data.NB_SOUSCRIT
+                                    },
+                                    {
+                                       label               : 'Nombre de sessions',
+                                       backgroundColor     : 'rgba(210, 214, 222, 1)',
+                                       borderColor         : 'rgba(210, 214, 222, 1)',
+                                       pointRadius         : false,
+                                       pointColor          : 'rgba(210, 214, 222, 1)',
+                                       pointStrokeColor    : '#c1c7d1',
+                                       pointHighlightFill  : '#fff',
+                                       pointHighlightStroke: 'rgba(220,220,220,1)',
+                                       data                : data.SESSIONS
+                                    }
+                                    ]
+                                 }
+
+                                 var barChartCanvas = $('#barChartOnesignal').get(0).getContext('2d')
+                                 var barChartData = $.extend(true, {}, areaChartData)
+                                 var temp0 = areaChartData.datasets[0]
+                                 var temp1 = areaChartData.datasets[1]
+                                 barChartData.datasets[0] = temp0
+                                 barChartData.datasets[1] = temp1
+                                 
+                                 var barChartOptions = {
+                                    responsive              : true,
+                                    maintainAspectRatio     : false,
+                                    datasetFill             : false,
+                                    "animation": {
+                                          "duration": 1,
+                                          "onComplete": function () {
+                                             var chartInstance = this.chart,
+                                             ctx = chartInstance.ctx;
+
+                                             ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                             ctx.textAlign = 'center';
+                                             ctx.textBaseline = 'bottom';
+
+                                             this.data.datasets.forEach(function (dataset, i) {
+                                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                                meta.data.forEach(function (bar, index) {
+                                                      var data = dataset.data[index];                            
+                                                      ctx.fillText(data, bar._model.x, bar._model.y + 15);
+                                                });
+                                             });
+                                          }
+                                    },
+                                    
+                                 }
+
+                                 new Chart(barChartCanvas, {
+                                    type: 'bar',
+                                    data: barChartData,
+                                    options: barChartOptions,
+                                 })
+                                 
+                              break;
+                  case 'KO':
+                     break;
+                  default:
+                     break;
+               }
             }
-         });
+            });
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : ONESIGNAL
+         // ! --------------------------------------------------------------------------------------------------
+               
+         <?php
+            include '../fonction/_import-onesignal.php';
+         ?>
           
          // ! --------------------------------------------------------------------------------------------------
          // ! FONCTION : VERIFICATION VALIDITE DE L ADRESSE MAIL
@@ -1097,6 +1141,18 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          function checkEmail(email) {
              var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
              return re.test(email);
+         }
+
+         // ! --------------------------------------------------------------------------------------------------
+         // ! FONCTION : VERIFICATION VALIDITE DU NUMERO DE TEL
+         // ! --------------------------------------------------------------------------------------------------
+         
+         function checkPhone(num) {
+            if(num.indexOf('+33')!=-1){
+               num = num.replace('+33', '0');
+            }
+            var re = /^0[1-7]\d{8}$/;
+            return re.test(num);
          }
 
          // ! --------------------------------------------------------------------------------------------------

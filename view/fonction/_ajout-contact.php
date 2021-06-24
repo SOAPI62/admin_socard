@@ -1,4 +1,17 @@
 // ! --------------------------------------------------------------------------------------------------
+// ! INITIALISATION DE LA LISTE DES MESSAGES SMS DANS LE CAS D UN AJOUT D UN CONTACT
+// ! --------------------------------------------------------------------------------------------------
+
+$.ajax({
+    url: '../../traitements/contact/liste_select_messages.php',
+    dataType: 'json',
+    async: false,
+    success: function(data) {
+        $('#BLK_ZONE_SOCARD').html(data.HTML);
+    }
+    }); 
+
+// ! --------------------------------------------------------------------------------------------------
 // ! DETECTION CHANGEMENT DU TYPE DE CONTACT
 // ! --------------------------------------------------------------------------------------------------
 
@@ -28,6 +41,14 @@ $('#AJOUT_CONTACT').click(function() {
 
 message_anomalie = "";
 
+
+const reg = /\W+\W/;
+const str = $('#NRO_TEL').val();
+const newStr = str.replace(reg, "+");
+const newStr2 = newStr.replace(reg, "");
+const newStr3 = newStr2.replace('+33', '0');
+const num = newStr3.replace('France', "");
+
 var $ajout_ORI_CLIENT = $('#CONTACT_PAR').val();
 var $ajout_TYP_CLIENT = $('#TYPE_CONTACT').val();
 var $ajout_CIV1_CLIENT = '';
@@ -37,7 +58,7 @@ var $ajout_CIV2_CLIENT = '';
 var $ajout_NOM2_CLIENT = '';
 var $ajout_PNOM2_CLIENT = '';
 var $ajout_TEL_CLIENT = '';
-var $ajout_POR_CLIENT = $('#NRO_TEL').val();
+var $ajout_POR_CLIENT = num;
 var $ajout_EMAIL_CLIENT = $('#EMAIL').val();
 var $ajout_ADR1_CLIENT = '';
 var $ajout_ADR2_CLIENT = '';
@@ -51,6 +72,13 @@ switch ($('#CONTACT_PAR').val()) {
     if ($ajout_POR_CLIENT.trim() == "")
     {
         message_anomalie = "Téléphone non renseigné !";
+    }
+    else if ($ajout_POR_CLIENT.trim() != "")
+    {
+        if (!checkPhone(num))
+        {
+            message_anomalie = "Numero de téléphone non conforme !";
+        }
     }
     break;
     case 'MAIL':

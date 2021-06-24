@@ -106,10 +106,10 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                            <h3>cliquez ou glissez un fichier</h3>
                         </div>
                      </div>
-                     <div class="file-upload-content-1">
+                     <div class="file-upload-content-1" >
                         <img class="file-upload-image-1" src="#" alt="" />
                         <div class="image-title-wrap-1">
-                           <button type="button" onclick="removeUpload_1()" class="remove-image">Supprimer <span class="image-title-1">Télécharger une image</span></button>
+                           <button type="button" onclick="removeUpload_1();" class="remove-image">Supprimer <span class="image-title-1">Télécharger une image</span></button>
                         </div>
                      </div>
                   </div>
@@ -173,6 +173,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script src="../../dist/js/adminlte.min.js"></script>
       <!-- AdminLTE for demo purposes -->
       <script src="../../dist/js/demo.js"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
       <script>
 
          // !----------------------------------------------------------------------------------------------------------------
@@ -301,9 +302,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
              reader.onload = function(e) {
                $('.image-upload-wrap-1').hide();
+          
                $('.file-upload-image-1').attr('src', e.target.result);
                $('.file-upload-content-1').show();
-         
                $('.image-title-1').html(input.files[0].name);
              };
          
@@ -321,6 +322,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
              reader.onload = function(e) {
                $('.image-upload-wrap-2').hide();
+               
                $('.file-upload-image-2').attr('src', e.target.result);
                $('.file-upload-content-2').show();
          
@@ -341,6 +343,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          
              reader.onload = function(e) {
                $('.image-upload-wrap-3').hide();
+            
                $('.file-upload-image-3').attr('src', e.target.result);
                $('.file-upload-content-3').show();
          
@@ -358,26 +361,45 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
            $('.file-upload-input-1').replaceWith($('.file-upload-input-1').clone());
            $('.file-upload-content-1').hide();
            $('.image-upload-wrap-1').show();
+           $('.file-upload-image-1').attr('src','#');  
          }
 
          function removeUpload_2() {
            $('.file-upload-input-2').replaceWith($('.file-upload-input-2').clone());
            $('.file-upload-content-2').hide();
            $('.image-upload-wrap-2').show();
+           $('.file-upload-image-2').attr('src','#'); 
          }
 
          function removeUpload_3() {
            $('.file-upload-input-3').replaceWith($('.file-upload-input-3').clone());
            $('.file-upload-content-3').hide();
            $('.image-upload-wrap-3').show();
+           $('.file-upload-image-3').attr('src','#'); 
          }
 
-         $('.image-upload-wrap').bind('dragover', function () {
-         		$('.image-upload-wrap').addClass('image-dropping');
+         $('.image-upload-wrap-1').bind('dragover', function () {
+         		$('.image-upload-wrap-1').addClass('image-dropping');
          	});
 
-         $('.image-upload-wrap').bind('dragleave', function () {
-            $('.image-upload-wrap').removeClass('image-dropping');
+         $('.image-upload-wrap-1').bind('dragleave', function () {
+            $('.image-upload-wrap-1').removeClass('image-dropping');
+         });
+
+         $('.image-upload-wrap-2').bind('dragover', function () {
+         		$('.image-upload-wrap-2').addClass('image-dropping');
+         	});
+
+         $('.image-upload-wrap-2').bind('dragleave', function () {
+            $('.image-upload-wrap-2').removeClass('image-dropping');
+         });
+
+         $('.image-upload-wrap-3').bind('dragover', function () {
+         		$('.image-upload-wrap-3').addClass('image-dropping');
+         	});
+
+         $('.image-upload-wrap-3').bind('dragleave', function () {
+            $('.image-upload-wrap-3').removeClass('image-dropping');
          });
 
          // ! ----------------------------------------------------------------------------------------------------------------
@@ -395,19 +417,35 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   $img_3 ='#';
                   break;
                case '1':
-                  $img_1 = $('.file-upload-image-1').attr('src');
-                  $img_2 ='#';
-                  $img_3 ='#';
+                  if ($('.file-upload-image-1').attr('src') == '#' ) {
+                     toastr.error('Image non renseigné');
+                  }else{
+                     $img_1 = $('.file-upload-image-1').attr('src');
+                     $img_2 ='#';
+                     $img_3 ='#';
+                  }
+                  
                   break;
                case '2':
-                  $img_1 = $('.file-upload-image-1').attr('src');
-                  $img_2 = $('.file-upload-image-2').attr('src');
-                  $img_3 ='#';
+
+                  if ($('.file-upload-image-1').attr('src') == '#' || $('.file-upload-image-2').attr('src') == '#') {
+                     toastr.error('Image non renseigné');
+                  }else{
+                     $img_1 = $('.file-upload-image-1').attr('src');
+                     $img_2 = $('.file-upload-image-2').attr('src');
+                     $img_3 ='#';
+                  }
+                  
                   break;
                case '3':
-                  $img_1 = $('.file-upload-image-1').attr('src');
-                  $img_2 = $('.file-upload-image-2').attr('src');
-                  $img_3 = $('.file-upload-image-3').attr('src');
+                  if ($('.file-upload-image-1').attr('src') == '#' || $('.file-upload-image-2').attr('src') == '#' || $('.file-upload-image-3').attr('src') == '#') {
+                     toastr.error('Image non renseigné');
+                  }else{
+                     $img_1 = $('.file-upload-image-1').attr('src');
+                     $img_2 = $('.file-upload-image-2').attr('src');
+                     $img_3 = $('.file-upload-image-3').attr('src');
+                  }
+                  
                   break;
                default:
                   break;
@@ -433,7 +471,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   {
                      switch (data.CODE_RETOUR) {
                      case 'OK':
+                        
                         location.href='../socard/edition_structure.php';
+                        
                      break;
                      case 'ANOMALIE':
                         alert(data.MESSAGE_RETOUR);

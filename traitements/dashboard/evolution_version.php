@@ -15,17 +15,19 @@ $select["CODE_SQL"] = '';
 
 $version = [];
 $nombre_version = [];
+$nombre_version_temporaire = [];
+$first = 100;
 
-
-$sql = "SELECT `version`, count(*) FROM `SOCARD_INSTAL` GROUP BY `version`";
+$sql = "SELECT `version`, count(*) FROM `SOCARD_INSTAL` GROUP BY SUBSTRING(`version`,1,1)";
 
 $req = $dbh->prepare($sql);
 $req->execute();
 
 while ($row = $req->fetch())
 {
-    array_push($version, $row[0]);
+    array_push($version, $first);
     array_push($nombre_version, $row[1]);
+    $first = $first +100;
 }
 
 

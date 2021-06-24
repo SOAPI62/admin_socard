@@ -104,9 +104,9 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                            <label class="margin">Image :</label>
                         </div>
                      </div>
-                     <div >
-                        <div class="image-upload-wrap ">
-                           <input class="file-upload-input" id="file" name="files" type='file' onchange="readURL(this);" accept="image/*" />
+                     <div class="file-upload">
+                        <div class="image-upload-wrap">
+                           <input class="file-upload-input" id="file-nouveaute" name="files" type='file' onchange="readURL(this);" accept="image/*" />
                            <div class="drag-text">
                               <h3>cliquez ou glissez un fichier</h3>
                            </div>
@@ -155,8 +155,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
       <script src="../../dist/js/demo.js"></script>
       <!-- Summernote -->
       <script src="../../plugins/summernote/summernote-bs4.min.js"></script>
-      <!-- AdminLTE for demo purposes -->
-      <script src="../../dist/js/demo.js"></script>   
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
       <script>    
  
          // ! ----------------------------------------------------------------------------------------------------------------
@@ -224,12 +223,17 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             $("#btn_valider").click(function(){
          
              $img = $('.file-upload-image').attr('src');
+
+             if ($('.file-upload-image').attr('src') == '#' ) {
+                     toastr.error('Image non renseigné');
+                     return;
+               }
          
              var formData = new FormData();
              
              formData.append('titre', $('#titre').val());
              formData.append('description', $('#summernote').val());
-             formData.append('file', $img);
+             formData.append('file-nouveaute', $img);
          
               $.ajax({
                    type: "POST",
@@ -266,6 +270,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
             $('.file-upload-input').replaceWith($('.file-upload-input').clone());
             $('.file-upload-content').hide();
             $('.image-upload-wrap').show();
+            $('.file-upload-image').attr('src','#'); 
           }
           
           $('.image-upload-wrap').bind('dragover', function () {

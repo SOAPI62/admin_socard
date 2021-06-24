@@ -22,13 +22,13 @@ $select["MESSAGE_SQL"]      = '';
 
 $titre          = $_POST['titre'];
 $description    = $_POST['description'];
-$file           = $_POST['file'];
+$file           = $_POST['file-nouveaute'];
 
 // ! ----------------------------------------------------------------------
 // ! Vérification si les parametres sont renseignés
 // ! ----------------------------------------------------------------------
 
-if (!empty($_POST['titre']) && !empty($_POST['description']) && !empty($_POST['file'])) {
+if (!empty($_POST['titre']) && !empty($_POST['description']) && !empty($_POST['file-nouveaute'])) {
     
     // ? --- Préparation de la requêtes SQL
 

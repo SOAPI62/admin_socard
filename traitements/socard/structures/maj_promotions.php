@@ -31,7 +31,7 @@ $file_3         = $_POST['file_3'];
 // ! Vérification si les parametres sont renseignés
 // ! ----------------------------------------------------------------------
 
-if (!empty($_POST['titre']) && !empty($_POST['file_1'])) {
+if (!empty($_POST['titre'])) {
     
     // ? --- Préparation de la requêtes SQL
 
