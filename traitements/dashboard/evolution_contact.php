@@ -105,7 +105,8 @@ switch ($mode) {
         break;
         case 'par mois':
             $periodicite =  ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
-            $sql = "SELECT `MOIS_PER`, count(*) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` GROUP BY `MOIS_PER` ";
+            $y = date("Y");
+            $sql = "SELECT `MOIS_PER`, count(*) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` AND `ANNEE`= '$y' GROUP BY `MOIS_PER` ";
 
             $req = $dbh->prepare($sql);
             $req->execute();
@@ -158,9 +159,24 @@ switch ($mode) {
      
         case 'par semaine':
             $periodicite = [];
-            $semaine = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    
-            for ($i=0; $i < 53; $i++) { 
+            $semaine = [];
+
+            $d = date("d"); 
+            $m = date("m"); 
+            $y = date("Y"); 
+
+            $semaine_encours = ISOWeek($y , $m , $d);
+
+            if($semaine_encours == 52){
+                $semaine = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+            }
+            else{
+                for ($i=0; $i < $semaine_encours + 2; $i++) { 
+                    array_push($semaine, 0);
+                }
+            }
+            
+            for ($i=0; $i < count($semaine); $i++) { 
                 $periodicite[$i] =  $i;
             }
             
@@ -168,7 +184,7 @@ switch ($mode) {
             $nb_inscrit_s   = 0;
             $nb_inscrit_s_1 = 0;
     
-             $sql = "SELECT `SEMAINE`, count(*) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` GROUP BY `SEMAINE` ";
+             $sql = "SELECT `SEMAINE`, count(*) FROM `CLIENTS`, `PERIODES` WHERE `SUPPORT_COM`='SOCARD' AND `ACTIF_Client`=1 AND SUBSTRING(`DTHR_CREATION`,1,10) = `DATE_PER` AND `ANNEE`= '$y' GROUP BY `SEMAINE` ";
 
             $req = $dbh->prepare($sql);
             $req->execute();

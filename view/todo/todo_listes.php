@@ -105,7 +105,46 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          <!-- /.content -->
          </div>
  
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- IMPORT CONTACT                                                                                           -->                                                           
+         <!-- -------------------------------------------------------------------------------------------------------- -->
 
+         <div class="modal fade dropdown" tabindex="-1" role="dialog" aria-hidden="true" id="envoi_sms_client">
+            <div class="modal-dialog modal-xl ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Envoi SMS</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                     <div class="modal-body">
+                     <div class="form-group">
+                        <label>Numero de telephone</label>
+                        <div class="input-group" >
+                            <input id="NUMERO_TEL" type="text" class="form-control"  disabled>
+                        </div>
+                        </div>
+                        <div class="form-group"  >
+                           <label id="MAJ_BLK_REMARQUES">SMS </label>
+                           <textarea id="CONTENU_SMS_CLIENT" class="form-control" rows="10" >Bonjour, 
+
+ Cordialement Laurent Vandenbussche | 06 85 31 88 27 | Carte de visite : https://urlr.me/FxNZP
+  
+
+                           </textarea>
+                        </div>
+                     </div>
+                    <div class="modal-footer">
+                        <button id="ANNULATION_SMS" type="button" class="btn btn-primary btn-info">Annuler</button>
+                        <button id="VALIDATION_SMS" type="submit" class="btn btn-success">Envoyer</button>
+                    </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>  
          <!-- /.modal -->
          <?php
             include '../navigation/footer.php';
@@ -175,7 +214,7 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   "width": "5%",
          			"targets": [0],
          			"data": null,
-         			"defaultContent": "<div class='btn-group'></button><button type='button' class='btn btn-default edit-desactive'><i class='fas fa-user-slash'></i></button></div>"
+         			"defaultContent": "<div class='btn-group'><button type='button' class='btn btn-default edit-desactive'><i class='fas fa-user-slash'></i></button><button type='button' class='btn btn-default appel-client'><i class='fas fa-phone-alt'></i></button><button type='button' class='btn btn-default sms-client'><i class='fas fa-sms'></i></button></div>"
          		},
                {
                   "width": '5%',
@@ -242,6 +281,94 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
             });
            });
+
+          // ! --------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : APPEL CLIENT
+          // ! -------------------------------------------------------------------------------------------------------
+
+         $(function() {
+            $('.appel-client').click(function() {
+               var data = table.row($(this).parents('tr')).data();
+               var $phone_todo = data[5];
+               window.location.href = 'tel://' + $phone_todo;
+            });
+         });
+
+         // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- APPEL DE LA FENETRE SMS CLIENT
+          // ! -------------------------------------------------------------------------------------------------------
+
+
+          $('#liste_todo').on('click', '.sms-client', function() {
+             var data = table.row($(this).parents('tr')).data();
+             var $client= data[2];
+
+             $.ajax({
+                  type: "POST",
+                  url: "../../traitements/todo/lecture_todo.php",
+                  data: 'client=' + $client,
+                  dataType: 'json',
+                  success: function (data) 
+                  {
+                     switch (data.CODE_RETOUR) {
+                     case 'OK':
+                           $('#NUMERO_TEL').val(data.NRO_CLIENT);
+                           
+                           $('#envoi_sms_client').modal('toggle');
+                        
+
+                     break;
+                     case 'ANOMALIE':
+                        alert(data.MESSAGE_RETOUR);
+                     break;  
+                     case 'ERREUR':
+                        alert(data.MESSAGE_SQL);
+                     break;                       
+                     default:
+                        break;
+                     }
+                  }
+            });
+
+           });
+
+         // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : SMS CLIENT
+          // ! -------------------------------------------------------------------------------------------------------
+
+         $('#VALIDATION_SMS').click(function() {
+
+               $.ajax({
+               url: '../../traitements/contact/envoi_sms_todo.php',
+               data: 'nro_tel=' + $('#NUMERO_TEL').val() + '&message=' + $('#CONTENU_SMS_CLIENT').val(),
+               dataType: 'json',
+               async: false,
+               success: function(data) {
+                  switch (data.REPONSE) {
+                        case 'OK':
+                           toastr.success('Sms envoyé au contact!')
+                           $('#envoi_sms_client').modal('toggle');
+                           break;
+                        case 'ERREUR':
+                           toastr.warning('Sms non envoyé ! ' + data.CODE_ERR);
+                           break;
+                        default:
+                           break;
+                  }
+               }
+               });  
+
+           });
+
+           // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : ANNULATION SMS CLIENT
+          // ! -------------------------------------------------------------------------------------------------------
+
+         $('#ANNULATION_SMS').click(function() {
+
+            $('#envoi_sms_client').modal('toggle');
+
+         });
 
 
 

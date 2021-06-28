@@ -241,6 +241,48 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
          </div>  
 
          <!-- -------------------------------------------------------------------------------------------------------- -->
+         <!-- ENVOI SMS CONTACT                                                                                        -->                                                           
+         <!-- -------------------------------------------------------------------------------------------------------- -->
+
+         <div class="modal fade dropdown" tabindex="-1" role="dialog" aria-hidden="true" id="envoi_sms_contact">
+            <div class="modal-dialog modal-xl ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Envoi SMS</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label>Numero de telephone</label>
+                           <div class="input-group" >
+                              <input id="NUMERO_TEL" type="text" class="form-control"  disabled>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <label id="MAJ_BLK_REMARQUES">SMS </label>
+                           <textarea id="CONTENU_SMS_CLIENT" class="form-control" rows="10" >Bonjour, 
+
+ Cordialement Laurent Vandenbussche | 06 85 31 88 27 | Carte de visite : https://urlr.me/FxNZP
+  
+
+                           </textarea>
+                        </div>
+                     </div>
+                    <div class="modal-footer">
+                        <button id="ANNULATION_SMS" type="button" class="btn btn-primary btn-info">Annuler</button>
+                        <button id="VALIDATION_SMS" type="submit" class="btn btn-success">Envoyer</button>
+                    </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>  
+         <!-- /.modal -->
+
+         <!-- -------------------------------------------------------------------------------------------------------- -->
          <!-- EDITION D UN CONTACT                                                                                       -->                                                           
          <!-- -------------------------------------------------------------------------------------------------------- -->
 
@@ -326,8 +368,10 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                         </div>
                      </div>
                   </div>
-                  <div class="modal-footer justify-content-between">
+                  <div class="modal-footer">
                      <button id="MAJ_CONTACT" type="button" class="btn btn-primary">Modifier</button>
+                     <button id="APPEL_CONTACT" type="button" class="btn btn-primary">Appeler</button>
+                     <button id="SMS_CONTACT" type="button" class="btn btn-primary">SMS</button>
                   </div>
                </div>
                <!-- /.modal-content -->
@@ -781,6 +825,62 @@ if (isset($_SESSION['EMAIL_UTILISATEUR'])  && isset($_SESSION['PWD_UTILISATEUR']
                   }
                 });
             });
+
+
+
+         // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : APPEL CONTACT
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#APPEL_CONTACT').click(function() {
+
+            var $phone_contact = $('#MAJ_NRO_TEL').val();
+            window.location.href = 'tel://' + $phone_contact;
+            $('#maj_contact_modale').modal('toggle');
+
+         });
+
+         // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : 
+          // ! -------------------------------------------------------------------------------------------------------
+
+         $('#SMS_CONTACT').click(function() {
+            
+            var $phone_contact = $('#MAJ_NRO_TEL').val();
+            $('#maj_contact_modale').modal('toggle');
+            $('#NUMERO_TEL').val($phone_contact);
+            $('#envoi_sms_contact').modal('toggle');
+         });
+
+         // ! -------------------------------------------------------------------------------------------------------
+          // ! ---- TRAITEMENT : SMS CLIENT
+          // ! -------------------------------------------------------------------------------------------------------
+
+          $('#VALIDATION_SMS').click(function() {
+
+            $.ajax({
+            url: '../../traitements/contact/envoi_sms_todo.php',
+            data: 'nro_tel=' + $('#NUMERO_TEL').val() + '&message=' + $('#CONTENU_SMS_CLIENT').val(),
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+               switch (data.REPONSE) {
+                     case 'OK':
+                        toastr.success('Sms envoyé au contact!')
+                        $('#envoi_sms_contact').modal('toggle');
+                        break;
+                     case 'ERREUR':
+                        toastr.warning('Sms non envoyé ! ' + data.CODE_ERR);
+                        break;
+                     default:
+                        break;
+               }
+            }
+            });  
+
+            });
+
+
 
          // ! --------------------------------------------------------------------------------------------------
          // ! Fonction AJOUT CONTACT

@@ -18,9 +18,24 @@ switch ($mode_conn) {
 
     case 'semaine':
         $periodicite = [];
-        $semaine = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        $semaine = [];
 
-        for ($i=0; $i < 53; $i++) { 
+        $d = date("d"); 
+        $m = date("m"); 
+        $y = date("Y"); 
+
+        $semaine_encours = ISOWeek($y , $m , $d);
+
+        if($semaine_encours == 52){
+            $semaine = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        }
+        else{
+            for ($i=0; $i < $semaine_encours + 2; $i++) { 
+                array_push($semaine, 0);
+            }
+        }
+        
+        for ($i=0; $i < count($semaine); $i++) { 
             $periodicite[$i] =  $i;
         }
         
@@ -28,7 +43,7 @@ switch ($mode_conn) {
         $nb_connexion_s   = 0;
         $nb_connexion_s_1 = 0;
 
-        $sql = "SELECT `SEMAINE`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER` GROUP BY `SEMAINE`";
+        $sql = "SELECT `SEMAINE`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER` AND `ANNEE`='$y' GROUP BY `SEMAINE`";
         $req = $dbh->prepare($sql);
         $req->execute();
         
@@ -80,7 +95,8 @@ switch ($mode_conn) {
 
     case 'mois':
         $periodicite =  ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
-        $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER`  GROUP BY `MOIS_PER`";
+        $y = date("Y");
+        $sql = "SELECT `MOIS_PER`, count(*) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER`  AND `ANNEE`='$y' GROUP BY `MOIS_PER`";
         $req = $dbh->prepare($sql);
         $req->execute();
 
@@ -134,7 +150,8 @@ switch ($mode_conn) {
 
     case 'trimestre':
         $periodicite =  ['T1', 'T2', 'T3', 'T4'];
-        $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER` GROUP BY `TRIMESTRE`";
+        $y = date("Y");
+        $sql = "SELECT `TRIMESTRE`, count(*), substr(`TRIMESTRE`,2,1) FROM `SOCARD_JOURNAL`, `PERIODES` WHERE `date_connexion`= `DATE_PER` AND `ANNEE`='$y' GROUP BY `TRIMESTRE`";
 
          $req = $dbh->prepare($sql);
         $req->execute();
